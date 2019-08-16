@@ -22,11 +22,11 @@ import io.restassured.specification.RequestSpecification;
  * @author Jesus Menacho.
  * @version 1.0.
  */
-public class Builder {
+public final class Builder {
     /**
      * Constructor.
      */
-    public Builder() {
+    private Builder() {
     }
 
     /**
