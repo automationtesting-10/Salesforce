@@ -13,10 +13,9 @@
 package com.foundation.salesforce.common;
 
 import io.restassured.response.Response;
+import static io.restassured.RestAssured.given;
 
 import java.util.Map;
-
-import static io.restassured.RestAssured.given;
 
 /**
  * Class that allows to load the result of the salesforce page.
