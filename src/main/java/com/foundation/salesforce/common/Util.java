@@ -12,6 +12,7 @@
 package com.foundation.salesforce.common;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -57,7 +58,7 @@ public final class Util {
             config.setUserName(properties.getProperty("app.user_name"));
             config.setPassword(properties.getProperty("app.password"));
             config.setToken(properties.getProperty("app.security_token"));
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
