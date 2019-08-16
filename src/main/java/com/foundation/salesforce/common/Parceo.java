@@ -41,8 +41,8 @@ public final class Parceo {
      */
     public static Parceo getInstance() {
         if (parcer == null) {
-            parcer = new Parceo();
             appClient = new AppClient();
+            parcer = new Parceo();
         }
         return parcer;
     }
