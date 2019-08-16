@@ -22,14 +22,14 @@ import java.util.Properties;
  * @author Jesus Menacho.
  * @version 1.0.
  */
-public final class Util {
-    private static Util utilCreation;
-    private static Config config = new Config();
+public final class ReadAppProp {
+    private static ReadAppProp readAppPropCreation;
+    private static Config config;
 
     /**
      * This constructor let me initializer the method initUnit.
      */
-    private Util() {
+    private ReadAppProp() {
         initUtil();
     }
 
@@ -38,11 +38,12 @@ public final class Util {
      *
      * @return Util variable class.
      */
-    public static Util getInstance() {
-        if (utilCreation == null) {
-            utilCreation = new Util();
+    public static ReadAppProp getInstance() {
+        if (readAppPropCreation == null) {
+            readAppPropCreation = new ReadAppProp();
+            config = new Config();
         }
-        return utilCreation;
+        return readAppPropCreation;
     }
 
     /**
