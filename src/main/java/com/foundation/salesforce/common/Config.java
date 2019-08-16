@@ -21,7 +21,6 @@ package com.foundation.salesforce.common;
 public class Config {
     private String clientID;
     private String clientSecret;
-    private String redirectUri;
     private String userName;
     private String password;
     private String token;
@@ -56,22 +55,6 @@ public class Config {
      */
     public void setClientSecret(String clientSecret) {
         this.clientSecret = clientSecret;
-    }
-
-    /**
-     * Method return the variable Redirect Uri.
-     * @return redirectUri variable return.
-     */
-    public String getRedirectUri() {
-        return redirectUri;
-    }
-
-    /**
-     * Method to let to set redirect Uri.
-     * @param redirectUri variable to server to redirect.
-     */
-    public void setRedirectUri(String redirectUri) {
-        this.redirectUri = redirectUri;
     }
 
     /**
