@@ -40,8 +40,8 @@ public final class ReadAppProp {
      */
     public static ReadAppProp getInstance() {
         if (readAppPropCreation == null) {
-            readAppPropCreation = new ReadAppProp();
             config = new Config();
+            readAppPropCreation = new ReadAppProp();
         }
         return readAppPropCreation;
     }
