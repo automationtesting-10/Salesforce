@@ -25,7 +25,7 @@ import java.util.Map;
 
 public final class Parceo {
     private static Parceo parcer;
-    private static AppClient appClient = new AppClient();
+    private static AppClient appClient;
 
     /**
      * Constructor let init the method initAccess.
@@ -42,6 +42,7 @@ public final class Parceo {
     public static Parceo getInstance() {
         if (parcer == null) {
             parcer = new Parceo();
+            appClient = new AppClient();
         }
         return parcer;
     }
