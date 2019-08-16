@@ -56,7 +56,7 @@ public final class Util {
             config.setClientSecret(properties.getProperty("app.client_secret"));
             config.setUserName(properties.getProperty("app.user_name"));
             config.setPassword(properties.getProperty("app.password"));
-            config.setToken(properties.getProperty("app.token"));
+            config.setToken(properties.getProperty("app.security_token"));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
