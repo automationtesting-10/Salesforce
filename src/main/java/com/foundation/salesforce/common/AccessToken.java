@@ -24,13 +24,13 @@ import static io.restassured.RestAssured.given;
  * @author Jesus Menacho.
  * @version 1.0.
  */
-public class AccessToken {
+public final class AccessToken {
     private static AccessToken accessToken;
     private static Response response;
     private static Map mapJson;
 
     /**
-     * Constructor let init the method initAccessToken
+     * Constructor let init the method initAccessToken.
      */
     private AccessToken() {
         initAccessToken();
@@ -58,8 +58,8 @@ public class AccessToken {
                 .param("client_id", Util.getInstance().getConfig().getClientID())
                 .param("client_secret", Util.getInstance().getConfig().getClientSecret())
                 .param("username", Util.getInstance().getConfig().getUserName())
-                .param("password", Util.getInstance().getConfig().getPassword() +
-                        Util.getInstance().getConfig().getToken())
+                .param("password", Util.getInstance().getConfig().getPassword()
+                        + Util.getInstance().getConfig().getToken())
                 .when()
                 .post(urlAuth);
         mapJson = response.jsonPath().getMap("$");
