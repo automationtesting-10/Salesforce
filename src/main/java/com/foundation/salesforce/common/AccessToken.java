@@ -54,11 +54,11 @@ public final class AccessToken {
         String urlAuth = "https://login.salesforce.com/services/oauth2/token";
         response = given()
                 .param("grant_type", "password")
-                .param("client_id", Util.getInstance().getConfig().getClientID())
-                .param("client_secret", Util.getInstance().getConfig().getClientSecret())
-                .param("username", Util.getInstance().getConfig().getUserName())
-                .param("password", Util.getInstance().getConfig().getPassword()
-                        + Util.getInstance().getConfig().getToken())
+                .param("client_id", ReadAppProp.getInstance().getConfig().getClientID())
+                .param("client_secret", ReadAppProp.getInstance().getConfig().getClientSecret())
+                .param("username", ReadAppProp.getInstance().getConfig().getUserName())
+                .param("password", ReadAppProp.getInstance().getConfig().getPassword()
+                        + ReadAppProp.getInstance().getConfig().getToken())
                 .when()
                 .post(urlAuth);
         mapJson = response.jsonPath().getMap("$");
