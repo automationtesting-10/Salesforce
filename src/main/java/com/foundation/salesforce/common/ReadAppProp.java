@@ -1,5 +1,5 @@
 /*
- * @(#) Util.java Copyright (c) 2019 Jala Foundation.
+ * @(#) ReadAppProp.java Copyright (c) 2019 Jala Foundation.
  * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * Util class implements the singleton which allows to read the application properties.
+ * Class implements the singleton which allows to read the application properties.
  *
  * @author Jesus Menacho.
  * @version 1.0.
