@@ -10,7 +10,7 @@
  * with Jala Foundation.
  */
 
-package com.foundation.salesforce.util;
+package com.foundation.salesforce.api;
 
 import com.foundation.salesforce.common.Parceo;
 import io.restassured.builder.RequestSpecBuilder;
@@ -22,11 +22,11 @@ import io.restassured.specification.RequestSpecification;
  * @author Jesus Menacho.
  * @version 1.0.
  */
-public final class Builder {
+public final class Authentication {
     /**
      * Constructor.
      */
-    private Builder() {
+    private Authentication() {
     }
 
     /**
