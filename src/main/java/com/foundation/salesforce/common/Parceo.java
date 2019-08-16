@@ -14,7 +14,6 @@ package com.foundation.salesforce.common;
 
 import org.json.JSONException;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -32,7 +31,7 @@ public final class Parceo {
      * Constructor let init the method initAccess.
      */
     private Parceo() {
-        initAccess();
+        access();
     }
 
     /**
@@ -50,17 +49,16 @@ public final class Parceo {
     /**
      * Method that loads the values of the page.
      */
-    private static void initAccess() {
-        Map<Integer, String> nombreMap = new HashMap<Integer, String>();
+    private static void access() {
 
         try {
-            nombreMap = AccessToken.getInstance().getResponse();
-            appClient.setAccessToken(nombreMap.get("access_token"));
-            appClient.setInstanceUrl(nombreMap.get("instance_url"));
-            appClient.setId(nombreMap.get("id"));
-            appClient.setTokenType(nombreMap.get("token_type"));
-            appClient.setIssuedAt(nombreMap.get("issued_at"));
-            appClient.setSignature(nombreMap.get("signature"));
+            Map<String, String> nameMap = AccessToken.getInstance().getResponse();
+            appClient.setAccessToken(nameMap.get("access_token"));
+            appClient.setInstanceUrl(nameMap.get("instance_url"));
+            appClient.setId(nameMap.get("id"));
+            appClient.setTokenType(nameMap.get("token_type"));
+            appClient.setIssuedAt(nameMap.get("issued_at"));
+            appClient.setSignature(nameMap.get("signature"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
