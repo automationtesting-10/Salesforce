@@ -1,8 +1,6 @@
 /*
- * Salesforce
- *
- * Copyright (c) 2019 Jala Foundation.
- * 2643 Av. Melchor Perez de Olguín, Colquiri Sud, Cochabamba, Bolivia.
+ * @(#) AuthenticationParser.java Copyright (c) 2019 Jala Foundation.
+ * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
  * This software is the confidential and proprietary information of
@@ -27,7 +25,7 @@ import java.util.Map;
 
 public final class AuthenticationParser {
     private static AuthenticationParser parcer;
-    private static AppClient appClient;
+    private static Client client;
 
     /**
      * Constructor let init the method initAccess.
@@ -43,7 +41,7 @@ public final class AuthenticationParser {
      */
     public static AuthenticationParser getInstance() {
         if (parcer == null) {
-            appClient = new AppClient();
+            client = new Client();
             parcer = new AuthenticationParser();
         }
         return parcer;
@@ -56,13 +54,13 @@ public final class AuthenticationParser {
 
         try {
             Map<String, String> nameMap = AccessToken.getInstance().getResponse();
-            appClient.setAccessToken(nameMap.get("access_token"));
-            appClient.setInstanceUrl(nameMap.get("instance_url"));
-            appClient.setId(nameMap.get("id"));
-            appClient.setTokenType(nameMap.get("token_type"));
-            appClient.setIssuedAt(nameMap.get("issued_at"));
-            appClient.setSignature(nameMap.get("signature"));
-            appClient.setAuthUrl(nameMap.get("auth_url"));
+            client.setAccessToken(nameMap.get("access_token"));
+            client.setInstanceUrl(nameMap.get("instance_url"));
+            client.setId(nameMap.get("id"));
+            client.setTokenType(nameMap.get("token_type"));
+            client.setIssuedAt(nameMap.get("issued_at"));
+            client.setSignature(nameMap.get("signature"));
+            client.setAuthUrl(nameMap.get("auth_url"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -73,7 +71,7 @@ public final class AuthenticationParser {
      *
      * @return mapJason variable..
      */
-    public AppClient containtReq() {
-        return appClient;
+    public Client containtReq() {
+        return client;
     }
 }

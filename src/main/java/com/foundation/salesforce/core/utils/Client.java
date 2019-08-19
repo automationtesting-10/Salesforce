@@ -1,8 +1,6 @@
 /*
- * Salesforce
- *
- * Copyright (c) 2019 Jala Foundation.
- * 2643 Av. Melchor Perez de Olguín, Colquiri Sud, Cochabamba, Bolivia.
+ * @(#) Client.java Copyright (c) 2019 Jala Foundation.
+ * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
  * This software is the confidential and proprietary information of
@@ -20,7 +18,7 @@ package com.foundation.salesforce.core.utils;
  * @author Jesus Menacho.
  * @version 1.0.
  */
-public class AppClient {
+public class Client {
     private String accessToken;
     private String instanceUrl;
     private String id;

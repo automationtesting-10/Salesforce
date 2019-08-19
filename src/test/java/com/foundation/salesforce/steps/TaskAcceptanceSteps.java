@@ -1,8 +1,6 @@
 /*
- * Salesforce
- *
- * Copyright (c) 2019 Jala Foundation.
- * 2643 Av. Melchor Perez de Olguín, Colquiri Sud, Cochabamba, Bolivia.
+ * @(#) TaskAcceptanceSteps.java Copyright (c) 2019 Jala Foundation.
+ * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
  * This software is the confidential and proprietary information of
@@ -30,12 +28,12 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 /**
- * TaskAcceptanceStepdefs
+ * TaskAcceptanceSteps
  *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
-public class TaskAcceptanceStepdefs {
+public class TaskAcceptanceSteps {
     private ValidatableResponse json;
     private Response response;
     private TaskApi taskApi;
@@ -64,7 +62,7 @@ public class TaskAcceptanceStepdefs {
 
     @And("creation response includes the following$")
     public void creation_response_includes(Map<String, String> response) {
-
+        //TODO Implement TestNG Assertion
     }
 
     @Given("user specifies updated body content$")
@@ -79,13 +77,12 @@ public class TaskAcceptanceStepdefs {
 
     @Then("the status code is 204 after updating")
     public void check_update_status_code() {
-
+        //TODO Implement TestNG Assertion
     }
 
     @When("user searches for task (.*)")
     public void user_searches_for(String taskId){
         this.response = taskApi.findTaskById(taskId);
-
     }
 
     @Then("status code is (\\d+) after finding")

@@ -1,8 +1,6 @@
 /*
- * Salesforce
- *
- * Copyright (c) 2019 Jala Foundation.
- * 2643 Av. Melchor Perez de Olguín, Colquiri Sud, Cochabamba, Bolivia.
+ * @(#) PropertiesReader.java Copyright (c) 2019 Jala Foundation.
+ * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
  * This software is the confidential and proprietary information of
@@ -11,6 +9,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jala Foundation.
  */
+
 package com.foundation.salesforce.core.utils;
 
 import java.io.FileInputStream;

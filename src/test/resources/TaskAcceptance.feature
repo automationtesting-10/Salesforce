@@ -19,12 +19,12 @@ Feature: Manage Tasks in Salesforce
     When user patches Task 00T3i000005ZrUDEA0
     Then the status code is 204 after updating
 
-#  Scenario: A user searches for a task by id
-#    When user searches for task 00T3i000005ZrUDEA0
-#    Then status code is 200 after finding
-#    And search response contains the following
-#      | Id | 00T3i000005ZrUDEA0 |
+  Scenario: A user searches for a task by id
+    When user searches for task 00T3i000005ZrUDEA0
+    Then status code is 200 after finding
+    And search response contains the following
+      | Id | 00T3i000005ZrUDEA0 |
 
-#  Scenario: A user wants to delete a task
-#    When user makes a delete request for task 00T3i000005ZrUDEA0
-#    Then status code is 200 after deleting
+  Scenario: A user wants to delete a task
+    When user makes a delete request for task 00T3i000005ZrUDEA0
+    Then status code is 200 after deleting
