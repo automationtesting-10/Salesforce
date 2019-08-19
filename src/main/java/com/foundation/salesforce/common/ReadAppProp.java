@@ -51,7 +51,7 @@ public final class ReadAppProp {
      */
     private static void initUtil() {
 
-        try (InputStream input = new FileInputStream(System.getProperty("user.dir") + "/application.properties")) {
+        try (InputStream input = new FileInputStream(System.getProperty("user.dir") + "/gradle.properties")) {
             Properties properties = new Properties();
             properties.load(input);
             config.setClientID(properties.getProperty("app.client_id"));
