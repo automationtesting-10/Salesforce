@@ -19,12 +19,7 @@ package com.foundation.salesforce.entities;
  * @version 1.0
  */
 public class Context {
-    /**
-     * contact of type opportunity.
-     */
     private Opportunity opportunity;
-
-
     private Task task;
 
     /**
@@ -32,6 +27,7 @@ public class Context {
      */
     public Context() {
         this.opportunity = new Opportunity();
+        this.task = new Task();
     }
 
     /**

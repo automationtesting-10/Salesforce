@@ -19,14 +19,7 @@ package com.foundation.salesforce.entities;
  * @version 1.0
  */
 public class Opportunity {
-    /**
-     * Variable for the name of an opportunity.
-     */
     private String nameOpportunity;
-
-    /**
-     * Variable for the id of Contact.
-     */
     private int id;
 
     /**
@@ -43,6 +36,7 @@ public class Opportunity {
      *
      * @param nameOpportunity for the opportunity.
      */
+
     public void setNameOpportunity(String nameOpportunity) {
         this.nameOpportunity = nameOpportunity;
     }
