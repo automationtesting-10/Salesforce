@@ -1,6 +1,8 @@
 /*
- * @(#) Builder.java Copyright (c) 2019 Jala Foundation.
- * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+ * Salesforce
+ *
+ * Copyright (c) 2019 Jala Foundation.
+ * 2643 Av. Melchor Perez de Olguín, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
  * This software is the confidential and proprietary information of
@@ -10,9 +12,9 @@
  * with Jala Foundation.
  */
 
-package com.foundation.salesforce.api;
+package com.foundation.salesforce.core.restClient;
 
-import com.foundation.salesforce.common.Parceo;
+import com.foundation.salesforce.core.utils.AuthenticationParser;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
@@ -37,10 +39,10 @@ public final class Authentication {
      */
     public static RequestSpecification requestSpecification() {
         return new RequestSpecBuilder()
-                .setBaseUri(Parceo.getInstance().containtReq().getInstanceUrl())
-                .addHeader("Authorization", Parceo.getInstance().containtReq().getTokenType()
+                .setBaseUri(AuthenticationParser.getInstance().containtReq().getInstanceUrl())
+                .addHeader("Authorization", AuthenticationParser.getInstance().containtReq().getTokenType()
                         + " "
-                        + Parceo.getInstance().containtReq().getAccessToken())
+                        + AuthenticationParser.getInstance().containtReq().getAccessToken())
                 .build();
     }
 }

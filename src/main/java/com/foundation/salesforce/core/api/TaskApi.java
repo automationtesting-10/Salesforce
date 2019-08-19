@@ -1,5 +1,5 @@
 /*
- * Salesforce API Testing
+ * Salesforce
  *
  * Copyright (c) 2019 Jala Foundation.
  * 2643 Av. Melchor Perez de Olguín, Colquiri Sud, Cochabamba, Bolivia.
@@ -12,13 +12,11 @@
  * with Jala Foundation.
  */
 
-package com.foundation.salesforce.core;
+package com.foundation.salesforce.core.api;
 
-import com.foundation.salesforce.api.Authentication;
-import com.foundation.salesforce.core.RestClient.RestClientApi;
+import com.foundation.salesforce.core.restClient.Authentication;
+import com.foundation.salesforce.core.restClient.RestClientApi;
 import io.restassured.response.Response;
-import io.restassured.specification.AuthenticationSpecification;
-import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -33,9 +31,6 @@ import static com.foundation.salesforce.core.utils.EndPoints.TASK_ENDPOINT;
  */
 public class TaskApi {
     private RestClientApi restClient;
-    //private String finalEndpoint;
-    //private RequestSpecification request;
-    //private Response response;
 
     /**
      * Class constructor.
@@ -54,34 +49,77 @@ public class TaskApi {
         return new TaskApi();
     }
 
-    public Response findTaskById(String id) {
-        return restClient.get(TASK_ENDPOINT.concat("/").concat(id));
-    }
-
-    public Response retrieveSummaryForTask() {
-        return restClient.get(TASK_ENDPOINT);
-    }
-
+    /**
+     * Add a deserialized json content to the body of 'request' Requestpecification attribute of this class
+     *
+     * @param taskBody
+     */
     public void setContent(String taskBody) {
         restClient.buildSpec(taskBody);
     }
 
+    /**
+     * Add a json content to the body of 'request' Requestpecification attribute contained in a Map format.
+     *
+     * @param taskBody
+     */
     public void setContent(Map taskBody) {
         restClient.buildSpec(taskBody);
     }
 
+    /**
+     * Adds content to the body of 'request' Requestpecification attribute contained within a JSONObject.
+     *
+     * @param taskBody
+     */
     public void setContent(JSONObject taskBody) {
         restClient.buildSpec(taskBody);
     }
 
+    /**
+     * Returns a RestAssured Response as a result of a successful PATCH request.
+     *
+     * @param id
+     * @return
+     */
     public Response patchContent(String id) {
         return restClient.patch(TASK_ENDPOINT.concat("/").concat(id));
     }
 
+    /**
+     * Returns a RestAssured Response as a result of a successful POST request.
+     *
+     * @return
+     */
     public Response postContent() {
         return restClient.post(TASK_ENDPOINT);
     }
 
+    /**
+     * Returns a previousy created Task specified by its id.
+     *
+     * @param id
+     * @return
+     */
+    public Response findTaskById(String id) {
+        return restClient.get(TASK_ENDPOINT.concat("/").concat(id));
+    }
+
+    /**
+     * Returns an overview of Task's metadata as well as a list of the most recently used Task records.
+     *
+     * @return
+     */
+    public Response retrieveSummaryForTask() {
+        return restClient.get(TASK_ENDPOINT);
+    }
+
+    /**
+     * Delete a previously created Task specified by its id.
+     *
+     * @param id
+     * @return
+     */
     public Response deleteTaskById(String id) {
         return restClient.delete(TASK_ENDPOINT.concat("/").concat(id));
     }

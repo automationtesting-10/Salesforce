@@ -14,7 +14,7 @@
 
 package com.foundation.salesforce.steps;
 
-import com.foundation.salesforce.core.TaskApi;
+import com.foundation.salesforce.core.api.TaskApi;
 import com.foundation.salesforce.entities.Task;
 
 import io.restassured.response.Response;
@@ -33,7 +33,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
  * TaskAcceptanceStepdefs
  *
  * @author Alejandro Sánchez Luizaga
- * @version 0.1.0
+ * @version 1.0
  */
 public class TaskAcceptanceStepdefs {
     private ValidatableResponse json;

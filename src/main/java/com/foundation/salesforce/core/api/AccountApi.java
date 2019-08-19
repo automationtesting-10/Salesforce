@@ -1,6 +1,8 @@
 /*
- * @(#) OpportunityApi.java Copyright (c) 2019 Jala Foundation.
- * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+ * Salesforce
+ *
+ * Copyright (c) 2019 Jala Foundation.
+ * 2643 Av. Melchor Perez de Olguín, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
  * This software is the confidential and proprietary information of
@@ -10,23 +12,22 @@
  * with Jala Foundation.
  */
 
-package com.foundation.salesforce.core;
+package com.foundation.salesforce.core.api;
 
-import com.foundation.salesforce.core.RestClient.RestClientApi;
+import com.foundation.salesforce.core.restClient.RestClientApi;
 import io.restassured.response.Response;
 
 import java.util.Map;
 
 import static com.foundation.salesforce.core.utils.EndPoints.ACCOUNT_ENDPOINT;
-import static com.foundation.salesforce.core.utils.EndPoints.OPPORTUNITY_ENDPOINT;
 
 /**
- * OpportunityApi class
+ * AccountApi class
  *
  * @author Cristian Lujan
  * @version 1.0
  */
-public class OpportunityApi {
+public class AccountApi {
 
     /**
      * Variable for the restClient.
@@ -46,26 +47,26 @@ public class OpportunityApi {
     /**
      * Constructor of AccountAPI.
      */
-    protected OpportunityApi() {
+    protected AccountApi() {
         restClient = RestClientApi.getInstance();
     }
 
     /**
-     * Returns the instance the opportunity API.
+     * Returns the instance the account API.
      *
      * @return a account API.
      */
-    public static OpportunityApi getInstance() {
-        return new OpportunityApi();
+    public static AccountApi getInstance() {
+        return new AccountApi();
     }
 
     /**
-     * Return the response after requesting an opportunities.
      *
-     * @return the response.
+     *
+     * @return
      */
-    public Response getOpportunity() {
-        response = restClient.get(OPPORTUNITY_ENDPOINT);
+    public Response getAccount() {
+        response = restClient.get(ACCOUNT_ENDPOINT);
         response.prettyPrint();
         return response;
     }
@@ -73,11 +74,11 @@ public class OpportunityApi {
     /**
      * Creates an account.
      *
-     * @param newOpportunity to sent the body of the request.
+     * @param newAccount to sent the body of the request.
      * @return the id of account created.
      */
-    public String createOpportunity(final Map<String, String> newOpportunity) {
-        finalEndpoint = OPPORTUNITY_ENDPOINT;
+    public String createAccount(final Map<String, String> newAccount) {
+        finalEndpoint = ACCOUNT_ENDPOINT;
         response = restClient.post(finalEndpoint);
         response.prettyPrint();
         return response.body().jsonPath().getString("id");

@@ -1,6 +1,8 @@
 /*
- * @(#) AppClient.java Copyright (c) 2019 Jala Foundation.
- * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+ * Salesforce
+ *
+ * Copyright (c) 2019 Jala Foundation.
+ * 2643 Av. Melchor Perez de Olguín, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
  * This software is the confidential and proprietary information of
@@ -10,7 +12,7 @@
  * with Jala Foundation.
  */
 
-package com.foundation.salesforce.common;
+package com.foundation.salesforce.core.utils;
 
 /**
  * Class let implement the get a set variable to response to web page.
@@ -25,6 +27,7 @@ public class AppClient {
     private String tokenType;
     private String issuedAt;
     private String signature;
+    private String authUrl;
 
     /**
      * Method let return the access token.
@@ -132,5 +135,23 @@ public class AppClient {
      */
     public void setSignature(String signature) {
         this.signature = signature;
+    }
+
+    /**
+     * Gets this class' authUrl
+     *
+     * @return
+     */
+    public String getAuthUrl() {
+        return authUrl;
+    }
+
+    /**
+     * Sets this class' authUrl
+     *
+     * @param authUrl
+     */
+    public void setAuthUrl(String authUrl) {
+        this.authUrl = authUrl;
     }
 }

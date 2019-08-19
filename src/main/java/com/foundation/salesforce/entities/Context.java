@@ -44,7 +44,11 @@ public class Context {
         return opportunity;
     }
 
-
+    /**
+     * Returns the Task of context.
+     *
+     * @return
+     */
     public Task getTask() {
         return task;
     }

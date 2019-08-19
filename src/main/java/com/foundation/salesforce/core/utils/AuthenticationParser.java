@@ -1,6 +1,8 @@
 /*
- * @(#) Parceo.java Copyright (c) 2019 Jala Foundation.
- * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+ * Salesforce
+ *
+ * Copyright (c) 2019 Jala Foundation.
+ * 2643 Av. Melchor Perez de Olguín, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
  * This software is the confidential and proprietary information of
@@ -10,7 +12,7 @@
  * with Jala Foundation.
  */
 
-package com.foundation.salesforce.common;
+package com.foundation.salesforce.core.utils;
 
 import org.json.JSONException;
 
@@ -23,14 +25,14 @@ import java.util.Map;
  * @version 1.0.
  */
 
-public final class Parceo {
-    private static Parceo parcer;
+public final class AuthenticationParser {
+    private static AuthenticationParser parcer;
     private static AppClient appClient;
 
     /**
      * Constructor let init the method initAccess.
      */
-    private Parceo() {
+    private AuthenticationParser() {
         access();
     }
 
@@ -39,10 +41,10 @@ public final class Parceo {
      *
      * @return parcer variable.
      */
-    public static Parceo getInstance() {
+    public static AuthenticationParser getInstance() {
         if (parcer == null) {
             appClient = new AppClient();
-            parcer = new Parceo();
+            parcer = new AuthenticationParser();
         }
         return parcer;
     }
@@ -60,6 +62,7 @@ public final class Parceo {
             appClient.setTokenType(nameMap.get("token_type"));
             appClient.setIssuedAt(nameMap.get("issued_at"));
             appClient.setSignature(nameMap.get("signature"));
+            appClient.setAuthUrl(nameMap.get("auth_url"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

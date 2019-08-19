@@ -10,73 +10,31 @@
  * with Jala Foundation.
  */
 
-package com.foundation.salesforce.core.RestClient;
+package com.foundation.salesforce.core.restClient;
 
-import com.foundation.salesforce.common.AccessToken;
-import com.foundation.salesforce.common.Parceo;
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
 
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.oauth2;
 
 /**
  * RestClientApi class
  *
  * @author Cristian Lujan
- * @version 0.0.1
+ * @version 1.0
  */
 public class RestClientApi {
-
-    /**
-     * Variable for concat the urlApi of API with the endpoint.
-     */
-    private String urlApi;
-
-    /**
-     * Header name for the Url Api.
-     */
-    private String urlBase;
-
-    /**
-     * Header name for the token type
-     */
-    final String TOKEN_TYPE = "Bearer ";
-
-    /**
-     * Header name for de access token
-     */
-    private String accessToken;
-
-    /**
-     * Variable for the response.
-     */
-    private Response response;
-
-    /**
-     * Variable for the request.
-     */
     private RequestSpecification request;
-
-    /**
-     * Variable for  initialize base api.
-     */
     private static RestClientApi instance;
-
-    private ValidatableResponse json;
 
     /**
      * Constructor of rest client API.
      */
     protected RestClientApi() {
-        initialize();
-        //requestAuthenticate();
     }
 
     /**
@@ -92,32 +50,19 @@ public class RestClientApi {
     }
 
     /**
-     * Initializes the setting for the API.
+     * Returns this class' RequestSpecification request.
+     *
+     * @return
      */
-    private void initialize() {
-        //urlBase = ReaderDriverProperties.getInstance().getProperties().get("urlBase");
-        //accessToken = ReaderDriverProperties.getInstance().getProperties().get("access_token");
-        urlBase = Parceo.getInstance().containtReq().getInstanceUrl();
-        accessToken = Parceo.getInstance().containtReq().getAccessToken();
-    }
-
-    /**
-     * Request authenticate.
-     */
-    /*
-    public void requestAuthenticate() {
-        request = new RequestSpecBuilder()
-                .setBaseUri(urlBase)
-                .setContentType(ContentType.JSON)
-                .setAuth(oauth2(accessToken))
-                .build();
-    }
-     */
-
     public RequestSpecification getRequest() {
         return request;
     }
 
+    /**
+     * Sets this class' RequestSpecification request.
+     *
+     * @param request
+     */
     public void setRequest(RequestSpecification request) {
         this.request = request;
     }
@@ -136,7 +81,6 @@ public class RestClientApi {
      * Returns a response after requesting a delete.
      *
      * @param endpoint to do the request.
-     *
      * @return a response.
      */
     public Response delete(final String endpoint) {
@@ -147,7 +91,6 @@ public class RestClientApi {
      * Returns a response after requesting a post.
      *
      * @param endpoint to do the request.
-     *
      * @return a response.
      */
     public Response post(final String endpoint) {
@@ -158,7 +101,6 @@ public class RestClientApi {
      * Returns a response after requesting a put.
      *
      * @param endpoint to do the request.
-     *
      * @return a response.
      */
     public Response put(final String endpoint) {
@@ -169,7 +111,6 @@ public class RestClientApi {
      * Returns a response after requesting a patch.
      *
      * @param endpoint to do the request.
-     *
      * @return a response.
      */
     public Response patch(final String endpoint) {
@@ -186,14 +127,29 @@ public class RestClientApi {
         return given().spec(request).when().request(httpMethod, endPoint);
     }
 
+    /**
+     * Add a deserialized json content to the body of this class request attribute.
+     *
+     * @param taskBody A string containing plain deserialized key/value pairs.
+     */
     public void buildSpec(final String taskBody) {
         request = given().spec(request).contentType(ContentType.JSON).body(taskBody);
     }
 
+    /**
+     * Add a json content contained in a Map format to the body of this class request attribute.
+     *
+     * @param taskBody A map structure containing the key/value pairs to be passed.
+     */
     public void buildSpec(final Map taskBody) {
         request = given().spec(request).contentType(ContentType.JSON).body(new JSONObject(taskBody).toString());
     }
 
+    /**
+     * Adds content to the body of this class request attribute contained within a JSONObject.
+     *
+     * @param taskBody
+     */
     public void buildSpec(final JSONObject taskBody) {
         request = given().spec(request)
                 .contentType(ContentType.JSON)

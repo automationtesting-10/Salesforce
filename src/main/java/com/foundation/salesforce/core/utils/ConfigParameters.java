@@ -1,6 +1,8 @@
 /*
- * @(#) Config.java Copyright (c) 2019 Jala Foundation.
- * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+ * Salesforce
+ *
+ * Copyright (c) 2019 Jala Foundation.
+ * 2643 Av. Melchor Perez de Olguín, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
  * This software is the confidential and proprietary information of
@@ -10,7 +12,7 @@
  * with Jala Foundation.
  */
 
-package com.foundation.salesforce.common;
+package com.foundation.salesforce.core.utils;
 
 /**
  * Class let set and get variable from application.properties.
@@ -18,12 +20,13 @@ package com.foundation.salesforce.common;
  * @author Jesus Menacho
  * @version 1.0
  */
-public class Config {
+public class ConfigParameters {
     private String clientID;
     private String clientSecret;
     private String userName;
     private String password;
     private String token;
+    private String authUrl;
 
     /**
      * Method return id client.
@@ -103,5 +106,13 @@ public class Config {
      */
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getAuthUrl() {
+        return authUrl;
+    }
+
+    public void setAuthUrl(String authUrl) {
+        this.authUrl = authUrl;
     }
 }
