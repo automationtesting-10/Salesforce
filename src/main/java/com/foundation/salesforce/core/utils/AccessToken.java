@@ -10,7 +10,7 @@
  * with Jala Foundation.
  */
 
-package com.foundation.salesforce.common;
+package com.foundation.salesforce.core.utils;
 
 import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
@@ -51,14 +51,14 @@ public final class AccessToken {
      * Method that loads the values of the page.
      */
     private static void initAccessToken() {
-        String urlAuth = "https://login.salesforce.com/services/oauth2/token";
+        String urlAuth = PropertiesReader.getInstance().getConfig().getAuthUrl();
         response = given()
                 .param("grant_type", "password")
-                .param("client_id", ReadAppProp.getInstance().getConfig().getClientID())
-                .param("client_secret", ReadAppProp.getInstance().getConfig().getClientSecret())
-                .param("username", ReadAppProp.getInstance().getConfig().getUserName())
-                .param("password", ReadAppProp.getInstance().getConfig().getPassword()
-                        + ReadAppProp.getInstance().getConfig().getToken())
+                .param("client_id", PropertiesReader.getInstance().getConfig().getClientID())
+                .param("client_secret", PropertiesReader.getInstance().getConfig().getClientSecret())
+                .param("username", PropertiesReader.getInstance().getConfig().getUserName())
+                .param("password", PropertiesReader.getInstance().getConfig().getPassword()
+                        + PropertiesReader.getInstance().getConfig().getToken())
                 .when()
                 .post(urlAuth);
         mapJson = response.jsonPath().getMap("$");
