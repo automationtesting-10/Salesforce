@@ -15,6 +15,7 @@ package com.foundation.salesforce.core.restClient;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -22,9 +23,9 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 /**
- * RestClientApi class
+ * RestClientApi class.
  *
- * @author Cristian Lujan
+ * @author Cristian Lujan.
  * @version 1.0
  */
 public class RestClientApi {
@@ -52,7 +53,7 @@ public class RestClientApi {
     /**
      * Returns this class' RequestSpecification request.
      *
-     * @return
+     * @return a RequestSpecification structure containing the details to make an HTTP request.
      */
     public RequestSpecification getRequest() {
         return request;
@@ -61,7 +62,7 @@ public class RestClientApi {
     /**
      * Sets this class' RequestSpecification request.
      *
-     * @param request
+     * @param request the RequestSpecification structure to be associated to this class' attribute.
      */
     public void setRequest(RequestSpecification request) {
         this.request = request;
@@ -74,7 +75,7 @@ public class RestClientApi {
      * @return a response.
      */
     public Response get(final String endpoint) {
-        return apiResponse ("GET", endpoint);
+        return apiResponse("GET", endpoint);
     }
 
     /**
@@ -84,7 +85,7 @@ public class RestClientApi {
      * @return a response.
      */
     public Response delete(final String endpoint) {
-        return apiResponse ("DELETE", endpoint);
+        return apiResponse("DELETE", endpoint);
     }
 
     /**
@@ -94,7 +95,7 @@ public class RestClientApi {
      * @return a response.
      */
     public Response post(final String endpoint) {
-        return apiResponse ("POST", endpoint);
+        return apiResponse("POST", endpoint);
     }
 
     /**
@@ -104,7 +105,7 @@ public class RestClientApi {
      * @return a response.
      */
     public Response put(final String endpoint) {
-        return apiResponse ("PUT", endpoint);
+        return apiResponse("PUT", endpoint);
     }
 
     /**
@@ -114,14 +115,15 @@ public class RestClientApi {
      * @return a response.
      */
     public Response patch(final String endpoint) {
-        return apiResponse ("PATCH", endpoint);
+        return apiResponse("PATCH", endpoint);
     }
 
     /**
      * Returns a response after requesting a post.
      *
      * @param httpMethod to do the request.
-     * @return a response
+     * @param endPoint URI.
+     * @return a RestAssured Response structure.
      */
     public Response apiResponse(String httpMethod, final String endPoint) {
         return given().spec(request).when().request(httpMethod, endPoint);
@@ -148,7 +150,7 @@ public class RestClientApi {
     /**
      * Adds content to the body of this class request attribute contained within a JSONObject.
      *
-     * @param taskBody
+     * @param taskBody A JSONObject object containing the key/value pairs to be passed.
      */
     public void buildSpec(final JSONObject taskBody) {
         request = given().spec(request)

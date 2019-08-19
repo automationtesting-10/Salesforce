@@ -13,30 +13,29 @@
 package com.foundation.salesforce.core.utils;
 
 /**
- * EndPoints class
+ * EndPoints class.
  *
  * @author Cristian Lujan
  * @version 1.0
  */
-public class EndPoints {
+public final class EndPoints {
     /**
      * Constructor protected.
      */
-    private EndPoints(){
-
+    private EndPoints() {
     }
     /**
      * Endpoint of account.
      */
-    public final static String ACCOUNT_ENDPOINT = "/v46.0/sobjects/Account";
+    public static String ACCOUNT_ENDPOINT = "/services/data/v46.0/sobjects/Account";
 
     /**
      * Endpoint of Opportunity.
      */
-    public final static String OPPORTUNITY_ENDPOINT = "/v46.0/sobjects/Opportunity";
+    public static String OPPORTUNITY_ENDPOINT = "/services/data/v46.0/sobjects/Opportunity";
 
     /**
      * Endpoint of Task.
      */
-    public final static String TASK_ENDPOINT = "/services/data/v46.0/sobjects/Task";
+    public static String TASK_ENDPOINT = "/services/data/v46.0/sobjects/Task";
 }

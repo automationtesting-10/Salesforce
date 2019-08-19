@@ -14,7 +14,9 @@ package com.foundation.salesforce.core.api;
 
 import com.foundation.salesforce.core.restClient.Authentication;
 import com.foundation.salesforce.core.restClient.RestClientApi;
+
 import io.restassured.response.Response;
+
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -22,10 +24,10 @@ import java.util.Map;
 import static com.foundation.salesforce.core.utils.EndPoints.TASK_ENDPOINT;
 
 /**
- * TaskApi
+ * TaskApi class.
  *
  * @author Alejandro Sánchez Luizaga
- * @version 0.1.0
+ * @version 1.0
  */
 public class TaskApi {
     private RestClientApi restClient;
@@ -48,10 +50,10 @@ public class TaskApi {
     }
 
     /**
-     * Add a deserialized json content to the body of 'request' Requestpecification attribute of this class
+     * Add a deserialized json content to the body of 'request' Requestpecification attribute of this class.
      *
      * @param taskBody a flat deserialized String containing the key/value data to be provided to a POST or
-     *                 PATCH request.
+     *      PATCH request.
      */
     public void setContent(String taskBody) {
         restClient.buildSpec(taskBody);

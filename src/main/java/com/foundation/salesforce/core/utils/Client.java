@@ -136,18 +136,18 @@ public class Client {
     }
 
     /**
-     * Gets this class' authUrl
+     * Gets this class' authUrl.
      *
-     * @return
+     * @return the endpoint URI to request an access token to.
      */
     public String getAuthUrl() {
         return authUrl;
     }
 
     /**
-     * Sets this class' authUrl
+     * Sets this class' authUrl.
      *
-     * @param authUrl
+     * @param authUrl the endpoint URI to request an access token to.
      */
     public void setAuthUrl(String authUrl) {
         this.authUrl = authUrl;

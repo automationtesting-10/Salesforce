@@ -106,10 +106,18 @@ public class ConfigParameters {
         this.token = token;
     }
 
+    /**
+     *
+     * @return the endpoint URI to request an access token to.
+     */
     public String getAuthUrl() {
         return authUrl;
     }
 
+    /**
+     *
+     * @param authUrl the endpoint URI to request an access token to.
+     */
     public void setAuthUrl(String authUrl) {
         this.authUrl = authUrl;
     }

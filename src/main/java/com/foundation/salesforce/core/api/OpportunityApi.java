@@ -20,7 +20,7 @@ import java.util.Map;
 import static com.foundation.salesforce.core.utils.EndPoints.OPPORTUNITY_ENDPOINT;
 
 /**
- * OpportunityApi class
+ * OpportunityApi class.
  *
  * @author Cristian Lujan
  * @version 1.0

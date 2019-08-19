@@ -13,13 +13,12 @@
 package com.foundation.salesforce.entities;
 
 /**
- * Context class
+ * Context class.
  *
  * @author Cristian Lujan
  * @version 1.0
  */
 public class Context {
-
     /**
      * contact of type opportunity.
      */
@@ -47,7 +46,7 @@ public class Context {
     /**
      * Returns the Task of context.
      *
-     * @return
+     * @return the Task object associated to this Context object.
      */
     public Task getTask() {
         return task;

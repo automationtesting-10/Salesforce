@@ -26,41 +26,62 @@ import java.util.Properties;
  * @version 1.0
  */
 public class ReaderDriverProperties {
-
-    private static final String URL_SALESFORCE_PROPERTIES = "gradle.properties";
+    private static final String SALESFORCE_PROPERTIES = "gradle.properties";
 
     /**
      * Map to save the properties of the application.
      */
     private Map<String, String> properties;
 
+    /**
+     *  Class constructor.
+     */
     protected ReaderDriverProperties() {
         properties = new HashMap<>();
         addPropertiesSalesForce();
     }
 
+    /**
+     * Returns the properties read from the config file as a Map structure.
+     *
+     * @return properties This class attribute.
+     */
     public Map<String, String> getProperties() {
         return properties;
     }
 
+    /**
+     *  Sets the members of this class' atribute
+     */
     public void addPropertiesSalesForce() {
-        Properties propertiesSalesForce = loadFile(URL_SALESFORCE_PROPERTIES);
+        Properties propertiesSalesForce = loadFile(SALESFORCE_PROPERTIES);
         propertiesSalesForce.forEach((key, value) -> properties.put(key.toString(), value.toString()));
     }
 
+    /**
+     * Returns a unique instance of this class.
+     *
+     * @return a unique instance of this class.
+     */
     public static ReaderDriverProperties getInstance() {
         return new ReaderDriverProperties();
     }
 
+    /**
+     * Loads a file as a Properties object.
+     *
+     * @url Location of the file to be read.
+     * @return properties object.
+     */
     private Properties loadFile(String url) {
-        Properties prop = new Properties();
+        Properties properties = new Properties();
         try {
             InputStream input = new FileInputStream(url);
-            // load a properties file
-            prop.load(input);
+            // Load a properties file
+            properties.load(input);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return prop;
+        return properties;
     }
 }

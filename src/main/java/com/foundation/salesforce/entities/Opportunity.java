@@ -13,13 +13,12 @@
 package com.foundation.salesforce.entities;
 
 /**
- * Opportunity class
+ * Opportunity class.
  *
  * @author Cristian Lujan
  * @version 1.0
  */
 public class Opportunity {
-
     /**
      * Variable for the name of an opportunity.
      */
@@ -42,7 +41,7 @@ public class Opportunity {
     /**
      * Sets the name of Opportunity.
      *
-     * @param nameOpportunity for the opportunity
+     * @param nameOpportunity for the opportunity.
      */
     public void setNameOpportunity(String nameOpportunity) {
         this.nameOpportunity = nameOpportunity;
