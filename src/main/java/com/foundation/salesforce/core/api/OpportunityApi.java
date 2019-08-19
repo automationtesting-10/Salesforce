@@ -26,7 +26,6 @@ import static com.foundation.salesforce.core.utils.EndPoints.OPPORTUNITY_ENDPOIN
  * @version 1.0
  */
 public class OpportunityApi {
-
     /**
      * Variable for the restClient.
      */

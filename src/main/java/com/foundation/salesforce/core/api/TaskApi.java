@@ -50,7 +50,8 @@ public class TaskApi {
     /**
      * Add a deserialized json content to the body of 'request' Requestpecification attribute of this class
      *
-     * @param taskBody
+     * @param taskBody a flat deserialized String containing the key/value data to be provided to a POST or
+     *                 PATCH request.
      */
     public void setContent(String taskBody) {
         restClient.buildSpec(taskBody);
@@ -59,7 +60,7 @@ public class TaskApi {
     /**
      * Add a json content to the body of 'request' Requestpecification attribute contained in a Map format.
      *
-     * @param taskBody
+     * @param taskBody a Map structure containing the key/value data to be provided to a POST or PATCH request.
      */
     public void setContent(Map taskBody) {
         restClient.buildSpec(taskBody);
@@ -68,7 +69,7 @@ public class TaskApi {
     /**
      * Adds content to the body of 'request' Requestpecification attribute contained within a JSONObject.
      *
-     * @param taskBody
+     * @param taskBody a JSONObject containing the key/value data to be provided to a POST or PATCH request.
      */
     public void setContent(JSONObject taskBody) {
         restClient.buildSpec(taskBody);
@@ -77,8 +78,8 @@ public class TaskApi {
     /**
      * Returns a RestAssured Response as a result of a successful PATCH request.
      *
-     * @param id
-     * @return
+     * @param id uniquely identifies the Task to be updated.
+     * @return Returns a RestAssured Response as a result of a successful PATCH request.
      */
     public Response patchContent(String id) {
         return restClient.patch(TASK_ENDPOINT.concat("/").concat(id));
@@ -87,17 +88,18 @@ public class TaskApi {
     /**
      * Returns a RestAssured Response as a result of a successful POST request.
      *
-     * @return
+     * @return Returns a RestAssured Response as a result of a successful PATCH request containing among other
+     * things, the id of the newly created Task.
      */
     public Response postContent() {
         return restClient.post(TASK_ENDPOINT);
     }
 
     /**
-     * Returns a previousy created Task specified by its id.
+     * Returns a previously created Task specified by its id.
      *
-     * @param id
-     * @return
+     * @param id uniquely identifies a given Task.
+     * @return a RestAssured Response structure containing the values for all the keys associated to a given Task.
      */
     public Response findTaskById(String id) {
         return restClient.get(TASK_ENDPOINT.concat("/").concat(id));
@@ -106,7 +108,7 @@ public class TaskApi {
     /**
      * Returns an overview of Task's metadata as well as a list of the most recently used Task records.
      *
-     * @return
+     * @return a RestAssured Response structure containing metada of the most recently used Task records.
      */
     public Response retrieveSummaryForTask() {
         return restClient.get(TASK_ENDPOINT);
@@ -115,8 +117,8 @@ public class TaskApi {
     /**
      * Delete a previously created Task specified by its id.
      *
-     * @param id
-     * @return
+     * @param id uniquely identifies a given Task.
+     * @return a RestAssured Response structure as a result of a successful DELETE request.
      */
     public Response deleteTaskById(String id) {
         return restClient.delete(TASK_ENDPOINT.concat("/").concat(id));

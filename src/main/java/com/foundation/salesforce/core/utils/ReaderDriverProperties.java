@@ -63,5 +63,4 @@ public class ReaderDriverProperties {
         }
         return prop;
     }
-
 }

@@ -19,7 +19,6 @@ package com.foundation.salesforce.core.utils;
  * @version 1.0
  */
 public class EndPoints {
-
     /**
      * Constructor protected.
      */
