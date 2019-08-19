@@ -1,5 +1,5 @@
 /*
- * @(#) Config.java Copyright (c) 2019 Jala Foundation.
+ * @(#) ConfigParameters.java Copyright (c) 2019 Jala Foundation.
  * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
@@ -10,7 +10,7 @@
  * with Jala Foundation.
  */
 
-package com.foundation.salesforce.common;
+package com.foundation.salesforce.core.utils;
 
 /**
  * Class let set and get variable from application.properties.
@@ -18,12 +18,13 @@ package com.foundation.salesforce.common;
  * @author Jesus Menacho
  * @version 1.0
  */
-public class Config {
+public class ConfigParameters {
     private String clientID;
     private String clientSecret;
     private String userName;
     private String password;
     private String token;
+    private String authUrl;
 
     /**
      * Method return id client.
@@ -103,5 +104,21 @@ public class Config {
      */
     public void setToken(String token) {
         this.token = token;
+    }
+
+    /**
+     *
+     * @return the endpoint URI to request an access token to.
+     */
+    public String getAuthUrl() {
+        return authUrl;
+    }
+
+    /**
+     *
+     * @param authUrl the endpoint URI to request an access token to.
+     */
+    public void setAuthUrl(String authUrl) {
+        this.authUrl = authUrl;
     }
 }
