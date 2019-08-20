@@ -18,6 +18,7 @@ dependencies {
     testCompile 'io.cucumber:cucumber-java:4.3.1'
     implementation 'io.rest-assured:rest-assured:4.0.0'
     compile group: 'org.json', name: 'json', version: '20180813'
+    compile group: 'io.cucumber', name: 'cucumber-testng', version: '4.7.1'
 }
 
 // In this section you declare where to find the dependencies of your project

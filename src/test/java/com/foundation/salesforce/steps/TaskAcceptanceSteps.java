@@ -22,6 +22,8 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.http.HttpStatus;
+import org.testng.Assert;
 
 import java.util.Map;
 
@@ -64,23 +66,27 @@ public class TaskAcceptanceSteps {
     public void user_posts_content() {
         this.response = taskApi.postContent();
         task.setId(response.jsonPath().getString("id"));
+        this.response.prettyPrint();
     }
 
     /**
      * Checks the resulting status code.
      */
-    @Then("the status code is 201 after creating")
-    public void check_create_status_code() {
+    @Then("status code is (\\d+)")
+    public void verify_status_code(int statusCode){
+        Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
     /**
      * Checks the response obtained after creating a Task.
      *
-     * @param response
+     * @param response a RestAssured.Response structure.
      */
-    @And("creation response includes the following$")
-    public void creation_response_includes(Map<String, String> response) {
-        //TODO Implement TestNG Assertion
+    @And("response includes the following$")
+    public void response_includes(Map<String, String> response) {
+        for (Map.Entry<String, String> field : response.entrySet()) {
+            Assert.assertEquals(this.response.jsonPath().get(field.getKey()).toString(), field.getValue());
+        }
     }
 
     /**
@@ -99,15 +105,8 @@ public class TaskAcceptanceSteps {
      */
     @When("user patches Task (.*)")
     public void user_patches_content(String id) {
-        taskApi.patchContent(id).prettyPrint();
-    }
-
-    /**
-     * Checks the resulting status code.
-     */
-    @Then("the status code is 204 after updating")
-    public void check_update_status_code() {
-        //TODO Implement TestNG Assertion
+        this.response = taskApi.patchContent(id);
+        this.response.prettyPrint();
     }
 
     /**
@@ -116,24 +115,7 @@ public class TaskAcceptanceSteps {
     @When("user searches for task (.*)")
     public void user_searches_for(String taskId){
         this.response = taskApi.findTaskById(taskId);
-    }
-
-    /**
-     * Checks the resulting status code.
-     */
-    @Then("status code is (\\d+) after finding")
-    public void verify_search_status_code(int statusCode){
-        json = response.then().statusCode(statusCode);
-    }
-
-    /**
-     * Check also if the response may contain something relevant.
-     */
-    @And("search response contains the following$")
-    public void search_response_includes(Map<String, String> responseFields){
-        for (Map.Entry<String, String> field : responseFields.entrySet()) {
-            json.body(field.getKey(), equalTo(field.getValue()));
-        }
+        this.response.prettyPrint();
     }
 
     /**
@@ -141,14 +123,7 @@ public class TaskAcceptanceSteps {
      */
     @When("user makes a delete request for task (.*)")
     public void user_makes_delete_request(String taskId){
-        this.response = taskApi.findTaskById(taskId);
-    }
-
-    /**
-     * Checks the resulting status code.
-     */
-    @Then("status code is (\\d+) after deleting")
-    public void verify_delete_status_code(int statusCode){
-        json = response.then().statusCode(statusCode);
+        this.response = taskApi.deleteTaskById(taskId);
+        this.response.prettyPrint();
     }
 }
