@@ -60,7 +60,7 @@ public final class PropertiesReader {
             configParameters.setPassword(properties.getProperty("password"));
             configParameters.setToken(properties.getProperty("security_token"));
             configParameters.setAuthUrl(properties.getProperty("auth_url"));
-            configParameters.setTester_name(properties.getProperty("tester_name"));
+            configParameters.setTesterName(properties.getProperty("tester_name"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }

@@ -21,10 +21,10 @@ import java.util.Date;
  * @author John Salazar Pinto.
  * @version 1.0
  */
-public class ValueAppender {
+public abstract class ValueAppender {
     private static String suffix;
-    private static String tester_name = PropertiesReader.getInstance().getConfig().getTester_name();
-    private static String prefix = "Created by " + tester_name + ": ";
+    private static String testerName = PropertiesReader.getInstance().getConfig().getTesterName();
+    private static String prefix = "Created by " + testerName + ": ";
 
     /**
      * This method returns the actual date to differentiate the feature name.
@@ -41,7 +41,7 @@ public class ValueAppender {
     /**
      * This method returns the the person that runs the scenaries.
      *
-     * @return
+     * @return prefix.
      */
     public static String prefix() {
         return prefix;

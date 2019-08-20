@@ -25,22 +25,22 @@ public class ConfigParameters {
     private String password;
     private String token;
     private String authUrl;
-    private String tester_name;
+    private String testerName;
 
     /**
      * Method let set the variable tester name.
-     * @param tester_name set a variable tester name.
+     * @param testerName set a variable tester name.
      */
-    public void setTester_name(String tester_name) {
-        this.tester_name = tester_name;
+    public void setTesterName(String testerName) {
+        this.testerName = testerName;
     }
 
     /**
      * Method return tester name.
-     * @return tester_name variable.
+     * @return testerName variable.
      */
-    public String getTester_name() {
-        return tester_name;
+    public String getTesterName() {
+        return testerName;
     }
 
     /**
