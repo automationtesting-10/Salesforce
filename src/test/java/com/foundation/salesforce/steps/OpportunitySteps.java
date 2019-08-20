@@ -17,6 +17,10 @@ import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.entities.Context;
 import com.foundation.salesforce.entities.Opportunity;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.When;
+import io.restassured.response.Response;
+
+import java.util.Map;
 
 /**
  * OpportunitySteps class
@@ -28,13 +32,9 @@ public class OpportunitySteps {
 
     private RestClientApi restClientApi;
     private OpportunityApi opportunityApi;
-
-    /**
-     * Variable for the context.
-     */
     private Context context;
-
     private Opportunity opportunity;
+    private Response response;
 
     /**
      * Constructor of contact com.foundation.salesforce.steps sending the context.
@@ -46,8 +46,21 @@ public class OpportunitySteps {
         opportunity = context.getOpportunity();
     }
 
-    @Given("^I set up a GET request to Opportunities endpoint$")
-    public void iSetUpAGETRequestToOpportunitiesEndpoint() {
+    @Given("User log in into the Opportunities page")
+    public void LogInIntoTheOpportunitiesPage() {
         opportunityApi.getInstance().getOpportunity();
     }
+
+
+    @Given("User set up the data:")
+    public void SetUpTheData(Map<String, String> inputBody) {
+        opportunityApi.setContent(inputBody);
+    }
+
+    @When("User send de request post to opportunity endpoint")
+    public void SendDeRequestPostToOpportunityEndpoint() {
+        this.response = opportunityApi.createOpportunity();
+        opportunity.setId(response.jsonPath().getString("id"));
+    }
+
 }

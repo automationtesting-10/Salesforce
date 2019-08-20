@@ -15,10 +15,12 @@ package com.foundation.salesforce.core.api;
 import com.foundation.salesforce.core.restClient.Authentication;
 import com.foundation.salesforce.core.restClient.RestClientApi;
 import io.restassured.response.Response;
+import org.json.JSONObject;
 
 import java.util.Map;
 
 import static com.foundation.salesforce.core.utils.EndPoints.OPPORTUNITY_ENDPOINT;
+import static com.foundation.salesforce.core.utils.EndPoints.TASK_ENDPOINT;
 
 /**
  * OpportunityApi class.
@@ -49,9 +51,37 @@ public class OpportunityApi {
     }
 
     /**
+     * Add a deserialized json content to the body of 'request' Requestpecification attribute of this class.
+     *
+     * @param opportunityBody a flat deserialized String containing the key/value data to be provided to a POST or
+     *      PATCH request.
+     */
+    public void setContent(String opportunityBody) {
+        restClient.buildSpec(opportunityBody);
+    }
+
+    /**
+     * Add a json content to the body of 'request' Requestpecification attribute contained in a Map format.
+     *
+     * @param opportunityBody a Map structure containing the key/value data to be provided to a POST or PATCH request.
+     */
+    public void setContent(Map opportunityBody) {
+        restClient.buildSpec(opportunityBody);
+    }
+
+    /**
+     * Adds content to the body of 'request' Requestpecification attribute contained within a JSONObject.
+     *
+     * @param opportunityBody a JSONObject containing the key/value data to be provided to a POST or PATCH request.
+     */
+    public void setContent(JSONObject opportunityBody) {
+        restClient.buildSpec(opportunityBody);
+    }
+
+    /**
      * Return the response after requesting an opportunities.
      *
-     * @return the response.
+     * @return the RestAssured response.
      */
     public Response getOpportunity() {
         response = restClient.get(OPPORTUNITY_ENDPOINT);
@@ -60,15 +90,25 @@ public class OpportunityApi {
     }
 
     /**
-     * Creates an opportunity.
+     * Returns a RestAssured Response as a result of a successful POST request.
      *
-     * @param newOpportunity to sent the body of the request.
-     * @return the id of account created.
+     * @return a RestAssured Response.
      */
-    public String createOpportunity(final Map<String, String> newOpportunity) {
-        finalEndpoint = OPPORTUNITY_ENDPOINT;
-        response = restClient.post(finalEndpoint);
+    public Response createOpportunity() {
+        response = restClient.post(OPPORTUNITY_ENDPOINT);
         response.prettyPrint();
-        return response.body().jsonPath().getString("id");
+        return response;
+    }
+
+    /**
+     * Delete a previously created Task specified by its id.
+     *
+     * @param id uniquely identifies a given Task.
+     * @return a RestAssured Response structure as a result of a successful DELETE request.
+     */
+    public Response deleteOpportunityById(String id) {
+        finalEndpoint = OPPORTUNITY_ENDPOINT.concat("/".concat(id));
+        response = restClient.delete(finalEndpoint);
+        return response;
     }
 }

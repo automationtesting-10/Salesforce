@@ -1,10 +1,14 @@
 
 Feature: Manage Opportunities tests
   Background:
-    Given A user log in into the Opportunities page
+    Given User log in into the Opportunities page
 
+  @deleteNewOpportunity
   Scenario: User creates a new opportunity with the required data
-    Given User specifies new body content
-      | Name      | test1       |
-      | CloseDate | 2019-01-01  |
-      | StageName | Qualifier   |
+    Given User set up the data:
+      | Name      | test1.0    |
+      | CloseDate | 2019-01-01 |
+      | StageName | Qualifier  |
+    When User send de request post to opportunity endpoint
+    Then User get a "200" status code as response
+
