@@ -14,22 +14,17 @@ package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.AccountApi;
 import com.foundation.salesforce.core.restClient.RestClientApi;
-import com.foundation.salesforce.core.utils.EndPoints;
+import com.foundation.salesforce.core.utils.ValueAppender;
 import com.foundation.salesforce.entities.Context;
-import cucumber.api.PendingException;
-import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
-import org.json.JSONException;
 import org.json.JSONObject;
 import io.restassured.response.Response;
 import org.testng.Assert;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static com.foundation.salesforce.core.utils.EndPoints.ACCOUNT_ENDPOINT;
@@ -51,6 +46,9 @@ public class AccountStep {
     private JSONObject bodyData;
     private Context context;
 
+//    public AccountStep(Context context) {
+//        this.context = context;
+//    }
 
     @Given("^I log in with Authorization token$")
     public void ILogInWithAuthorizationToken() {
@@ -64,10 +62,11 @@ public class AccountStep {
 
     @Given("^I fill the request with the minimun data required$")
     public void iFillTheRequest(Map<String, String> inputFields) {
-        // idAccount = accountApi.getInstance().createAccount(jsonObject);
+        String abc = inputFields.get("Name")+ValueAppender.suffix();
+        inputFields.replace("Name",abc + ValueAppender.suffix());
+       // inputFields.put("Name", abc + ValueAppender.sufijo());
         restClientApi = RestClientApi.getInstance();
         restClientApi.buildSpec(inputFields);
-        //request = restClientApi.getRequest();
     }
 
     @When("^I create an Account with the name")
@@ -81,7 +80,8 @@ public class AccountStep {
     @When("^I fill the delete request$")
     public void iFillTheDeleteRequest() {
         restClientApi = RestClientApi.getInstance();
-        response = restClientApi.delete("https://na112.salesforce.com/services/data/v39.0/sobjects/Account/0013i000005lbmUAAQ");
+        response = restClientApi.delete(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
+        System.out.println(ValueAppender.prefix() + "########" + context.getAccount().getId() + "########" + ValueAppender.suffix());
         response.prettyPrint();
     }
 

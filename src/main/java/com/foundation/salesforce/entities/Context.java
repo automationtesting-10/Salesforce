@@ -29,6 +29,7 @@ public class Context {
     public Context() {
         this.opportunity = new Opportunity();
         this.task = new Task();
+        this.account = new Account();
     }
 
     /**

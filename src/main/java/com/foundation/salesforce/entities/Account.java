@@ -22,7 +22,7 @@ public class Account {
 
     private String nameAccount;
 
-    private int id;
+    private String id;
 
     public String getNameAccount() {
         return nameAccount;
@@ -32,11 +32,11 @@ public class Account {
         this.nameAccount = nameAccount;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }
