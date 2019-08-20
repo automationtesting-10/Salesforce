@@ -11,4 +11,3 @@ Feature: Manage Opportunities tests
       | StageName | Qualifier  |
     When User send de request post to opportunity endpoint
     Then User get a "200" status code as response
-

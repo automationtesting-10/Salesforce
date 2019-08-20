@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * GeneratorReport class
+ * GeneratorReport class.
  *
  * @author Cristian Lujan
  * @version 1.0

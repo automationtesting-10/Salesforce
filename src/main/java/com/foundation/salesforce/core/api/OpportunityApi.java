@@ -20,7 +20,6 @@ import org.json.JSONObject;
 import java.util.Map;
 
 import static com.foundation.salesforce.core.utils.EndPoints.OPPORTUNITY_ENDPOINT;
-import static com.foundation.salesforce.core.utils.EndPoints.TASK_ENDPOINT;
 
 /**
  * OpportunityApi class.

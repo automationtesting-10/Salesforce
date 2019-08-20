@@ -23,7 +23,7 @@ import io.restassured.response.Response;
 import java.util.Map;
 
 /**
- * OpportunitySteps class
+ * OpportunitySteps class.
  *
  * @author Cristian Lujan
  * @version 1.0
@@ -62,5 +62,4 @@ public class OpportunitySteps {
         this.response = opportunityApi.createOpportunity();
         opportunity.setId(response.jsonPath().getString("id"));
     }
-
 }
