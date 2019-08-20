@@ -23,7 +23,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.apache.http.HttpStatus;
 import org.testng.Assert;
 
 import java.util.Map;
@@ -48,18 +47,11 @@ public class TaskAcceptanceSteps {
     }
 
     /**
-     * Retrieves an authentication token in order to be able to access to Salesforce platform.
-     */
-    @Given("a user logs in into the Task page")
-    public void a_user_logs_in() {
-    }
-
-    /**
      *
      * @param inputContent specified as data table in gherkin feature file.
      */
-    @Given("user specifies new body content$")
-    public void user_specifies_new_content(Map<String, String> inputContent) {
+    @Given("user specifies body content$")
+    public void user_specifies_content(Map<String, String> inputContent) {
         taskApi.setContent(inputContent);
     }
 
@@ -94,13 +86,12 @@ public class TaskAcceptanceSteps {
     }
 
     /**
-     * Appends a body part to this class' RequestSpecification attributes.
-     * @param inputContent A Map structure containing the key/value pairs that are intended to be passed to the
-     *     API endpoint.
+     * Searches for an existing Task.
      */
-    @Given("user specifies updated body content$")
-    public void user_specifies_updated_content(Map<String, String> inputContent) {
-        taskApi.setContent(inputContent);
+    @When("user patches an existing task")
+    public void user_patches_content() {
+        this.response = taskApi.patchContent(task.getId());
+        this.response.prettyPrint();
     }
 
     /**
@@ -114,6 +105,15 @@ public class TaskAcceptanceSteps {
     }
 
     /**
+     * Searchs an existing id.
+     */
+    @When("user searches for an existing task")
+    public void user_searches_existing(){
+        this.response = taskApi.findTaskById(task.getId());
+        this.response.prettyPrint();
+    }
+
+    /**
      * Search a task based on its id.
      */
     @When("user searches for task (.*)")
@@ -123,11 +123,26 @@ public class TaskAcceptanceSteps {
     }
 
     /**
+     * Delete an existing Task.
+     */
+    @When("user makes a delete request for an existing task")
+    public void user_makes_delete_request_existing(){
+        this.response = taskApi.deleteTaskById(task.getId());
+        this.response.prettyPrint();
+    }
+
+    /**
      * Delete a Task based on its id string.
      */
     @When("user makes a delete request for task (.*)")
     public void user_makes_delete_request(String taskId){
         this.response = taskApi.deleteTaskById(taskId);
+        this.response.prettyPrint();
+    }
+
+    @When("user makes a get request to endpoint")
+    public void user_retrieves_summary() {
+        this.response = taskApi.retrieveSummaryForTask();
         this.response.prettyPrint();
     }
 }
