@@ -14,7 +14,6 @@ package com.foundation.salesforce.steps;
 import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.core.utils.EndPoints;
 import com.foundation.salesforce.entities.Context;
-import com.foundation.salesforce.entities.Lead;
 import com.foundation.salesforce.core.restClient.Authentication;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -45,7 +44,6 @@ public class LeadsSteps {
     private ValidatableResponse json;
     private RequestSpecification request;
     private JSONObject bodyData;
-    static private String createdLeadId;
 
     /**
      * Initializes the class setting the context.
@@ -55,15 +53,7 @@ public class LeadsSteps {
     public LeadsSteps(Context context) {
         this.context = context;
         requestManager = RestClientApi.getInstance();
-    }
-
-    /**
-     * Allows to get created lead Id.
-     *
-     * @return Created lead Id.
-     */
-    static String getCreatedLeadId() {
-        return createdLeadId;
+        requestManager.setRequest(Authentication.requestSpecification());
     }
 
     /**
@@ -71,10 +61,9 @@ public class LeadsSteps {
      *
      * @param leadId - Lead's Id.
      */
-    @When("a user retrieves the lead by Id (.*)")
+    @When("a user finds the lead by Id (.*)")
     public void aUserRetrievesTheLeadById(String leadId) {
-        request = Authentication.requestSpecification();
-        response = given().spec(request).get(EndPoints.LEAD_ENDPOINT + "/" + leadId);
+        response = requestManager.get(EndPoints.LEAD_ENDPOINT + "/" + leadId);
         response.prettyPrint();
     }
 
@@ -113,8 +102,7 @@ public class LeadsSteps {
      */
     @When("a user retrieves the summary for lead")
     public void aUserRetrievesTheSummaryForLead() {
-        request = Authentication.requestSpecification();
-        response = given().spec(request).get(EndPoints.LEAD_ENDPOINT);
+        response = requestManager.get(EndPoints.LEAD_ENDPOINT);
         response.prettyPrint();
     }
 
@@ -125,8 +113,7 @@ public class LeadsSteps {
      */
     @When("a user deletes a lead by Id (.*)")
     public void aUserDeletesALeadById(String leadId) {
-        request = Authentication.requestSpecification();
-        response = given().spec(request).delete(EndPoints.LEAD_ENDPOINT + "/" + leadId);
+        response = requestManager.delete(EndPoints.LEAD_ENDPOINT + "/" + leadId);
         response.prettyPrint();
     }
 
@@ -137,10 +124,7 @@ public class LeadsSteps {
      */
     @Given("a user sets json object")
     public void aUserSetsJsonObjectWithRequiredFields(Map<String, String> inputFields) {
-        bodyData = new JSONObject();
-        for (Map.Entry<String, String> field : inputFields.entrySet()) {
-            bodyData.put(field.getKey(), field.getValue());
-        }
+        requestManager.buildSpec(inputFields);
     }
 
     /**
@@ -148,9 +132,7 @@ public class LeadsSteps {
      */
     @When("the user creates the lead")
     public void theUserCreatesTheLead() {
-        request = Authentication.requestSpecification();
-        request.contentType("application/json").body(bodyData.toString());
-        response = given().spec(request).post(EndPoints.LEAD_ENDPOINT);
+        response = requestManager.post(EndPoints.LEAD_ENDPOINT);
         response.prettyPrint();
     }
 
@@ -181,7 +163,6 @@ public class LeadsSteps {
     public void theResponseInSaved() {
         Map<String, String> creationResponse = response.jsonPath().getMap("$");
         context.getLead().setId(creationResponse.get("id"));
-        createdLeadId = creationResponse.get("id");
     }
 
     /**
@@ -191,9 +172,7 @@ public class LeadsSteps {
      */
     @When("the user updates the lead by Id (.*)")
     public void theUserUpdatesTheLeadById(String leadId) {
-        request = Authentication.requestSpecification();
-        request.contentType("application/json").body(bodyData.toString());
-        response = given().spec(request).patch(EndPoints.LEAD_ENDPOINT + "/" + leadId);
+        response = requestManager.patch(EndPoints.LEAD_ENDPOINT + "/" + leadId);
         response.prettyPrint();
     }
 }

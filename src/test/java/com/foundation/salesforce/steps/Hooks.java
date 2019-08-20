@@ -39,7 +39,6 @@ public class Hooks {
     @After("@LeadCreation")
     public void afterScenario() {
         System.out.println("This will run after the creation Scenario"
-                + LeadsSteps.getCreatedLeadId()
                 + context.getLead().getId());
     }
 }
