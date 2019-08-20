@@ -12,6 +12,7 @@
 
 package com.foundation.salesforce.core.api;
 
+import com.foundation.salesforce.core.restClient.Authentication;
 import com.foundation.salesforce.core.restClient.RestClientApi;
 import io.restassured.response.Response;
 
@@ -35,6 +36,7 @@ public class OpportunityApi {
      */
     protected OpportunityApi() {
         restClient = RestClientApi.getInstance();
+        restClient.setRequest(Authentication.requestSpecification());
     }
 
     /**
@@ -58,7 +60,7 @@ public class OpportunityApi {
     }
 
     /**
-     * Creates an account.
+     * Creates an opportunity.
      *
      * @param newOpportunity to sent the body of the request.
      * @return the id of account created.
