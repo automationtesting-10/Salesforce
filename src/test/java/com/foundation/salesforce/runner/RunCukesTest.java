@@ -19,7 +19,7 @@ import org.testng.annotations.AfterTest;
 
 
 /**
- * RunCukesTest class
+ * RunCukesTest class.
  *
  * @author Cristian Lujan
  * @version 1.0
