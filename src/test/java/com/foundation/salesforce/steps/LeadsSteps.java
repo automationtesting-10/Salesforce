@@ -24,10 +24,10 @@ import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
+import org.testng.Assert;
 
 import java.util.Map;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -75,6 +75,7 @@ public class LeadsSteps {
     @Then("the status code is {int}")
     public void theStatusCodeIs(int statusCode) {
         json = response.then().statusCode(statusCode);
+        Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
     /**
@@ -159,7 +160,7 @@ public class LeadsSteps {
     /**
      * Saves the created lead.
      */
-    @And("the created lead in saved")
+    @And("the created lead is saved")
     public void theResponseInSaved() {
         Map<String, String> creationResponse = response.jsonPath().getMap("$");
         context.getLead().setId(creationResponse.get("id"));

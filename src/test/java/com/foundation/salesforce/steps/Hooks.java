@@ -12,6 +12,9 @@
 
 package com.foundation.salesforce.steps;
 
+import com.foundation.salesforce.core.restClient.Authentication;
+import com.foundation.salesforce.core.restClient.RestClientApi;
+import com.foundation.salesforce.core.utils.EndPoints;
 import com.foundation.salesforce.entities.Context;
 import cucumber.api.java.After;
 
@@ -23,6 +26,7 @@ import cucumber.api.java.After;
  **/
 public class Hooks {
     private Context context;
+    private RestClientApi requestManager;
 
     /**
      * Initializes the class setting the context.
@@ -31,14 +35,15 @@ public class Hooks {
      */
     public Hooks(Context context) {
         this.context = context;
+        requestManager = RestClientApi.getInstance();
+        requestManager.setRequest(Authentication.requestSpecification());
     }
 
     /**
-     * Actions performed after LeadCreation scenario.
+     * Deletes created lead after LeadCreation scenario.
      */
     @After("@LeadCreation")
-    public void afterScenario() {
-        System.out.println("This will run after the creation Scenario"
-                + context.getLead().getId());
+    public void deleteLeadAfterCreation() {
+        requestManager.delete(EndPoints.LEAD_ENDPOINT + "/" + context.getLead().getId());
     }
 }
