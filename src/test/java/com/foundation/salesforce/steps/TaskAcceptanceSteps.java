@@ -13,6 +13,7 @@
 package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.TaskApi;
+import com.foundation.salesforce.entities.Context;
 import com.foundation.salesforce.entities.Task;
 
 import io.restassured.response.Response;
@@ -39,15 +40,18 @@ public class TaskAcceptanceSteps {
     private ValidatableResponse json;
     private Response response;
     private TaskApi taskApi;
+    private Task task;
 
-    Task task = new Task();
+    public TaskAcceptanceSteps(Task task) {
+        this.task = task;
+        taskApi = TaskApi.getInstance();
+    }
 
     /**
      * Retrieves an authentication token in order to be able to access to Salesforce platform.
      */
     @Given("a user logs in into the Task page")
     public void a_user_logs_in() {
-        taskApi = TaskApi.getInstance();
     }
 
     /**
