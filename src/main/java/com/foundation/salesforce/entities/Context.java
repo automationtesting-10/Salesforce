@@ -21,6 +21,7 @@ package com.foundation.salesforce.entities;
 public class Context {
     private Opportunity opportunity;
     private Task task;
+    private Lead lead;
 
     /**
      * Context for creation of the constructor.
@@ -28,6 +29,7 @@ public class Context {
     public Context() {
         this.opportunity = new Opportunity();
         this.task = new Task();
+        this.lead = new Lead();
     }
 
     /**
@@ -46,5 +48,14 @@ public class Context {
      */
     public Task getTask() {
         return task;
+    }
+
+    /**
+     * Allows to get the lead.
+     *
+     * @return lead.
+     */
+    public Lead getLead() {
+        return lead;
     }
 }
