@@ -29,7 +29,7 @@ public abstract class ValueAppender {
     /**
      * This method returns the actual date to differentiate the feature name.
      *
-     * @return suffix.
+     * @return suffix - the actual data.
      */
     public static String suffix() {
         Date actual = new Date();
@@ -41,7 +41,7 @@ public abstract class ValueAppender {
     /**
      * This method returns the the person that runs the scenaries.
      *
-     * @return prefix.
+     * @return prefix - the tester that run the scenaries.
      */
     public static String prefix() {
         return prefix;
