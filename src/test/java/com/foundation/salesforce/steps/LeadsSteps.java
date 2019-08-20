@@ -57,12 +57,21 @@ public class LeadsSteps {
     }
 
     /**
-     * Retrieves the lead info by Id.
+     * Finds existing lead by Id.
+     */
+    @When("a user finds an existing lead by Id")
+    public void aUserFindsExistingLeadById() {
+        response = requestManager.get(EndPoints.LEAD_ENDPOINT + "/" + context.getLead().getId());
+        response.prettyPrint();
+    }
+
+    /**
+     * Finds the lead by Id.
      *
      * @param leadId - Lead's Id.
      */
-    @When("a user finds the lead by Id (.*)")
-    public void aUserRetrievesTheLeadById(String leadId) {
+    @When("a user finds a lead by Id (.*)")
+    public void aUserFindsLeadById(String leadId) {
         response = requestManager.get(EndPoints.LEAD_ENDPOINT + "/" + leadId);
         response.prettyPrint();
     }
@@ -104,6 +113,15 @@ public class LeadsSteps {
     @When("a user retrieves the summary for lead")
     public void aUserRetrievesTheSummaryForLead() {
         response = requestManager.get(EndPoints.LEAD_ENDPOINT);
+        response.prettyPrint();
+    }
+
+    /**
+     * Deletes a lead an existing by Id.
+     */
+    @When("a user deletes an existing lead by Id")
+    public void aUserDeletesExistingLeadById() {
+        response = requestManager.delete(EndPoints.LEAD_ENDPOINT + "/" + context.getLead().getId());
         response.prettyPrint();
     }
 
@@ -168,11 +186,20 @@ public class LeadsSteps {
 
     /**
      * Updates existing lead by Id.
+     */
+    @When("the user updates existing lead by Id")
+    public void theUserUpdatesExistingLeadById() {
+        response = requestManager.patch(EndPoints.LEAD_ENDPOINT + "/" + context.getLead().getId());
+        response.prettyPrint();
+    }
+
+    /**
+     * Updates lead by Id.
      *
      * @param leadId - Id from lead that is going to be updated.
      */
-    @When("the user updates the lead by Id (.*)")
-    public void theUserUpdatesTheLeadById(String leadId) {
+    @When("the user updates lead by Id (.*)")
+    public void theUserUpdatesLeadById(String leadId) {
         response = requestManager.patch(EndPoints.LEAD_ENDPOINT + "/" + leadId);
         response.prettyPrint();
     }

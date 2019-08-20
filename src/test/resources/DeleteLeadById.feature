@@ -1,6 +1,7 @@
 Feature: Delete lead by Id
+  @DeleteLead
   Scenario: Delete a lead by correct Id
-    When a user deletes a lead by Id 00Q3i000002MRlqEAG
+    When a user deletes an existing lead by Id
     Then the status code is 204
 
   Scenario: Delete a lead by Id that has been already deleted

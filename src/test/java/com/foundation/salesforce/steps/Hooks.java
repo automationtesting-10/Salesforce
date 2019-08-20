@@ -17,11 +17,15 @@ import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.core.utils.EndPoints;
 import com.foundation.salesforce.entities.Context;
 import cucumber.api.java.After;
+import cucumber.api.java.Before;
+import io.restassured.response.Response;
+
+import java.util.Map;
 
 /**
  * Hooks class contains before and after actions for Lead endpoint.
  *
- * @author Melissa Roman
+ * @author Melissa Román
  * @version 1.0
  **/
 public class Hooks {
@@ -42,8 +46,19 @@ public class Hooks {
     /**
      * Deletes created lead after LeadCreation scenario.
      */
-    @After("@LeadCreation")
+    @After("@LeadCreation, @FindLead, @UpdateLead")
     public void deleteLeadAfterCreation() {
         requestManager.delete(EndPoints.LEAD_ENDPOINT + "/" + context.getLead().getId());
+    }
+
+    @Before("@DeleteLead, @FindLead, @UpdateLead")
+    public void createLeadBefore() {
+        requestManager.buildSpec("{\n" +
+                "\t\"Company\": \"Enterprise\",\n" +
+                "\t\"LastName\": \"Fisk\"\n" +
+                "}");
+        Response response = requestManager.post(EndPoints.LEAD_ENDPOINT);
+        Map<String, String> creationResponse = response.jsonPath().getMap("$");
+        context.getLead().setId(creationResponse.get("id"));
     }
 }
