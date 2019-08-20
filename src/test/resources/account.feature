@@ -11,6 +11,6 @@ Feature: Acceptance Accounts tests
     |Name|test|
     When I create an Account with the name
 
-#  Scenario: Delete an Account
-#    Given I fill the delete request
-#    When I delete the account that previously was created
+  Scenario: Delete an Account
+    When I fill the delete request
+    Then I delete the account that previously was created is 404

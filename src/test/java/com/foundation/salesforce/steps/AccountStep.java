@@ -15,16 +15,19 @@ package com.foundation.salesforce.steps;
 import com.foundation.salesforce.core.api.AccountApi;
 import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.core.utils.EndPoints;
+import com.foundation.salesforce.entities.Context;
 import cucumber.api.PendingException;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import org.json.JSONException;
 import org.json.JSONObject;
 import io.restassured.response.Response;
+import org.testng.Assert;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +37,7 @@ import static com.foundation.salesforce.core.utils.EndPoints.ACCOUNT_ENDPOINT;
 /**
  * AccountStep class
  *
- * @author Cristian Lujan
+ * @author John Salazar Pinto
  * @version 1.0
  */
 public class AccountStep {
@@ -46,7 +49,7 @@ public class AccountStep {
     private ValidatableResponse json;
     private RequestSpecification request;
     private JSONObject bodyData;
-
+    private Context context;
 
 
     @Given("^I log in with Authorization token$")
@@ -59,7 +62,6 @@ public class AccountStep {
         accountApi.getInstance().getAccount();
     }
 
-    //////////////////
     @Given("^I fill the request with the minimun data required$")
     public void iFillTheRequest(Map<String, String> inputFields) {
         // idAccount = accountApi.getInstance().createAccount(jsonObject);
@@ -70,22 +72,22 @@ public class AccountStep {
 
     @When("^I create an Account with the name")
     public void iSendThePostWithTheName() {
-
-        //idAccount = accountApi.getInstance().createAccount(jsonObject);
-        //response = restClientApi.postAccount(ACCOUNT_ENDPOINT, jsonObject);
+//        idAccount = accountApi.getInstance().createAccount(jsonObject);
+//        response = restClientApi.postAccount(ACCOUNT_ENDPOINT, jsonObject);
         response = restClientApi.post(ACCOUNT_ENDPOINT);
         response.prettyPrint();
     }
-//
-//    @Given("^I fill the delete request$")
-//    public void iFillTheDeleteRequest() {
-//        restClientApi.getInstance();
-//    }
-//
-//    @When("^I delete the account that previously was created$")
-//    public void iSendTheDelete() {
-//        String endpoint = "https://na112.salesforce.com/services/data/v39.0/sobjects/Account/"+idAccount;
-//        accountApi.getInstance()
-//                .deleteAccount(endpoint);
-//    }
+
+    @When("^I fill the delete request$")
+    public void iFillTheDeleteRequest() {
+        restClientApi = RestClientApi.getInstance();
+        response = restClientApi.delete("https://na112.salesforce.com/services/data/v39.0/sobjects/Account/0013i000005lbmUAAQ");
+        response.prettyPrint();
+    }
+
+    @Then("I delete the account that previously was created is {int}")
+    public void iDeleteTheAccountThatPreviouslyWasCreatedIs(int statusCode) {
+        json = response.then().statusCode(statusCode);
+        Assert.assertEquals(response.getStatusCode(), statusCode);
+    }
 }

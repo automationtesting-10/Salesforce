@@ -21,6 +21,7 @@ package com.foundation.salesforce.entities;
 public class Context {
     private Opportunity opportunity;
     private Task task;
+    private Account account;
 
     /**
      * Context for creation of the constructor.
@@ -46,5 +47,14 @@ public class Context {
      */
     public Task getTask() {
         return task;
+    }
+
+    /**
+     * Allows to get the Account.
+     *
+     * @return Account.
+     */
+    public Account getAccount() {
+        return account;
     }
 }
