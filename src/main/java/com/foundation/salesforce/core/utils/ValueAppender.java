@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * ValueAppender class.
+ * ValueAppender class prepare the suffix and prefix for the feature.
  *
  * @author John Salazar Pinto.
  * @version 1.0
