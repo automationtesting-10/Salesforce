@@ -24,9 +24,14 @@ import org.testng.annotations.AfterTest;
  * @author Cristian Lujan
  * @version 1.0
  */
-@CucumberOptions(plugin = {"pretty", "html:target/Salesforce", "json:target/Salesforce.json"},
-        glue = {"com.foundation.salesforce"},
-        features = {"src/test/resources/features/TaskAcceptance.feature"})
+@CucumberOptions(
+        plugin = {"pretty",
+                "html:target/cucumber-pretty",
+                "json:target/cucumber.json",
+                "rerun:target/rerun.txt"},
+        glue = {"com/foundation/salesforce/steps"},
+        features = {"src/test/resources/features/TaskAcceptance.feature"},
+        monochrome = true)
 public class RunCukesTest extends AbstractTestNGCucumberTests {
 
     /**
