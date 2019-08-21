@@ -45,6 +45,15 @@ public class LeadHooks {
     }
 
     /**
+     * Sets context's lead id after LeadCreation scenario.
+     */
+    @After("@LeadCreation")
+    public void saveLeadAfterCreation() {
+        Map<String, String> creationResponse = context.getResponse().jsonPath().getMap("$");
+        context.getLead().setId(creationResponse.get("id"));
+    }
+
+    /**
      * Deletes created lead after tagged scenarios.
      */
     @After("@LeadCreation, @FindLead, @UpdateLead")
@@ -64,15 +73,6 @@ public class LeadHooks {
                 "}");
         Response response = requestManager.post(EndPoints.LEAD_ENDPOINT);
         Map<String, String> creationResponse = response.jsonPath().getMap("$");
-        context.getLead().setId(creationResponse.get("id"));
-    }
-
-    /**
-     * Sets context's lead id after LeadCreation scenario.
-     */
-    @After("@LeadCreation")
-    public void saveLeadAfterCreation() {
-        Map<String, String> creationResponse = context.getResponse().jsonPath().getMap("$");
         context.getLead().setId(creationResponse.get("id"));
     }
 }
