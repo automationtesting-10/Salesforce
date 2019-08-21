@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * ResponseValidation
+ * ResponseValidation performs json schema validation against a json spec stored in resources directory.
  *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
@@ -31,10 +31,17 @@ import java.io.InputStream;
 public class ResponseValidation {
     private static ResponseValidation responseValidation;
 
+    /**
+     * Private constructor according to singleton pattern.
+     */
     private ResponseValidation() {
 
     }
 
+    /**
+     *
+     * @return an the same instance over and over again upon every call.
+     */
     public static ResponseValidation getInstance() {
         if (responseValidation == null) {
             responseValidation = new ResponseValidation();
@@ -42,6 +49,13 @@ public class ResponseValidation {
         return responseValidation;
     }
 
+    /**
+     *
+     * @param schemaTypeName A string containing the words that, once stripping spaces, will make for the real name
+     *                       of json spec.
+     * @param response A RestAssured.Response structure resulting from a previously http request call.
+     * @return
+     */
     public boolean matchesJsonSchema(String schemaTypeName, Response response) {
         StringBuilder stringAccumulator = new StringBuilder();
         char currentCharacter = ' ';

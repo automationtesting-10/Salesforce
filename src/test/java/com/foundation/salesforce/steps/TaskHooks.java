@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 /**
  * TaskHooks class.
+ * Implementations of various actions to be run according to @ tags.
  *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
@@ -29,11 +30,19 @@ public class TaskHooks {
     private Task task;
     private TaskApi taskApi;
 
+    /**
+     * Class constructor.
+     *
+     * @param task Object to be set by dependecy injection.
+     */
     public TaskHooks (Task task) {
         this.task = task;
         taskApi = TaskApi.getInstance();
     }
 
+    /**
+     * Creates a Task before the scenarios tagged as: @FindTask, @DeleteTask, @UpdateTask.
+     */
     @Before("@FindTask, @DeleteTask, @UpdateTask")
     public void before_delete_task() {
         JSONObject jsonContent = new JSONObject();

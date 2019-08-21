@@ -40,6 +40,11 @@ public class TaskAcceptanceSteps {
     private TaskApi taskApi;
     private Task task;
 
+    /**
+     * Class constructor.
+     *
+     * @param task
+     */
     public TaskAcceptanceSteps(Task task) {
         this.task = task;
         taskApi = TaskApi.getInstance();
@@ -55,7 +60,7 @@ public class TaskAcceptanceSteps {
     }
 
     /**
-     *  Sends throuhg a POST request the data needed to create a Task.
+     *  Sends through a POST request the data needed to create a Task.
      */
     @When("user posts to Task endpoint$")
     public void user_posts_content() {
@@ -101,6 +106,7 @@ public class TaskAcceptanceSteps {
 
     /**
      * Searches for a Task that is related to a given id.
+     *
      * @param id the id of the Task intended to add content to its body.
      */
     @When("user patches Task (.*)")
@@ -145,6 +151,9 @@ public class TaskAcceptanceSteps {
         this.response.prettyPrint();
     }
 
+    /**
+     * Retrieve a summary of Task.
+     */
     @When("user makes a get request to endpoint")
     public void user_retrieves_summary() {
         this.response = taskApi.retrieveSummaryForTask();
