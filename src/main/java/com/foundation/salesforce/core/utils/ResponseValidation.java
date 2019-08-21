@@ -77,8 +77,6 @@ final public class ResponseValidation {
             schema.validate(new JSONObject(response.jsonPath().getMap("$")));
             return true;
         } catch (ValidationException npvex) {
-            //Assert.fail("Мне похуй!");
-            //npvex.printStackTrace();
             return false;
         } finally {
             if (inputStream != null) {
