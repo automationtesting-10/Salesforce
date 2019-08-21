@@ -30,6 +30,19 @@ import java.io.InputStream;
  * @version 1.0
  */
 public class ResponseValidation {
+    private static ResponseValidation responseValidation;
+
+    private ResponseValidation() {
+
+    }
+
+    public static ResponseValidation getInstance() {
+        if (responseValidation == null) {
+            responseValidation = new ResponseValidation();
+        }
+        return responseValidation;
+    }
+
     public boolean matchesJsonSchema(String schemaTypeName, Response response) {
         StringBuilder stringAccumulator = new StringBuilder();
         char currentCharacter = ' ';
