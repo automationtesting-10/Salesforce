@@ -92,19 +92,27 @@ public class TaskAcceptanceSteps {
         }
     }
 
-    @And("(.*) json is valid")
+    @And("(.*) schema is valid")
     public void response_is_valid (String schemaTypeName) {
-        schemaTypeName.replaceAll("\\s","");
+        StringBuilder stringAccumulator = new StringBuilder();
+        char currentCharacter = ' ';
+        for (int characterIterator = 0; characterIterator < schemaTypeName.length(); characterIterator++) {
+            if (currentCharacter == ' ' && schemaTypeName.charAt(characterIterator) != ' ') {
+                stringAccumulator.append(Character.toUpperCase(schemaTypeName.charAt(characterIterator)));
+            }
+            else {
+                stringAccumulator.append(schemaTypeName.charAt(characterIterator));
+            }
+            currentCharacter = schemaTypeName.charAt(characterIterator);
+        }
+        schemaTypeName = stringAccumulator.toString().replaceAll("\\s","").trim();
+
         InputStream inputStream = null;
         try  {
-            //inputStream = this.getClass().getClassLoader().getResourceAsStream(schemaTypeName.concat(".json"));
-            inputStream = this.getClass().getClassLoader().getResourceAsStream("TaskCreationResponse.json");
-
+            inputStream = this.getClass().getClassLoader().getResourceAsStream(schemaTypeName.concat(".json"));
             JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
             Schema schema = SchemaLoader.load(rawSchema);
-
-            //schema.validate(new JSONObject(this.response.jsonPath().getMap("$")));
-            schema.validate(new JSONObject("{\"id\":\"00T3i000005atFQEAY\",\"success\":falseto,\"errors\": []}"));
+            schema.validate(new JSONObject(this.response.jsonPath().getMap("$")));
         }
         catch (ValidationException npvex) {
             Assert.fail("Мне похуй!");

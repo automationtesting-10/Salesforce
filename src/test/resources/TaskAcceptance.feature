@@ -8,7 +8,7 @@ Feature: Manage Tasks in Salesforce
     Then status code is 201
     And response includes the following
       | success | true |
-    And task creation response json is valid
+    And task creation response schema is valid
 
 #  @UpdateTask
 #  Scenario: User updates an existing task
