@@ -6,6 +6,8 @@ Feature: Create lead
       | LastName	| WilsonFisk   |
     When the user creates the lead
     Then the status code is 201
+    And headers include the following
+      | Vary	    | Accept-Encoding   |
     And response includes the following
       | success 	| true         |
 

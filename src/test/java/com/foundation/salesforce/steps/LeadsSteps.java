@@ -23,6 +23,7 @@ import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.util.Map;
 
@@ -86,26 +87,15 @@ public class LeadsSteps {
     /**
      * Verifies response's json body.
      *
-     * @param responseFields - Expected fields and values.
+     * @param bodyFields - Expected fields and values.
      */
     @And("response includes the following")
-    public void responseIncludesTheFollowing(Map<String, String> responseFields) {
-        /*
-        * for (Map.Entry<String, String> field : response.entrySet()) {
-            Assert.assertEquals(this.response.jsonPath().get(field.getKey()).toString(), field.getValue());
+    public void responseIncludesTheFollowing(Map<String, String> bodyFields) {
+        SoftAssert softAssert = new SoftAssert();
+        for (Map.Entry<String, String> field : bodyFields.entrySet()) {
+            softAssert.assertEquals(response.jsonPath().get(field.getKey()).toString(), field.getValue());
         }
-        * */
-        for (Map.Entry<String, String> field : responseFields.entrySet()) {
-            if (StringUtils.isNumeric(field.getValue())) {
-                json.body(field.getKey(), equalTo(Integer.parseInt(field.getValue())));
-            } else {
-                if (("true".equals(field.getValue())) || ("false".equals(field.getValue()))) {
-                    json.body(field.getKey(), equalTo(Boolean.parseBoolean(field.getValue())));
-                } else {
-                    json.body(field.getKey(), equalTo(field.getValue()));
-                }
-            }
-        }
+        softAssert.assertAll();
     }
 
     /**
@@ -158,13 +148,13 @@ public class LeadsSteps {
     }
 
     /**
-     * Verifies response's array of json objects.
+     * Verifies response's body array of json objects.
      *
-     * @param responseFields - Expected fields and values.
+     * @param bodyFields - Expected fields and values.
      */
     @And("response contains the following")
-    public void responseContainsTheFollowing(Map<String, String> responseFields) {
-        for (Map.Entry<String, String> field : responseFields.entrySet()) {
+    public void responseContainsTheFollowing(Map<String, String> bodyFields) {
+        for (Map.Entry<String, String> field : bodyFields.entrySet()) {
             if (StringUtils.isNumeric(field.getValue())) {
                 json.body(field.getKey(), containsInAnyOrder(Integer.parseInt(field.getValue())));
             } else {
@@ -195,5 +185,19 @@ public class LeadsSteps {
     public void theUserUpdatesLeadById(String leadId) {
         response = requestManager.patch(EndPoints.LEAD_ENDPOINT + "/" + leadId);
         response.prettyPrint();
+    }
+
+    /**
+     * Verifies response headers.
+     *
+     * @param headerFields - Expected headers and values.
+     */
+    @And("headers include the following")
+    public void headersIncludeTheFollowing(Map<String, String> headerFields) {
+        SoftAssert softAssert = new SoftAssert();
+        for (Map.Entry<String, String> field : headerFields.entrySet()) {
+            softAssert.assertEquals(response.getHeader(field.getKey()), field.getValue());
+        }
+        softAssert.assertAll();
     }
 }
