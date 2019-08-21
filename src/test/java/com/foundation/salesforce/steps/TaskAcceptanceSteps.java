@@ -23,8 +23,15 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.everit.json.schema.ValidationException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+import org.everit.json.schema.Schema;
+import org.everit.json.schema.loader.SchemaLoader;
 import org.testng.Assert;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -82,6 +89,35 @@ public class TaskAcceptanceSteps {
     public void response_includes(Map<String, String> response) {
         for (Map.Entry<String, String> field : response.entrySet()) {
             Assert.assertEquals(this.response.jsonPath().get(field.getKey()).toString(), field.getValue());
+        }
+    }
+
+    @And("(.*) json is valid")
+    public void response_is_valid (String schemaTypeName) {
+        schemaTypeName.replaceAll("\\s","");
+        InputStream inputStream = null;
+        try  {
+            //inputStream = this.getClass().getClassLoader().getResourceAsStream(schemaTypeName.concat(".json"));
+            inputStream = this.getClass().getClassLoader().getResourceAsStream("TaskCreationResponse.json");
+
+            JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
+            Schema schema = SchemaLoader.load(rawSchema);
+
+            //schema.validate(new JSONObject(this.response.jsonPath().getMap("$")));
+            schema.validate(new JSONObject("{\"id\":\"00T3i000005atFQEAY\",\"success\":falseto,\"errors\": []}"));
+        }
+        catch (ValidationException npvex) {
+            Assert.fail("Мне похуй!");
+        }
+        finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
