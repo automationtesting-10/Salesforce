@@ -51,7 +51,7 @@ public class ReaderDriverProperties {
     }
 
     /**
-     *  Sets the members of this class' atribute
+     *  Sets the members of this class' atribute.
      */
     public void addPropertiesSalesForce() {
         Properties propertiesSalesForce = loadFile(SALESFORCE_PROPERTIES);
@@ -70,7 +70,7 @@ public class ReaderDriverProperties {
     /**
      * Loads a file as a Properties object.
      *
-     * @url Location of the file to be read.
+     * @param url Location of the file to be read.
      * @return properties object.
      */
     private Properties loadFile(String url) {

@@ -28,7 +28,7 @@ import java.io.InputStream;
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
-public class ResponseValidation {
+final class ResponseValidation {
     private static ResponseValidation responseValidation;
 
     /**
@@ -54,7 +54,7 @@ public class ResponseValidation {
      * @param schemaTypeName A string containing the words that, once stripping spaces, will make for the real name
      *                       of json spec.
      * @param response A RestAssured.Response structure resulting from a previously http request call.
-     * @return
+     * @return true if json response provided has passed validation against json spec file.
      */
     public boolean matchesJsonSchema(String schemaTypeName, Response response) {
         StringBuilder stringAccumulator = new StringBuilder();
@@ -62,13 +62,12 @@ public class ResponseValidation {
         for (int characterIterator = 0; characterIterator < schemaTypeName.length(); characterIterator++) {
             if (currentCharacter == ' ' && schemaTypeName.charAt(characterIterator) != ' ') {
                 stringAccumulator.append(Character.toUpperCase(schemaTypeName.charAt(characterIterator)));
-            }
-            else {
+            } else {
                 stringAccumulator.append(schemaTypeName.charAt(characterIterator));
             }
             currentCharacter = schemaTypeName.charAt(characterIterator);
         }
-        schemaTypeName = stringAccumulator.toString().replaceAll("\\s","").trim();
+        schemaTypeName = stringAccumulator.toString().replaceAll("\\s", "").trim();
 
         InputStream inputStream = null;
         try  {
@@ -77,18 +76,15 @@ public class ResponseValidation {
             Schema schema = SchemaLoader.load(rawSchema);
             schema.validate(new JSONObject(response.jsonPath().getMap("$")));
             return true;
-        }
-        catch (ValidationException npvex) {
+        } catch (ValidationException npvex) {
             //Assert.fail("Мне похуй!");
             //npvex.printStackTrace();
             return false;
-        }
-        finally {
+        } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
