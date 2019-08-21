@@ -42,8 +42,15 @@ public class TaskAcceptanceSteps {
 
     /**
      * Class constructor.
+     * A class constructor instantiates a very shiny and beautiful TaskAcceptanceSteps object.
+     * Under normal conditions, a step definition class shouldn't have a constructor method,
+     * but for Dependency injection purposes, we are defining a constructor that ultimately is to be
+     * scanned and set up by our DI library, i.e. picocontainer.
      *
-     * @param task
+     * If there's the need for a more specific comment here, please refer to the documentation on
+     * dependency injection and specifically about the picocontainer library.
+     *
+     * @param task An object Task taht is going to be instantiated by the DI library.
      */
     public TaskAcceptanceSteps(Task task) {
         this.task = task;
