@@ -23,15 +23,19 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.everit.json.schema.ValidationException;
+
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.loader.SchemaLoader;
+import org.everit.json.schema.ValidationException;
+
 import org.testng.Assert;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.equalTo;
