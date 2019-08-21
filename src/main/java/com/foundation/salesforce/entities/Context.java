@@ -12,6 +12,8 @@
 
 package com.foundation.salesforce.entities;
 
+import io.restassured.response.Response;
+
 /**
  * Context class.
  *
@@ -22,6 +24,7 @@ public class Context {
     private Opportunity opportunity;
     private Task task;
     private Account account;
+    private Response response;
 
     /**
      * Context for creation of the constructor.
@@ -57,5 +60,23 @@ public class Context {
      */
     public Account getAccount() {
         return account;
+    }
+
+    /**
+     * Allows to get the response.
+     *
+     * @return response.
+     */
+    public Response getResponse() {
+        return response;
+    }
+
+    /**
+     * Allows to set the context response.
+     *
+     * @param response - Response to be set to the context.
+     */
+    public void setResponse(Response response) {
+        this.response = response;
     }
 }

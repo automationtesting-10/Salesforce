@@ -20,16 +20,15 @@ package com.foundation.salesforce.entities;
  */
 public class Account {
 
-    private String nameAccount;
-
+    private String name;
     private String id;
 
-    public String getNameAccount() {
-        return nameAccount;
+    public String getName() {
+        return name;
     }
 
-    public void setNameAccount(String nameAccount) {
-        this.nameAccount = nameAccount;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getId() {

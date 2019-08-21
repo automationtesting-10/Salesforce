@@ -10,12 +10,13 @@
  * with Jala Foundation.
  */
 
-package com.foundation.salesforce.steps;
+package com.foundation.salesforce.steps.steps;
 
 import com.foundation.salesforce.core.api.AccountApi;
 import com.foundation.salesforce.core.restClient.RestClientApi;
-import com.foundation.salesforce.core.utils.ValueAppender;
+import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -46,9 +47,14 @@ public class AccountStep {
     private JSONObject bodyData;
     private Context context;
 
-//    public AccountStep(Context context) {
-//        this.context = context;
-//    }
+    /**
+     * Initializes the class setting the context.
+     *
+     * @param context - Context to be set.
+     */
+    public AccountStep(Context context) {
+        this.context = context;
+    }
 
     @Given("^I log in with Authorization token$")
     public void ILogInWithAuthorizationToken() {
@@ -58,30 +64,27 @@ public class AccountStep {
     @Given("^I set up a GET request to Account endpoint$")
     public void iSetUpAGETRequestToAccountEndpoint() {
         accountApi.getInstance().getAccount();
+
     }
 
     @Given("^I fill the request with the minimun data required$")
     public void iFillTheRequest(Map<String, String> inputFields) {
-        String abc = inputFields.get("Name")+ValueAppender.suffix();
-        inputFields.replace("Name",abc + ValueAppender.suffix());
-       // inputFields.put("Name", abc + ValueAppender.sufijo());
         restClientApi = RestClientApi.getInstance();
         restClientApi.buildSpec(inputFields);
+
     }
 
     @When("^I create an Account with the name")
     public void iSendThePostWithTheName() {
-//        idAccount = accountApi.getInstance().createAccount(jsonObject);
-//        response = restClientApi.postAccount(ACCOUNT_ENDPOINT, jsonObject);
         response = restClientApi.post(ACCOUNT_ENDPOINT);
         response.prettyPrint();
+        context.setResponse(response);
     }
 
     @When("^I fill the delete request$")
     public void iFillTheDeleteRequest() {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.delete(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
-        System.out.println(ValueAppender.prefix() + "########" + context.getAccount().getId() + "########" + ValueAppender.suffix());
         response.prettyPrint();
     }
 
@@ -89,5 +92,22 @@ public class AccountStep {
     public void iDeleteTheAccountThatPreviouslyWasCreatedIs(int statusCode) {
         json = response.then().statusCode(statusCode);
         Assert.assertEquals(response.getStatusCode(), statusCode);
+    }
+
+    @Then("the status code is {int}")
+    public void theStatusCodeIs(int statusCode) {
+        json = response.then().statusCode(statusCode);
+        Assert.assertEquals(response.getStatusCode(), statusCode);
+    }
+
+
+    @Given("a user fill new data for update the name")
+    public void aUserFillNewDataForUpdateTheName() {
+    }
+
+    @And("{string} is valid")
+    public void accountCreationResponseIsValid(String schemaTypeName) {
+        boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
+        Assert.assertTrue(actual);
     }
 }
