@@ -28,7 +28,7 @@ import java.io.InputStream;
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
-final class ResponseValidation {
+final public class ResponseValidation {
     private static ResponseValidation responseValidation;
 
     /**
