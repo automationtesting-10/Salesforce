@@ -8,7 +8,6 @@ Feature: Create lead
     Then the status code is 201
     And response includes the following
       | success 	| true         |
-    And the created lead is saved
 
   Scenario: Create a lead sending json with required LastName field missing
     Given a user sets json object

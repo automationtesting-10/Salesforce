@@ -21,9 +21,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
-import io.restassured.specification.RequestSpecification;
 import org.apache.commons.lang3.StringUtils;
-import org.json.JSONObject;
 import org.testng.Assert;
 
 import java.util.Map;
@@ -32,7 +30,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 
 /**
- * LeadsSteps class contains steps for Lead endpoint.
+ * LeadsSteps class contains steps for lead endpoint.
  *
  * @author Melissa Roman
  * @version 1.0
@@ -42,8 +40,6 @@ public class LeadsSteps {
     private RestClientApi requestManager;
     private Response response;
     private ValidatableResponse json;
-    private RequestSpecification request;
-    private JSONObject bodyData;
 
     /**
      * Initializes the class setting the context.
@@ -68,7 +64,7 @@ public class LeadsSteps {
     /**
      * Finds the lead by Id.
      *
-     * @param leadId - Lead's Id.
+     * @param leadId - lead's Id.
      */
     @When("a user finds a lead by Id (.*)")
     public void aUserFindsLeadById(String leadId) {
@@ -94,6 +90,11 @@ public class LeadsSteps {
      */
     @And("response includes the following")
     public void responseIncludesTheFollowing(Map<String, String> responseFields) {
+        /*
+        * for (Map.Entry<String, String> field : response.entrySet()) {
+            Assert.assertEquals(this.response.jsonPath().get(field.getKey()).toString(), field.getValue());
+        }
+        * */
         for (Map.Entry<String, String> field : responseFields.entrySet()) {
             if (StringUtils.isNumeric(field.getValue())) {
                 json.body(field.getKey(), equalTo(Integer.parseInt(field.getValue())));
@@ -128,7 +129,7 @@ public class LeadsSteps {
     /**
      * Deletes a lead by Id.
      *
-     * @param leadId - Lead's Id.
+     * @param leadId - lead's Id.
      */
     @When("a user deletes a lead by Id (.*)")
     public void aUserDeletesALeadById(String leadId) {
@@ -153,6 +154,7 @@ public class LeadsSteps {
     public void theUserCreatesTheLead() {
         response = requestManager.post(EndPoints.LEAD_ENDPOINT);
         response.prettyPrint();
+        context.setResponse(response);
     }
 
     /**
@@ -173,15 +175,6 @@ public class LeadsSteps {
                 }
             }
         }
-    }
-
-    /**
-     * Saves the created lead.
-     */
-    @And("the created lead is saved")
-    public void theResponseInSaved() {
-        Map<String, String> creationResponse = response.jsonPath().getMap("$");
-        context.getLead().setId(creationResponse.get("id"));
     }
 
     /**
