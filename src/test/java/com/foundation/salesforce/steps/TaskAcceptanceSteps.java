@@ -13,6 +13,7 @@
 package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.TaskApi;
+import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
 import com.foundation.salesforce.entities.Task;
 
@@ -98,39 +99,8 @@ public class TaskAcceptanceSteps {
 
     @And("(.*) schema is valid")
     public void response_is_valid (String schemaTypeName) {
-        StringBuilder stringAccumulator = new StringBuilder();
-        char currentCharacter = ' ';
-        for (int characterIterator = 0; characterIterator < schemaTypeName.length(); characterIterator++) {
-            if (currentCharacter == ' ' && schemaTypeName.charAt(characterIterator) != ' ') {
-                stringAccumulator.append(Character.toUpperCase(schemaTypeName.charAt(characterIterator)));
-            }
-            else {
-                stringAccumulator.append(schemaTypeName.charAt(characterIterator));
-            }
-            currentCharacter = schemaTypeName.charAt(characterIterator);
-        }
-        schemaTypeName = stringAccumulator.toString().replaceAll("\\s","").trim();
-
-        InputStream inputStream = null;
-        try  {
-            inputStream = this.getClass().getClassLoader().getResourceAsStream(schemaTypeName.concat(".json"));
-            JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
-            Schema schema = SchemaLoader.load(rawSchema);
-            schema.validate(new JSONObject(this.response.jsonPath().getMap("$")));
-        }
-        catch (ValidationException npvex) {
-            Assert.fail("Мне похуй!");
-        }
-        finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        boolean actual = new ResponseValidation().matchesJsonSchema(schemaTypeName, this.response);
+        Assert.assertTrue(actual);
     }
 
     /**
