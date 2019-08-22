@@ -32,19 +32,39 @@ public class EventLogger {
         logger.info(message);
     }
 
+    public static void debug(String message, Throwable t) {
+        logger.info(message, t);
+    }
+
     public static void info(String message) {
         logger.info(message);
+    }
+
+    public static void info(String message, Throwable t) {
+        logger.info(message, t);
     }
 
     public static void warn(String message) {
         logger.info(message);
     }
 
+    public static void warn(String message, Throwable t) {
+        logger.info(message, t);
+    }
+
     public static void error(String message) {
         logger.info(message);
     }
 
+    public static void error(String message, Throwable t) {
+        logger.info(message, t);
+    }
+
     public static void fatal(String message) {
         logger.info(message);
+    }
+
+    public static void fatal(String message, Throwable t) {
+        logger.info(message, t);
     }
 }
