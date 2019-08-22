@@ -4,7 +4,7 @@ Feature: Acceptance Accounts tests
     Given I log in with Authorization token
 
   Scenario: Get Accounts
-    Given I set up a GET request to Account endpoint
+    When I get all accounts created
 
   @AccountCreation
   Scenario: Create an Account

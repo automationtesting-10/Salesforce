@@ -13,6 +13,7 @@
 package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.TaskApi;
+import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Task;
 
 import io.restassured.response.Response;
@@ -23,9 +24,9 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-import java.util.Map;
+import org.testng.Assert;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import java.util.Map;
 
 /**
  * TaskAcceptanceSteps
@@ -37,14 +38,22 @@ public class TaskAcceptanceSteps {
     private ValidatableResponse json;
     private Response response;
     private TaskApi taskApi;
-
-    Task task = new Task();
+    private Task task;
 
     /**
-     * Retrieves an authentication token in order to be able to access to Salesforce platform.
+     * Class constructor.
+     * A class constructor instantiates a very shiny and beautiful TaskAcceptanceSteps object.
+     * Under normal conditions, a step definition class shouldn't have a constructor method,
+     * but for Dependency injection purposes, we are defining a constructor that ultimately is to be
+     * scanned and set up by our DI library, i.e. picocontainer.
+     *
+     * If there's the need for a more specific comment here, please refer to the documentation on
+     * dependency injection and specifically about the picocontainer library.
+     *
+     * @param task An object Task taht is going to be instantiated by the DI library.
      */
-    @Given("a user logs in into the Task page")
-    public void a_user_logs_in() {
+    public TaskAcceptanceSteps(Task task) {
+        this.task = task;
         taskApi = TaskApi.getInstance();
     }
 
@@ -52,62 +61,74 @@ public class TaskAcceptanceSteps {
      *
      * @param inputContent specified as data table in gherkin feature file.
      */
-    @Given("user specifies new body content$")
-    public void user_specifies_new_content(Map<String, String> inputContent) {
+    @Given("user specifies body content$")
+    public void user_specifies_content(Map<String, String> inputContent) {
         taskApi.setContent(inputContent);
     }
 
     /**
-     *  Sends throuhg a POST request the data needed to create a Task.
+     *  Sends through a POST request the data needed to create a Task.
      */
     @When("user posts to Task endpoint$")
     public void user_posts_content() {
         this.response = taskApi.postContent();
         task.setId(response.jsonPath().getString("id"));
+        this.response.prettyPrint();
     }
 
     /**
      * Checks the resulting status code.
      */
-    @Then("the status code is 201 after creating")
-    public void check_create_status_code() {
+    @Then("status code is (\\d+)")
+    public void verify_status_code(int statusCode){
+        Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
     /**
      * Checks the response obtained after creating a Task.
      *
-     * @param response
+     * @param response a RestAssured.Response structure.
      */
-    @And("creation response includes the following$")
-    public void creation_response_includes(Map<String, String> response) {
-        //TODO Implement TestNG Assertion
+    @And("response includes the following$")
+    public void response_includes(Map<String, String> response) {
+        for (Map.Entry<String, String> field : response.entrySet()) {
+            Assert.assertEquals(this.response.jsonPath().get(field.getKey()).toString(), field.getValue());
+        }
+    }
+
+    @And("(.*) schema is valid")
+    public void response_is_valid (String schemaTypeName) {
+        boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
+        Assert.assertTrue(actual);
     }
 
     /**
-     * Appends a body part to this class' RequestSpecification attributes.
-     * @param inputContent A Map structure containing the key/value pairs that are intended to be passed to the
-     *     API endpoint.
+     * Searches for an existing Task.
      */
-    @Given("user specifies updated body content$")
-    public void user_specifies_updated_content(Map<String, String> inputContent) {
-        taskApi.setContent(inputContent);
+    @When("user patches an existing task")
+    public void user_patches_content() {
+        this.response = taskApi.patchContent(task.getId());
+        this.response.prettyPrint();
     }
 
     /**
      * Searches for a Task that is related to a given id.
+     *
      * @param id the id of the Task intended to add content to its body.
      */
     @When("user patches Task (.*)")
     public void user_patches_content(String id) {
-        taskApi.patchContent(id).prettyPrint();
+        this.response = taskApi.patchContent(id);
+        this.response.prettyPrint();
     }
 
     /**
-     * Checks the resulting status code.
+     * Searchs an existing id.
      */
-    @Then("the status code is 204 after updating")
-    public void check_update_status_code() {
-        //TODO Implement TestNG Assertion
+    @When("user searches for an existing task")
+    public void user_searches_existing(){
+        this.response = taskApi.findTaskById(task.getId());
+        this.response.prettyPrint();
     }
 
     /**
@@ -116,24 +137,16 @@ public class TaskAcceptanceSteps {
     @When("user searches for task (.*)")
     public void user_searches_for(String taskId){
         this.response = taskApi.findTaskById(taskId);
+        this.response.prettyPrint();
     }
 
     /**
-     * Checks the resulting status code.
+     * Delete an existing Task.
      */
-    @Then("status code is (\\d+) after finding")
-    public void verify_search_status_code(int statusCode){
-        json = response.then().statusCode(statusCode);
-    }
-
-    /**
-     * Check also if the response may contain something relevant.
-     */
-    @And("search response contains the following$")
-    public void search_response_includes(Map<String, String> responseFields){
-        for (Map.Entry<String, String> field : responseFields.entrySet()) {
-            json.body(field.getKey(), equalTo(field.getValue()));
-        }
+    @When("user makes a delete request for an existing task")
+    public void user_makes_delete_request_existing(){
+        this.response = taskApi.deleteTaskById(task.getId());
+        this.response.prettyPrint();
     }
 
     /**
@@ -141,14 +154,16 @@ public class TaskAcceptanceSteps {
      */
     @When("user makes a delete request for task (.*)")
     public void user_makes_delete_request(String taskId){
-        this.response = taskApi.findTaskById(taskId);
+        this.response = taskApi.deleteTaskById(taskId);
+        this.response.prettyPrint();
     }
 
     /**
-     * Checks the resulting status code.
+     * Retrieve a summary of Task.
      */
-    @Then("status code is (\\d+) after deleting")
-    public void verify_delete_status_code(int statusCode){
-        json = response.then().statusCode(statusCode);
+    @When("user makes a get request to endpoint")
+    public void user_retrieves_summary() {
+        this.response = taskApi.retrieveSummaryForTask();
+        this.response.prettyPrint();
     }
 }

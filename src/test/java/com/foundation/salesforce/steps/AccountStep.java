@@ -10,7 +10,7 @@
  * with Jala Foundation.
  */
 
-package com.foundation.salesforce.steps.steps;
+package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.AccountApi;
 import com.foundation.salesforce.core.restClient.RestClientApi;
@@ -61,10 +61,9 @@ public class AccountStep {
         restClientApi.getInstance();
     }
 
-    @Given("^I set up a GET request to Account endpoint$")
+    @When("^I get all accounts created$")
     public void iSetUpAGETRequestToAccountEndpoint() {
         accountApi.getInstance().getAccount();
-
     }
 
     @Given("^I fill the request with the minimun data required$")

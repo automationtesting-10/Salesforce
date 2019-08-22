@@ -158,7 +158,8 @@ public class RestClientApi {
      * @param taskBody A map structure containing the key/value pairs to be passed.
      */
     public void buildSpec(final Map taskBody) {
-        request = given().spec(request).contentType(ContentType.JSON).body(new JSONObject(taskBody).toString());
+        request = given().spec(request).contentType(ContentType.JSON)
+                .body(new JSONObject(taskBody).toString());
     }
 
     /**

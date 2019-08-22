@@ -15,7 +15,7 @@ package com.foundation.salesforce.entities;
 import io.restassured.response.Response;
 
 /**
- * Context class.
+ * Context class contains all objects that are shared between steps.
  *
  * @author Cristian Lujan
  * @version 1.0
@@ -23,8 +23,9 @@ import io.restassured.response.Response;
 public class Context {
     private Opportunity opportunity;
     private Task task;
-    private Account account;
+    private Lead lead;
     private Response response;
+    private Account account;
 
     /**
      * Context for creation of the constructor.
@@ -32,6 +33,7 @@ public class Context {
     public Context() {
         this.opportunity = new Opportunity();
         this.task = new Task();
+        this.lead = new Lead();
         this.account = new Account();
     }
 
@@ -60,6 +62,15 @@ public class Context {
      */
     public Account getAccount() {
         return account;
+    }
+
+    /**
+     * Allows to get the lead.
+     *
+     * @return lead.
+     */
+    public Lead getLead() {
+        return lead;
     }
 
     /**
