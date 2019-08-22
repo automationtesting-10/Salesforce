@@ -3,10 +3,10 @@ Feature: Find lead by Id
   Scenario: Find lead by Id with correct Id
     When a user finds an existing lead by Id
     Then the status code is 200
+    And the Id in response is the same as the one looked for
     And headers include the following
       | Vary	    | Accept-Encoding   |
-    And response includes the following
-    #  | Id	 	        | 00Q3i000002MKLeEAO     |
+    And response body includes the following
       | attributes.type	| Lead                   |
 
   Scenario: Find lead by Id that does not exist

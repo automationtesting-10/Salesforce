@@ -8,7 +8,7 @@ Feature: Create lead
     Then the status code is 201
     And headers include the following
       | Vary	    | Accept-Encoding   |
-    And response includes the following
+    And response body includes the following
       | success 	| true         |
 
   Scenario: Create a lead sending json with required LastName field missing

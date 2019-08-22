@@ -91,7 +91,7 @@ public class LeadsSteps {
      *
      * @param bodyFields - Expected fields and values.
      */
-    @And("response includes the following")
+    @And("response body includes the following")
     public void responseIncludesTheFollowing(Map<String, String> bodyFields) {
         SoftAssert softAssert = new SoftAssert();
         for (Map.Entry<String, String> field : bodyFields.entrySet()) {
@@ -196,5 +196,10 @@ public class LeadsSteps {
             softAssert.assertEquals(response.getHeader(field.getKey()), field.getValue());
         }
         softAssert.assertAll();
+    }
+
+    @And("the Id in response is the same as the one looked for")
+    public void theIdInResponseIsTheSameAsTheOneLookedFor() {
+        Assert.assertEquals(response.jsonPath().get("Id"), context.getLead().getId());
     }
 }

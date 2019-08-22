@@ -4,6 +4,6 @@ Feature: Retrieve summary for lead
     Then the status code is 200
     And headers include the following
       | Vary	    | Accept-Encoding   |
-    And response includes the following
+    And response body includes the following
       | objectDescribe.labelPlural  | Leads      |
       | objectDescribe.name         | Lead       |
