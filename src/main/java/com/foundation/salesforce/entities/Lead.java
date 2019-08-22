@@ -1,5 +1,5 @@
 /*
- * @(#) lead.java Copyright (c) 2019 Jala Foundation.
+ * @(#) Lead.java Copyright (c) 2019 Jala Foundation.
  * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *

@@ -15,7 +15,7 @@ package com.foundation.salesforce.entities;
 import io.restassured.response.Response;
 
 /**
- * Context class.
+ * Context class contains all objects that are shared between steps.
  *
  * @author Cristian Lujan
  * @version 1.0

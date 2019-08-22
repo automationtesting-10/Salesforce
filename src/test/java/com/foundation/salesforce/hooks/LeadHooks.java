@@ -28,7 +28,7 @@ import java.util.Map;
  *
  * @author Melissa Román
  * @version 1.0
- **/
+ */
 public class LeadHooks {
     private Context context;
     private RestClientApi requestManager;

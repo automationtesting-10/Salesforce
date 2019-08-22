@@ -16,5 +16,3 @@ Feature: Find lead by Id
   Scenario: Find lead by Id that is malformed
     When a user finds a lead by Id 00Q3i000002MKLeEA1
     Then the status code is 400
-
-
