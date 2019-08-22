@@ -105,15 +105,4 @@ public class AccountStep {
         boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
         Assert.assertTrue(actual);
     }
-
-    @Given("a user fill new data for update the name")
-    public void aUserFillNewDataForUpdateTheName() {
-
-    }
-
-
-    @When("the user updates the account by Id")
-    public void theUserUpdatesTheAccountById() {
-
-    }
 }

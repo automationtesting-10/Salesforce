@@ -63,7 +63,6 @@ public class AccountHooks {
     @After (value = "@AccountCreation, @FindAccount, @UpdateAccount", order = 0)
     public void deleteAccountAfterCreation() {
         restClientApi.delete(EndPoints.ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
-        System.out.println(context.getAccount().getId()+"this is the Id contenx");
     }
 
     /**
