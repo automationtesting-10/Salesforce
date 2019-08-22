@@ -30,7 +30,7 @@ import org.testng.annotations.AfterTest;
                 "json:target/cucumber.json",
                 "rerun:target/rerun.txt"},
         glue = {"com/foundation/salesforce/steps"},
-        features = {"src/test/resources/features/TaskAcceptance.feature"},
+        features = {"src/test/resources/features/OpportunityAcceptance.feature"},
         monochrome = true)
 public class RunCukesTest extends AbstractTestNGCucumberTests {
 

@@ -16,9 +16,12 @@ import com.foundation.salesforce.core.api.OpportunityApi;
 import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.entities.Context;
 import com.foundation.salesforce.entities.Opportunity;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.response.Response;
+import org.testng.Assert;
 
 import java.util.Map;
 
@@ -44,13 +47,8 @@ public class OpportunitySteps {
     public OpportunitySteps(final Context context) {
         this.context = context;
         opportunity = context.getOpportunity();
+        opportunityApi = OpportunityApi.getInstance();
     }
-
-    @Given("User log in into the Opportunities page")
-    public void LogInIntoTheOpportunitiesPage() {
-        opportunityApi.getInstance().getOpportunity();
-    }
-
 
     @Given("User set up the data:")
     public void SetUpTheData(Map<String, String> inputBody) {
@@ -61,5 +59,11 @@ public class OpportunitySteps {
     public void SendDeRequestPostToOpportunityEndpoint() {
         this.response = opportunityApi.createOpportunity();
         opportunity.setId(response.jsonPath().getString("id"));
+        this.response.prettyPrint();
+    }
+
+    @Then("^User get a \"([^\"]*)\" status code as response$")
+    public void userGetAStatusCodeAsResponse(int statusCode) {
+        Assert.assertEquals(response.getStatusCode(),statusCode);
     }
 }

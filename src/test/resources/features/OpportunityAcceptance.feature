@@ -1,7 +1,5 @@
 
 Feature: Manage Opportunities tests
-  Background:
-    Given User log in into the Opportunities page
 
   @deleteNewOpportunity
   Scenario: User creates a new opportunity with the required data
@@ -10,4 +8,5 @@ Feature: Manage Opportunities tests
       | CloseDate | 2019-01-01 |
       | StageName | Qualifier  |
     When User send de request post to opportunity endpoint
-    Then User get a "200" status code as response
+    Then User get a "201" status code as response
+
