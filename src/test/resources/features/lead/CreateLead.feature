@@ -2,8 +2,8 @@ Feature: Create lead
   @LeadCreation
   Scenario: Create a lead sending correct json with all required fields
     Given a user sets json object
-      | Company	 	| KingPin      |
-      | LastName	| WilsonFisk   |
+      | Company	 	| TestCompany      |
+      | LastName	| TestLastName     |
     When the user creates the lead
     Then the status code is 201
     And headers include the following
@@ -13,7 +13,7 @@ Feature: Create lead
 
   Scenario: Create a lead sending json with required LastName field missing
     Given a user sets json object
-      | Company	 	| KingPin      |
+      | Company	 	| TestCompany     |
     When the user creates the lead
     Then the status code is 400
     And response contains the following
@@ -22,7 +22,7 @@ Feature: Create lead
 
   Scenario: Create a lead sending json with required Company field missing
     Given a user sets json object
-      | LastName	| Fisk         |
+      | LastName	| TestLastName    |
     When the user creates the lead
     Then the status code is 400
     And response contains the following
@@ -31,7 +31,7 @@ Feature: Create lead
 
   Scenario: Create a lead sending json with any required field
     Given a user sets json object
-      | FirstName	| Wilson       |
+      | FirstName	| TestFirstName       |
     When the user creates the lead
     Then the status code is 400
     And response contains the following
