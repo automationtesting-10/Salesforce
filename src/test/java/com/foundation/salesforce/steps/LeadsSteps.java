@@ -25,10 +25,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import java.util.List;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.core.StringContains.containsString;
 
 /**
  * LeadsSteps class contains steps for lead endpoint.
@@ -154,17 +156,12 @@ public class LeadsSteps {
      */
     @And("response contains the following")
     public void responseContainsTheFollowing(Map<String, String> bodyFields) {
+        SoftAssert softAssert = new SoftAssert();
+        Map<String, String> responseFirstElement = response.jsonPath().getMap("[0]");
         for (Map.Entry<String, String> field : bodyFields.entrySet()) {
-            if (StringUtils.isNumeric(field.getValue())) {
-                json.body(field.getKey(), containsInAnyOrder(Integer.parseInt(field.getValue())));
-            } else {
-                if (("true".equals(field.getValue())) || ("false".equals(field.getValue()))) {
-                    json.body(field.getKey(), containsInAnyOrder(Boolean.parseBoolean(field.getValue())));
-                } else {
-                    json.body(field.getKey(), containsInAnyOrder(field.getValue()));
-                }
-            }
+            softAssert.assertEquals(responseFirstElement.get(field.getKey()), field.getValue());
         }
+        softAssert.assertAll();
     }
 
     /**
