@@ -35,10 +35,10 @@ final public class ResponseValidation {
      * Private constructor according to singleton pattern.
      */
     private ResponseValidation() {
-
     }
 
     /**
+     * A publicly accessible method that returns the same instance of this class.
      *
      * @return an the same instance over and over again upon every call.
      */
@@ -57,21 +57,10 @@ final public class ResponseValidation {
      * @return true if json response provided has passed validation against json spec file.
      */
     public boolean matchesJsonSchema(String schemaTypeName, Response response) {
-        StringBuilder stringAccumulator = new StringBuilder();
-        char currentCharacter = ' ';
-        for (int characterIterator = 0; characterIterator < schemaTypeName.length(); characterIterator++) {
-            if (currentCharacter == ' ' && schemaTypeName.charAt(characterIterator) != ' ') {
-                stringAccumulator.append(Character.toUpperCase(schemaTypeName.charAt(characterIterator)));
-            } else {
-                stringAccumulator.append(schemaTypeName.charAt(characterIterator));
-            }
-            currentCharacter = schemaTypeName.charAt(characterIterator);
-        }
-        schemaTypeName = stringAccumulator.toString().replaceAll("\\s", "").trim();
-
+        schemaTypeName = parseSchemaName(schemaTypeName);
         InputStream inputStream = null;
         try  {
-            inputStream = getClass().getClassLoader().getResourceAsStream(schemaTypeName.concat(".json"));
+            inputStream = getClass().getClassLoader().getResourceAsStream("schemas/" + schemaTypeName.concat(".json"));
             JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
             Schema schema = SchemaLoader.load(rawSchema);
             schema.validate(new JSONObject(response.jsonPath().getMap("$")));
@@ -87,5 +76,28 @@ final public class ResponseValidation {
                 }
             }
         }
+    }
+
+    /**
+     * This method expects a space-separated string and parses it so it returns the string in Pascal case format.
+     *
+     * @param schemaTypeName A string containing the words that, once stripping spaces, will make for the real name
+     *                       of json spec.
+     * @return A Pascal case-formatted string.
+     */
+    private String parseSchemaName(String schemaTypeName) {
+        StringBuilder stringAccumulator = new StringBuilder();
+        char currentCharacter = ' ';
+        for (int characterIterator = 0; characterIterator < schemaTypeName.length(); characterIterator++) {
+            if (currentCharacter == ' ' && schemaTypeName.charAt(characterIterator) != ' ') {
+                stringAccumulator.append(Character.toUpperCase(schemaTypeName.charAt(characterIterator)));
+            } else {
+                stringAccumulator.append(schemaTypeName.charAt(characterIterator));
+            }
+            currentCharacter = schemaTypeName.charAt(characterIterator);
+        }
+        schemaTypeName = stringAccumulator.toString().replaceAll("\\s", "").trim();
+
+        return schemaTypeName;
     }
 }
