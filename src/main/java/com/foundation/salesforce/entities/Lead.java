@@ -13,7 +13,7 @@
 package com.foundation.salesforce.entities;
 
 /**
- * lead class which saves relevant lead data.
+ * Lead class which saves relevant lead data.
  *
  * @author Melissa Román
  * @version 1.0
