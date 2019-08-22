@@ -25,6 +25,15 @@ public class EventLogger {
     private static Logger logger = Logger.getLogger(EventLogger.class.getName());
 
     /**
+     * EventLogger may print or log sensitive operation details to console or a file according to the user's needs
+     * and configurations.
+     *
+     * Private as this is merely a static utility class that is not intended to be instatiated.
+     */
+    private EventLogger() {
+    }
+
+    /**
      * Set the level of this Category.
      *
      * @param level A level recognized by the system, that is OFF, FATAL, ERROR, WARN, INFODEBUG and ALL.
@@ -36,7 +45,7 @@ public class EventLogger {
     /**
      * Logs a message object with the DEBUG level.
      *
-     * @param message
+     * @param message A customized message that briefly summarizes the situation.
      */
     public static void debug(String message) {
         logger.info(message);
@@ -45,7 +54,7 @@ public class EventLogger {
     /**
      * Logs a message at the DEBUG level including the stack trace of the Throwable t passed as parameter.
      *
-     * @param message
+     * @param message A customized message that briefly summarizes the situation.
      * @param t  An instance of Exception class (or one of its subclasses) thrown by the Java Virtual Machine or
      *           by the Java throw statement.
      */
