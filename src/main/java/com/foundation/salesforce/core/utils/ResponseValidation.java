@@ -50,6 +50,7 @@ final public class ResponseValidation {
     }
 
     /**
+     * Returns true if json response validation is successful.
      *
      * @param schemaTypeName A string containing the words that, once stripping spaces, will make for the real name
      *                       of json spec.
