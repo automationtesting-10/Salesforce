@@ -8,7 +8,7 @@ Feature: Acceptance Accounts tests
   @AccountCreation
   Scenario: Create an Account
     Given I fill the request with the minimun data required
-      | Name | Abcdef |
+      | Name | Account536 |
     When I create an Account with the name
     Then the status code is 201
     And " account creation " is valid
@@ -18,9 +18,9 @@ Feature: Acceptance Accounts tests
     When I fill the delete request
     Then I delete the account that previously was created is 204
 
-#  @UpdateAccount
-#  Scenario: Update a lead sending correct json
-#    Given a user fill new data for update the name
-#      | Name	 	| Account32     |
-#    When the user updates the account by Id
-#    Then the status code is 204
+  @UpdateAccount
+  Scenario: Update a lead sending correct json
+    Given a user fill new data for update the name
+      | Name	 	| Account32     |
+    When the user updates the account by Id
+    Then the status code is 204

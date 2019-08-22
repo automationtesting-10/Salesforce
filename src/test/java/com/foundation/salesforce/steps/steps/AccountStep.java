@@ -100,14 +100,20 @@ public class AccountStep {
         Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
-
-    @Given("a user fill new data for update the name")
-    public void aUserFillNewDataForUpdateTheName() {
-    }
-
     @And("{string} is valid")
     public void accountCreationResponseIsValid(String schemaTypeName) {
         boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
         Assert.assertTrue(actual);
+    }
+
+    @Given("a user fill new data for update the name")
+    public void aUserFillNewDataForUpdateTheName() {
+
+    }
+
+
+    @When("the user updates the account by Id")
+    public void theUserUpdatesTheAccountById() {
+
     }
 }

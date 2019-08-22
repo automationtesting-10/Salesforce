@@ -17,14 +17,13 @@ import com.foundation.salesforce.core.utils.EndPoints;
 import com.foundation.salesforce.core.utils.ValueAppender;
 import com.foundation.salesforce.entities.Context;
 import cucumber.api.java.After;
-import cucumber.api.java.AfterStep;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
 
 import java.util.Map;
 
 /**
- * LeadHooks class contains before and after actions for lead endpoint.
+ * AccountHooks class contains before and after actions for account endpoint.
  *
  * @author John Salazar Pinto
  * @version 1.0
@@ -45,20 +44,11 @@ public class AccountHooks {
     }
 
     /**
-     * Deletes created account after tagged scenarios.
-     */
-    @After ("@AccountCreation, @FindAccount, @UpdateAccount")
-    public void deleteAccountAfterCreation() {
-        restClientApi.delete(EndPoints.ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
-        System.out.println(context.getAccount().getId()+"this is the Id contenx");
-    }
-
-    /**
-     * Creates a account before tagged scenarios.
+     * Creates an account before scenarios.
      */
     @Before("@DeleteAccount, @FindAccount, @UpdateAccount")
     public void createAccountBefore() {
-        String name = ValueAppender.prefix() + "Account1" + ValueAppender.suffix();
+        String name = ValueAppender.prefix() + "Account" + ValueAppender.suffix();
         restClientApi.buildSpec("{" +
                 "\"Name\": \"" + name + "\"" +
                 "}");
@@ -68,9 +58,18 @@ public class AccountHooks {
     }
 
     /**
+     * Deletes created account after scenarios.
+     */
+    @After (value = "@AccountCreation, @FindAccount, @UpdateAccount", order = 0)
+    public void deleteAccountAfterCreation() {
+        restClientApi.delete(EndPoints.ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
+        System.out.println(context.getAccount().getId()+"this is the Id contenx");
+    }
+
+    /**
      * Sets context's account id after AccountCreation scenario.
      */
-    @After ("@AccountCreation")
+    @After (value = "@AccountCreation",order = 1)
     public void saveAccountfterCreation() {
         Map<String, String> creationResponse = context.getResponse().jsonPath().getMap("$");
         context.getAccount().setId(creationResponse.get("id"));
