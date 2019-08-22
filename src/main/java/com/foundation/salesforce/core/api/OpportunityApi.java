@@ -110,4 +110,10 @@ public class OpportunityApi {
         response = restClient.delete(finalEndpoint);
         return response;
     }
+
+//    public boolean recorridoJson(Map<String, String> response) {
+//        for (Map.Entry<String, String> field : response.entrySet()) {
+//            Assert.assertEquals(this.response.jsonPath().get(field.getKey()).toString(), field.getValue());
+//        }
+//    }
 }

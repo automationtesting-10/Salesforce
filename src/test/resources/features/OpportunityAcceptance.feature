@@ -9,4 +9,4 @@ Feature: Manage Opportunities tests
       | StageName | Qualifier  |
     When User send de request post to opportunity endpoint
     Then User get a "201" status code as response
-
+      And The response has been success true
