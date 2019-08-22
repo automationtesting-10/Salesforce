@@ -15,22 +15,16 @@ import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.core.utils.EndPoints;
 import com.foundation.salesforce.entities.Context;
 import com.foundation.salesforce.core.restClient.Authentication;
+
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
-import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import java.util.List;
 import java.util.Map;
-
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.core.StringContains.containsString;
 
 /**
  * LeadsSteps class contains steps for lead endpoint.
@@ -42,7 +36,6 @@ public class LeadsSteps {
     private Context context;
     private RestClientApi requestManager;
     private Response response;
-    private ValidatableResponse json;
 
     /**
      * Initializes the class setting the context.
@@ -82,7 +75,6 @@ public class LeadsSteps {
      */
     @Then("the status code is {int}")
     public void theStatusCodeIs(int statusCode) {
-        json = response.then().statusCode(statusCode);
         Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
@@ -198,6 +190,9 @@ public class LeadsSteps {
         softAssert.assertAll();
     }
 
+    /**
+     * Verifies if Id n response is the same as the one looked for.
+     */
     @And("the Id in response is the same as the one looked for")
     public void theIdInResponseIsTheSameAsTheOneLookedFor() {
         Assert.assertEquals(response.jsonPath().get("Id"), context.getLead().getId());
