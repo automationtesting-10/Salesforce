@@ -55,21 +55,23 @@ public class OpportunitySteps {
     public void SetUpTheData(Map<String, String> inputBody) {
         opportunityApi.setContent(inputBody);
     }
-
-    @When("User send de request post to opportunity endpoint")
-    public void SendDeRequestPostToOpportunityEndpoint() {
-        this.response = opportunityApi.createOpportunity();
-        opportunity.setId(response.jsonPath().getString("id"));
-        this.response.prettyPrint();
-    }
+//
+//    @When("User send request post to opportunity endpoint")
+//    public void SendRequestPostToOpportunityEndpoint() {
+//        this.response = opportunityApi.createOpportunity();
+//        opportunity.setId(response.jsonPath().getString("id"));
+//        this.response.prettyPrint();
+//    }
 
     @Then("^User get a \"([^\"]*)\" status code as response$")
-    public void userGetAStatusCodeAsResponse(int statusCode) {
+    public void GetAStatusCodeAsResponse(int statusCode) {
         Assert.assertEquals(response.getStatusCode(),statusCode);
     }
 
-    @And("^The response has been success true$")
-    public void theResponseHasBeenSuccessTrue() {
-
+    @When("User send request (.*) to opportunity endpoint")
+    public void SendRequestPOSTToOpportunityEndpoint(String method) {
+        response = opportunityApi.opportunityResponse(method);
+        opportunity.setId(response.jsonPath().getString("id"));
+        this.response.prettyPrint();
     }
 }
