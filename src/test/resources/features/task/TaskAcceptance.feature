@@ -8,7 +8,7 @@ Feature: Manage Tasks in Salesforce
     Then status code is 201
     And response includes the following
       | success | true |
-    And task creation response schema is valid
+    And response complies task schema
 
   @UpdateTask
   Scenario: User updates an existing task
