@@ -14,6 +14,7 @@ package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.TaskApi;
 import com.foundation.salesforce.core.utils.ResponseValidation;
+import com.foundation.salesforce.entities.Context;
 import com.foundation.salesforce.entities.Task;
 
 import io.restassured.response.Response;
@@ -26,6 +27,7 @@ import cucumber.api.java.en.When;
 
 import org.testng.Assert;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -38,7 +40,9 @@ public class TaskAcceptanceSteps {
     private ValidatableResponse json;
     private Response response;
     private TaskApi taskApi;
-    private Task task;
+    private Context context;
+    private Map<String, String> dataValues;
+
 
     /**
      * Class constructor.
@@ -50,10 +54,10 @@ public class TaskAcceptanceSteps {
      * If there's the need for a more specific comment here, please refer to the documentation on
      * dependency injection and specifically about the picocontainer library.
      *
-     * @param task An object Task taht is going to be instantiated by the DI library.
+     * @param context An object Task that is going to be instantiated by the DI library.
      */
-    public TaskAcceptanceSteps(Task task) {
-        this.task = task;
+    public TaskAcceptanceSteps(Context context) {
+        this.context = context;
         taskApi = TaskApi.getInstance();
     }
 
@@ -67,13 +71,37 @@ public class TaskAcceptanceSteps {
     }
 
     /**
+     *
+     * @param inputContent specified as data table in gherkin feature file.
+     */
+    @Given("user specifies json content")
+    public void user_specifies_content(String inputContent) {
+        taskApi.setContent(inputContent);
+    }
+
+    /**
      *  Sends through a POST request the data needed to create a Task.
      */
     @When("user posts to Task endpoint$")
     public void user_posts_content() {
         this.response = taskApi.postContent();
-        task.setId(response.jsonPath().getString("id"));
+        context.getTask().setId(response.jsonPath().getString("id"));
+        context.setResponse(response);
         this.response.prettyPrint();
+    }
+
+    /**
+     * Feeds multiple data values for the creation of multiple Task sObjects in SalesForce.
+     *
+     * @param status Initial status the Task will be granted.
+     * @param priority Initial priority level the Task will be granted.
+     */
+    @Given("user specifies (.*) and (.*)")
+    public void user_specifies_status_priority(String status, String priority) {
+        dataValues = new HashMap<>();
+        dataValues.put("Status", status);
+        dataValues.put("Priority", priority);
+        taskApi.setContent(dataValues);
     }
 
     /**
@@ -107,7 +135,8 @@ public class TaskAcceptanceSteps {
      */
     @When("user patches an existing task")
     public void user_patches_content() {
-        this.response = taskApi.patchContent(task.getId());
+        this.response = taskApi.patchContent(context.getTask().getId());
+        System.out.println("imprimiendo patches");
         this.response.prettyPrint();
     }
 
@@ -116,7 +145,7 @@ public class TaskAcceptanceSteps {
      *
      * @param id the id of the Task intended to add content to its body.
      */
-    @When("user patches Task (.*)")
+    @When("user patches Task ([\\w]{18})")
     public void user_patches_content(String id) {
         this.response = taskApi.patchContent(id);
         this.response.prettyPrint();
@@ -127,14 +156,15 @@ public class TaskAcceptanceSteps {
      */
     @When("user searches for an existing task")
     public void user_searches_existing(){
-        this.response = taskApi.findTaskById(task.getId());
+        this.response = taskApi.findTaskById(context.getTask().getId());
+        System.out.println("imprimiendo searches");
         this.response.prettyPrint();
     }
 
     /**
      * Search a task based on its id.
      */
-    @When("user searches for task (.*)")
+    @When("user searches for task ([\\w]{18})")
     public void user_searches_for(String taskId){
         this.response = taskApi.findTaskById(taskId);
         this.response.prettyPrint();
@@ -145,14 +175,15 @@ public class TaskAcceptanceSteps {
      */
     @When("user makes a delete request for an existing task")
     public void user_makes_delete_request_existing(){
-        this.response = taskApi.deleteTaskById(task.getId());
+        this.response = taskApi.deleteTaskById(context.getTask().getId());
+        System.out.println("imprimiendo deletes");
         this.response.prettyPrint();
     }
 
     /**
      * Delete a Task based on its id string.
      */
-    @When("user makes a delete request for task (.*)")
+    @When("user makes a delete request for task ([\\w]{18})")
     public void user_makes_delete_request(String taskId){
         this.response = taskApi.deleteTaskById(taskId);
         this.response.prettyPrint();

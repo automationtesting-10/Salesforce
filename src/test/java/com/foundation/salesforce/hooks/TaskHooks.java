@@ -10,9 +10,10 @@
  * with Jala Foundation.
  */
 
-package com.foundation.salesforce.steps;
+package com.foundation.salesforce.hooks;
 
 import com.foundation.salesforce.core.api.TaskApi;
+import com.foundation.salesforce.entities.Context;
 import com.foundation.salesforce.entities.Task;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -27,16 +28,16 @@ import org.json.JSONObject;
  * @version 1.0
  */
 public class TaskHooks {
-    private Task task;
+    private Context context;
     private TaskApi taskApi;
 
     /**
      * Class constructor.
      *
-     * @param task Object to be set by dependecy injection.
+     * @param context Object to be set by dependecy injection.
      */
-    public TaskHooks (Task task) {
-        this.task = task;
+    public TaskHooks (Context context) {
+        this.context = context;
         taskApi = TaskApi.getInstance();
     }
 
@@ -51,6 +52,22 @@ public class TaskHooks {
         taskApi.setContent(jsonContent);
         Response response = taskApi.postContent();
         response.prettyPrint();
-        task.setId(response.jsonPath().getString("id"));
+        context.getTask().setId(response.jsonPath().getString("id"));
+    }
+
+    /**
+     * Saves Task id after creation.
+     */
+    @After(value = "@CreateTask", order = 1)
+    public void save_created_task() {
+        context.getTask().setId(context.getResponse().jsonPath().getString("id"));
+    }
+
+    /**
+     * Deletes any Task(s) created by the tagged scenarios specified.
+     */
+    @After(value = "@CreateTask, @FindTask, @UpdateTask, @CreateTasks", order = 0)
+    public void after_create_task() {
+        taskApi.deleteTaskById(context.getTask().getId());
     }
 }
