@@ -96,7 +96,7 @@ public class TaskAcceptanceSteps {
         }
     }
 
-    @And("(.*) schema is valid")
+    @And("response complies (.*)")
     public void response_is_valid (String schemaTypeName) {
         boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
         Assert.assertTrue(actual);
