@@ -13,6 +13,7 @@ package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.core.utils.EndPoints;
+import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
 import com.foundation.salesforce.core.restClient.Authentication;
 
@@ -222,5 +223,16 @@ public class LeadsSteps {
     @Given("a user provides the following json")
     public void aUserProvidesTheFollowingJson(String jsonBodyString) {
         requestManager.buildSpec(jsonBodyString);
+    }
+
+    /**
+     *
+     *
+     * @param schemaTypeName
+     */
+    @And("response passes (.*) validation")
+    public void response_is_valid (String schemaTypeName) {
+        boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
+        Assert.assertTrue(actual);
     }
 }

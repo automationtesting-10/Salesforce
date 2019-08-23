@@ -11,6 +11,7 @@ Feature: Create lead
       | Vary | Accept-Encoding |
     And response body includes the following
       | success | true |
+    And response passes lead schema validation
 
   @Negative
   Scenario: Create a lead sending json with required LastName field missing
@@ -51,6 +52,7 @@ Feature: Create lead
       | Vary | Accept-Encoding |
     And response body includes the following
       | success | true |
+    And response passes lead schema validation
     Examples:
       | Company      | LastName      |
       | TestCompany1 | TestLastName1 |
