@@ -9,7 +9,7 @@ Feature: Creation funtional and acceptance
       | Name | Account536 |
     When I create an Account with the name
     Then the status code is a number 201
-    And schema "account creation" is valid
+    And schema "account creation schema" is valid
 
   @AccountCreation
   Scenario: Create an Account with five data
@@ -21,7 +21,7 @@ Feature: Creation funtional and acceptance
       | Industry | customerINC      |
     When I create an Account with the name
     Then the status code is a number 201
-    And schema "account creation" is valid
+    And schema "account creation schema" is valid
 
   Scenario: Create a Account with a body incorrect
     Given I fill the request with the data required

@@ -38,6 +38,8 @@ final public class ResponseValidation {
     }
 
     /**
+     * A publicly accessible method that returns the same instance of this class.
+     *
      * @return an the same instance over and over again upon every call.
      */
     public static ResponseValidation getInstance() {
@@ -48,12 +50,42 @@ final public class ResponseValidation {
     }
 
     /**
+     *
      * @param schemaTypeName A string containing the words that, once stripping spaces, will make for the real name
      *                       of json spec.
-     * @param response       A RestAssured.Response structure resulting from a previously http request call.
+     * @param response A RestAssured.Response structure resulting from a previously http request call.
      * @return true if json response provided has passed validation against json spec file.
      */
     public boolean matchesJsonSchema(String schemaTypeName, Response response) {
+        schemaTypeName = parseSchemaName(schemaTypeName);
+        InputStream inputStream = null;
+        try  {
+            inputStream = getClass().getClassLoader().getResourceAsStream("schemas/" + schemaTypeName.concat(".json"));
+            JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
+            Schema schema = SchemaLoader.load(rawSchema);
+            schema.validate(new JSONObject(response.jsonPath().getMap("$")));
+            return true;
+        } catch (ValidationException npvex) {
+            return false;
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * This method expects a space-separated string and parses it so it returns the string in Pascal case format.
+     *
+     * @param schemaTypeName A string containing the words that, once stripping spaces, will make for the real name
+     *                       of json spec.
+     * @return A Pascal case-formatted string.
+     */
+    private String parseSchemaName(String schemaTypeName) {
         StringBuilder stringAccumulator = new StringBuilder();
         char currentCharacter = ' ';
         for (int characterIterator = 0; characterIterator < schemaTypeName.length(); characterIterator++) {
@@ -66,24 +98,6 @@ final public class ResponseValidation {
         }
         schemaTypeName = stringAccumulator.toString().replaceAll("\\s", "").trim();
 
-        InputStream inputStream = null;
-        try {
-            inputStream = getClass().getClassLoader().getResourceAsStream(schemaTypeName.concat(".json"));
-            JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
-            Schema schema = SchemaLoader.load(rawSchema);
-            schema.validate(new JSONObject(response.jsonPath().getMap("$")));
-            return true;
-        } catch (ValidationException npvex) {
-            npvex.printStackTrace();
-            return false;
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        return schemaTypeName;
     }
 }
