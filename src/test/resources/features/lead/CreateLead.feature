@@ -37,3 +37,18 @@ Feature: Create lead
     And response contains the following
       | errorCode	| REQUIRED_FIELD_MISSING  |
       | message     | Required fields are missing: [LastName, Company]    |
+
+  @SeveralLeadsCreation
+  Scenario Outline: Create several leads sending correct json with all minimum required fields
+    Given a user specifies <Company> and <LastName>
+    When the user creates the lead
+    Then the status code is 201
+    Examples:
+      | Company	      | LastName      |
+      | TestCompany1  | TestLastName1 |
+      | TestCompany2  | TestLastName2 |
+      | TestCompany3  | TestLastName3 |
+      | TestCompany4  | TestLastName4 |
+      | TestCompany5  | TestLastName5 |
+
+
