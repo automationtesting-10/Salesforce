@@ -19,7 +19,7 @@ package com.foundation.salesforce.entities;
  */
 public class Contact {
     String lastName;
-    String fistName;
+    String firstName;
     String email;
     String Title;
 
@@ -31,12 +31,12 @@ public class Contact {
         this.lastName = lastName;
     }
 
-    public String getFistName() {
-        return fistName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFistName(String fistName) {
-        this.fistName = fistName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getEmail() {
