@@ -1,5 +1,5 @@
 /*
- * @(#) AccountApi.java Copyright (c) 2019 Jala Foundation.
+ * @(#) Account.java Copyright (c) 2019 Jala Foundation.
  * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
@@ -13,28 +13,29 @@
 package com.foundation.salesforce.entities;
 
 /**
- * Account class
+ * Account class.
  *
- * @author Cristian Lujan
+ * @author John Salazar Pinto
  * @version 1.0
  */
 public class Account {
 
-    private String name;
     private String id;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    /**
+     * This method get the id of the account.
+     *
+     * @return id that was used for the scenarios.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * This method set the id ot the account that was used for the scenarios.
+     *
+     * @param id - set the id of the account obtained.
+     */
     public void setId(String id) {
         this.id = id;
     }

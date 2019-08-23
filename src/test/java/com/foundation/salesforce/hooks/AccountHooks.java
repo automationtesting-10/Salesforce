@@ -9,7 +9,8 @@
  * accordance with the terms of the license agreement you entered into
  * with Jala Foundation.
  */
-package com.foundation.salesforce.steps.hooks;
+
+package com.foundation.salesforce.hooks;
 
 import com.foundation.salesforce.core.restClient.Authentication;
 import com.foundation.salesforce.core.restClient.RestClientApi;
@@ -49,9 +50,9 @@ public class AccountHooks {
     @Before("@DeleteAccount, @FindAccount, @UpdateAccount")
     public void createAccountBefore() {
         String name = ValueAppender.prefix() + "Account" + ValueAppender.suffix();
-        restClientApi.buildSpec("{" +
-                "\"Name\": \"" + name + "\"" +
-                "}");
+        String key = "Name";
+        String json = String.format("{\"%s\": \"%s\"}", key, name);
+        restClientApi.buildSpec(json);
         Response response = restClientApi.post(EndPoints.ACCOUNT_ENDPOINT);
         Map<String, String> creationResponse = response.jsonPath().getMap("$");
         context.getAccount().setId(creationResponse.get("id"));
@@ -60,7 +61,7 @@ public class AccountHooks {
     /**
      * Deletes created account after scenarios.
      */
-    @After (value = "@AccountCreation, @FindAccount, @UpdateAccount", order = 0)
+    @After(value = "@AccountCreation, @FindAccount, @UpdateAccount", order = 0)
     public void deleteAccountAfterCreation() {
         restClientApi.delete(EndPoints.ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
     }
@@ -68,7 +69,7 @@ public class AccountHooks {
     /**
      * Sets context's account id after AccountCreation scenario.
      */
-    @After (value = "@AccountCreation",order = 1)
+    @After(value = "@AccountCreation", order = 1)
     public void saveAccountfterCreation() {
         Map<String, String> creationResponse = context.getResponse().jsonPath().getMap("$");
         context.getAccount().setId(creationResponse.get("id"));

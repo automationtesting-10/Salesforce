@@ -14,17 +14,12 @@ package com.foundation.salesforce.core.api;
 
 import com.foundation.salesforce.core.restClient.Authentication;
 import com.foundation.salesforce.core.restClient.RestClientApi;
-import com.foundation.salesforce.core.utils.EndPoints;
 import io.restassured.response.Response;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Map;
 
 import static com.foundation.salesforce.core.utils.EndPoints.ACCOUNT_ENDPOINT;
 
 /**
- * AccountApi class
+ * AccountApi class.
  *
  * @author Cristian Lujan
  * @version 1.0
@@ -55,7 +50,7 @@ public class AccountApi {
     }
 
     /**
-     * Returns the instance the account API.
+     * Returns the instance from account API.
      *
      * @return a account API.
      */
@@ -63,29 +58,13 @@ public class AccountApi {
         return new AccountApi();
     }
 
+    /**
+     * Returns the response from account API.
+     * @return response api
+     */
     public Response getAccount() {
         response = restClient.get(ACCOUNT_ENDPOINT);
         response.prettyPrint();
         return response;
     }
-
-    /**
-     * Creates an account.
-     *
-     * @param newAccount to sent the body of the request.
-     * @return the id of account created.
-     */
-    public String createAccount(JSONObject newAccount) throws JSONException {
-        finalEndpoint = ACCOUNT_ENDPOINT;
-        response = restClient.postAccount(EndPoints.ACCOUNT_ENDPOINT,newAccount);
-        response.prettyPrint();
-        return response.body().jsonPath().getString("id");
-    }
-
-    public void deleteAccount(final String  endpoint) {
-        finalEndpoint = ACCOUNT_ENDPOINT;
-        response = restClient.delete(endpoint);
-        response.prettyPrint();
-    }
-
 }

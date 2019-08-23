@@ -35,11 +35,9 @@ final public class ResponseValidation {
      * Private constructor according to singleton pattern.
      */
     private ResponseValidation() {
-
     }
 
     /**
-     *
      * @return an the same instance over and over again upon every call.
      */
     public static ResponseValidation getInstance() {
@@ -50,10 +48,9 @@ final public class ResponseValidation {
     }
 
     /**
-     *
      * @param schemaTypeName A string containing the words that, once stripping spaces, will make for the real name
      *                       of json spec.
-     * @param response A RestAssured.Response structure resulting from a previously http request call.
+     * @param response       A RestAssured.Response structure resulting from a previously http request call.
      * @return true if json response provided has passed validation against json spec file.
      */
     public boolean matchesJsonSchema(String schemaTypeName, Response response) {
@@ -70,7 +67,7 @@ final public class ResponseValidation {
         schemaTypeName = stringAccumulator.toString().replaceAll("\\s", "").trim();
 
         InputStream inputStream = null;
-        try  {
+        try {
             inputStream = getClass().getClassLoader().getResourceAsStream(schemaTypeName.concat(".json"));
             JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
             Schema schema = SchemaLoader.load(rawSchema);

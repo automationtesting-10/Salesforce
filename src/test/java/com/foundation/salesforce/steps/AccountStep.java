@@ -14,6 +14,7 @@ package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.AccountApi;
 import com.foundation.salesforce.core.restClient.RestClientApi;
+import com.foundation.salesforce.core.utils.EndPoints;
 import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
 import cucumber.api.java.en.And;
@@ -31,7 +32,7 @@ import java.util.Map;
 import static com.foundation.salesforce.core.utils.EndPoints.ACCOUNT_ENDPOINT;
 
 /**
- * AccountStep class
+ * AccountStep class with the steps for the account feature
  *
  * @author John Salazar Pinto
  * @version 1.0
@@ -56,23 +57,37 @@ public class AccountStep {
         this.context = context;
     }
 
+    /**
+     * I do the authentication.
+     */
     @Given("^I log in with Authorization token$")
     public void ILogInWithAuthorizationToken() {
         restClientApi.getInstance();
     }
 
+    /**
+     * Get the account.
+     */
     @When("^I get all accounts created$")
     public void iSetUpAGETRequestToAccountEndpoint() {
         accountApi.getInstance().getAccount();
     }
 
-    @Given("^I fill the request with the minimun data required$")
+    /**
+     * The body is fill with the minimun data required.
+     *
+     * @param inputFields
+     */
+    @Given("^I fill the request with the data required$")
     public void iFillTheRequest(Map<String, String> inputFields) {
+        accountApi.getInstance().getAccount();
         restClientApi = RestClientApi.getInstance();
         restClientApi.buildSpec(inputFields);
-
     }
 
+    /**
+     * Creates the account
+     */
     @When("^I create an Account with the name")
     public void iSendThePostWithTheName() {
         response = restClientApi.post(ACCOUNT_ENDPOINT);
@@ -80,7 +95,10 @@ public class AccountStep {
         context.setResponse(response);
     }
 
-    @When("^I fill the delete request$")
+    /**
+     * Deletes an account by id
+     */
+    @When("^I delete an account that previusly was created$")
     public void iFillTheDeleteRequest() {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.delete(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
@@ -93,15 +111,50 @@ public class AccountStep {
         Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
-    @Then("the status code is {int}")
+    @Then("the status code is a number {int}")
     public void theStatusCodeIs(int statusCode) {
         json = response.then().statusCode(statusCode);
         Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
-    @And("{string} is valid")
-    public void accountCreationResponseIsValid(String schemaTypeName) {
+    /**
+     * Sets a json object according to input map.
+     *
+     * @param inputFields - Input data.
+     */
+    @Given("a user sets json object for the modify account")
+    public void aUserSetsJsonObjectWithRequiredFields(Map<String, String> inputFields) {
+        restClientApi = RestClientApi.getInstance();
+        restClientApi.buildSpec(inputFields);
+        context.setResponse(response);
+    }
+
+    /**
+     * Updates existing account by Id.
+     */
+    @When("the user updates existing account by Id")
+    public void theUserUpdatesExistingLeadById() {
+        response = restClientApi.patch(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
+        System.out.println(context.getAccount().getId());
+        response.prettyPrint();
+    }
+
+    /**
+     * Schema account validation.
+     */
+    @And("schema {string} is valid")
+    public void schemaIsValid(String schemaTypeName) {
         boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
         Assert.assertTrue(actual);
+    }
+
+    /**
+     * Updates existing lead by Id.
+     */
+    @When("the user creates the account")
+    public void theUserCreatesTheAccount() {
+        response = restClientApi.post(ACCOUNT_ENDPOINT);
+        response.prettyPrint();
+        context.setResponse(response);
     }
 }

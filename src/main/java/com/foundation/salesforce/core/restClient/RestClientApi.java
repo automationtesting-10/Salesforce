@@ -99,10 +99,6 @@ public class RestClientApi {
         return apiResponse("POST", endpoint);
     }
 
-    public Response postAccount(String endpoint, JSONObject jsonObject) {
-        return apiResponsePost("/services/data/v39.0/sobjects/Account",jsonObject);
-    }
-
     /**
      * Returns a response after requesting a put.
      *
@@ -136,10 +132,12 @@ public class RestClientApi {
 
     /**
      * Returns a response after requesting a post.
-     *
-     * @return a RestAssured Response structure.
+     * @param endpoint URI.
+     * @param valuesForTheBody body of the post
+     * @return responce of the post
+     * @throws JSONException
      */
-    public Response apiResponsePost(final String endpoint, JSONObject valuesForTheBody) throws JSONException {
+    public Response apiResponsePost(final String endpoint, JSONObject valuesForTheBody) {
         return given().spec(request.body(valuesForTheBody.toString())).post(endpoint);
     }
 
