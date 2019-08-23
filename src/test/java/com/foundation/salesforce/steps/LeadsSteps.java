@@ -226,9 +226,9 @@ public class LeadsSteps {
     }
 
     /**
+     * Validates json schema of creation response.
      *
-     *
-     * @param schemaTypeName
+     * @param schemaTypeName - Schema to validate.
      */
     @And("response passes (.*) validation")
     public void response_is_valid (String schemaTypeName) {
