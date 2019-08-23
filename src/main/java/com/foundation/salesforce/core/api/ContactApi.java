@@ -1,5 +1,5 @@
 /*
- * @(#) AccessToken.java Copyright (c) 2019 Jala Foundation.
+ * @(#) ContactApi.java Copyright (c) 2019 Jala Foundation.
  * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
@@ -14,9 +14,12 @@ package com.foundation.salesforce.core.api;
 import com.foundation.salesforce.core.restClient.Authentication;
 import com.foundation.salesforce.core.restClient.RestClientApi;
 import static com.foundation.salesforce.core.utils.EndPoints.CONTACT_ENDPOINT;
-import static com.foundation.salesforce.core.utils.EndPoints.TASK_ENDPOINT;
 
+import com.foundation.salesforce.core.utils.EndPoints;
+import groovy.json.JsonOutput;
 import io.restassured.response.Response;
+
+import java.util.Map;
 
 /**
  * Class let build endpoint.
@@ -26,16 +29,28 @@ import io.restassured.response.Response;
  */
 public final class ContactApi {
     private RestClientApi restClientApi;
+    private Response response;
 
     /**
      * Class constructor.
      */
-    protected ContactApi() {
+    public ContactApi() {
         restClientApi = RestClientApi.getInstance();
         restClientApi.setRequest(Authentication.requestSpecification());
     }
 
     public static ContactApi getInstance() {
         return new ContactApi();
+    }
+
+    public void setContent(String taskBody) {
+        restClientApi.buildSpec(taskBody);
+    }
+
+    public void setContent(Map taskBody) {
+
+        restClientApi.buildSpec(taskBody);
+//        response = restClientApi.get(CONTACT_ENDPOINT + "/" + "{"lastname":"menacho"}");
+//        response.prettyPrint();
     }
 }
