@@ -63,7 +63,7 @@ public class LeadHooks {
     /**
      * Deletes created lead after tagged scenarios.
      */
-    @After(value = "@LeadCreation, @FindLead, @UpdateLead, @SeveralLeadsCreation", order = 0)
+    @After(value = "@LeadCreation, @FindLead, @UpdateLead, @MultipleLeadsCreation", order = 0)
     public void deleteLeadAfterCreation() {
         requestManager.delete(EndPoints.LEAD_ENDPOINT + "/" + context.getLead().getId());
     }

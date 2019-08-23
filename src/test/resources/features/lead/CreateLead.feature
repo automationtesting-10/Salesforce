@@ -42,7 +42,7 @@ Feature: Create lead
       | errorCode | REQUIRED_FIELD_MISSING                           |
       | message   | Required fields are missing: [LastName, Company] |
 
-  @SeveralLeadsCreation @Functional
+  @MultipleLeadsCreation @Functional
   Scenario Outline: Create multiple leads sending correct json with all minimum required fields
     Given a user specifies <Company> and <LastName>
     When the user creates the lead
