@@ -13,10 +13,6 @@ package com.foundation.salesforce.core.api;
 
 import com.foundation.salesforce.core.restClient.Authentication;
 import com.foundation.salesforce.core.restClient.RestClientApi;
-import static com.foundation.salesforce.core.utils.EndPoints.CONTACT_ENDPOINT;
-
-import com.foundation.salesforce.core.utils.EndPoints;
-import groovy.json.JsonOutput;
 import io.restassured.response.Response;
 
 import java.util.Map;
@@ -39,18 +35,31 @@ public final class ContactApi {
         restClientApi.setRequest(Authentication.requestSpecification());
     }
 
+    /**
+     * Method let get the new instance to the class.
+     *
+     * @return ContactApi.
+     */
     public static ContactApi getInstance() {
         return new ContactApi();
     }
 
-    public void setContent(String taskBody) {
-        restClientApi.buildSpec(taskBody);
+    /**
+     * Method let set task body that let build request.
+     *
+     * @param Contactbody
+     */
+    public void setContent(String Contactbody) {
+        restClientApi.buildSpec(Contactbody);
     }
 
-    public void setContent(Map taskBody) {
+    /**
+     * Method let set task body that let build request.
+     *
+     * @param Contactbody
+     */
+    public void setContent(Map Contactbody) {
 
-        restClientApi.buildSpec(taskBody);
-//        response = restClientApi.get(CONTACT_ENDPOINT + "/" + "{"lastname":"menacho"}");
-//        response.prettyPrint();
+        restClientApi.buildSpec(Contactbody);
     }
 }
