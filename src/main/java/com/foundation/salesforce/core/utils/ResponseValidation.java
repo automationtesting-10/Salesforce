@@ -60,7 +60,8 @@ final public class ResponseValidation {
         schemaTypeName = parseSchemaName(schemaTypeName);
         InputStream inputStream = null;
         try  {
-            inputStream = getClass().getClassLoader().getResourceAsStream("schemas/" + schemaTypeName.concat(".json"));
+            inputStream = getClass().getClassLoader()
+                    .getResourceAsStream("schemas/" + schemaTypeName.concat(".json"));
             JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
             Schema schema = SchemaLoader.load(rawSchema);
             schema.validate(new JSONObject(response.jsonPath().getMap("$")));

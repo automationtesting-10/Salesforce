@@ -55,8 +55,8 @@ public class EventLogger {
      * Logs a message at the DEBUG level including the stack trace of the Throwable t passed as parameter.
      *
      * @param message A customized message that briefly summarizes the situation.
-     * @param throwableException  An instance of Exception class (or one of its subclasses) thrown by the Java Virtual Machine or
-     *           by the Java throw statement.
+     * @param throwableException  An instance of Exception class (or one of its subclasses) thrown by the
+     *                            Java Virtual Machine or by the Java throw statement.
      */
     public static void debug(String message, Throwable throwableException) {
         logger.info(message, throwableException);
@@ -75,8 +75,8 @@ public class EventLogger {
      * Logs a message at the INFO level including the stack trace of the Throwable t passed as parameter.
      *
      * @param message A customized message that briefly summarizes the situation.
-     * @param throwableException  An instance of Exception class (or one of its subclasses) thrown by the Java Virtual Machine or
-     *           by the Java throw statement.
+     * @param throwableException  An instance of Exception class (or one of its subclasses) thrown by the
+     *                            Java Virtual Machine or by the Java throw statement.
      */
     public static void info(String message, Throwable throwableException) {
         logger.info(message, throwableException);
@@ -95,8 +95,8 @@ public class EventLogger {
      * Logs a message at the WARN level including the stack trace of the Throwable t passed as parameter.
      *
      * @param message A customized message that briefly summarizes the situation.
-     * @param throwableException  An instance of Exception class (or one of its subclasses) thrown by the Java Virtual Machine or
-     *           by the Java throw statement.
+     * @param throwableException  An instance of Exception class (or one of its subclasses) thrown by the
+     *                            Java Virtual Machine or by the Java throw statement.
      */
     public static void warn(String message, Throwable throwableException) {
         logger.info(message, throwableException);
@@ -115,8 +115,8 @@ public class EventLogger {
      * Logs a message at the ERROR level including the stack trace of the Throwable t passed as parameter.
      *
      * @param message A customized message that briefly summarizes the situation.
-     * @param throwableException  An instance of Exception class (or one of its subclasses) thrown by the Java Virtual Machine or
-     *           by the Java throw statement.
+     * @param throwableException  An instance of Exception class (or one of its subclasses) thrown by the
+     *                            Java Virtual Machine or by the Java throw statement.
      */
     public static void error(String message, Throwable throwableException) {
         logger.info(message, throwableException);
@@ -135,8 +135,8 @@ public class EventLogger {
      * Logs a message at the FATAL level including the stack trace of the Throwable t passed as parameter.
      *
      * @param message A customized message that briefly summarizes the situation.
-     * @param throwableException  An instance of Exception class (or one of its subclasses) thrown by the Java Virtual Machine or
-     *           by the Java throw statement.
+     * @param throwableException  An instance of Exception class (or one of its subclasses) thrown by the
+     *                            Java Virtual Machine or by the Java throw statement.
      */
     public static void fatal(String message, Throwable throwableException) {
         logger.info(message, throwableException);
