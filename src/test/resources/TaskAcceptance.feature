@@ -1,7 +1,7 @@
 Feature: Manage Tasks in Salesforce
 
   Background: User is authenticated
-    Given a user sign in your account
+    Given a user logs in into the Task page
 
   Scenario: User creates a task by specifying at least a status and priority
     Given user specifies new body content
