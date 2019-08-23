@@ -12,8 +12,10 @@
 
 package com.foundation.salesforce.entities;
 
+import io.restassured.response.Response;
+
 /**
- * Context class.
+ * Context class contains all objects that are shared between steps.
  *
  * @author Cristian Lujan
  * @version 1.0
@@ -21,6 +23,8 @@ package com.foundation.salesforce.entities;
 public class Context {
     private Opportunity opportunity;
     private Task task;
+    private Lead lead;
+    private Response response;
 
     /**
      * Context for creation of the constructor.
@@ -28,6 +32,7 @@ public class Context {
     public Context() {
         this.opportunity = new Opportunity();
         this.task = new Task();
+        this.lead = new Lead();
     }
 
     /**
@@ -46,5 +51,32 @@ public class Context {
      */
     public Task getTask() {
         return task;
+    }
+
+    /**
+     * Allows to get the lead.
+     *
+     * @return lead.
+     */
+    public Lead getLead() {
+        return lead;
+    }
+
+    /**
+     * Allows to get the response.
+     *
+     * @return response.
+     */
+    public Response getResponse() {
+        return response;
+    }
+
+    /**
+     * Allows to set the context response.
+     *
+     * @param response - Response to be set to the context.
+     */
+    public void setResponse(Response response) {
+        this.response = response;
     }
 }

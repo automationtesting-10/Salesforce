@@ -23,6 +23,8 @@ public final class EndPoints {
     public static String OPPORTUNITY_ENDPOINT = "/services/data/v46.0/sobjects/Opportunity";
     public static String TASK_ENDPOINT = "/services/data/v46.0/sobjects/Task";
     public static String CONTACT_ENDPOINT = "/services/data/v39.0/sobjects/Contact";
+    public static String LEAD_ENDPOINT = "/services/data/v39.0/sobjects/lead";
+
     /**
      * Constructor protected.
      */

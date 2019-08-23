@@ -51,7 +51,6 @@ public final class PropertiesReader {
      * Method init the class util.
      */
     private static void initUtil() {
-
         try (InputStream input = new FileInputStream(System.getProperty("user.dir") + "/gradle.properties")) {
             Properties properties = new Properties();
             properties.load(input);
@@ -61,6 +60,7 @@ public final class PropertiesReader {
             configParameters.setPassword(properties.getProperty("password"));
             configParameters.setToken(properties.getProperty("security_token"));
             configParameters.setAuthUrl(properties.getProperty("auth_url"));
+            configParameters.setTesterName(properties.getProperty("tester_name"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }

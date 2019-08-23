@@ -20,7 +20,7 @@ package com.foundation.salesforce.entities;
  */
 public class Opportunity {
     private String nameOpportunity;
-    private int id;
+    private String id;
 
     /**
      * Gets the name of the Opportunity.
@@ -46,7 +46,7 @@ public class Opportunity {
      *
      * @return the id as string.
      */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -55,7 +55,7 @@ public class Opportunity {
      *
      * @param id for the account.
      */
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

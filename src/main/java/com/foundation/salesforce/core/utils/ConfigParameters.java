@@ -25,6 +25,23 @@ public class ConfigParameters {
     private String password;
     private String token;
     private String authUrl;
+    private String testerName;
+
+    /**
+     * Method let set the variable tester name.
+     * @param testerName set a variable tester name.
+     */
+    public void setTesterName(String testerName) {
+        this.testerName = testerName;
+    }
+
+    /**
+     * Method return tester name.
+     * @return testerName variable.
+     */
+    public String getTesterName() {
+        return testerName;
+    }
 
     /**
      * Method return id client.
