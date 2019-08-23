@@ -126,10 +126,10 @@ public class LeadsSteps {
     /**
      * Sets a json object according to input map.
      *
-     * @param inputFields - Input data.
+     * @param inputFields - Input data as a Map.
      */
     @Given("a user sets json object")
-    public void aUserSetsJsonObjectWithRequiredFields(Map<String, String> inputFields) {
+    public void aUserSetsJsonObject(Map<String, String> inputFields) {
         requestManager.buildSpec(inputFields);
     }
 
@@ -212,5 +212,15 @@ public class LeadsSteps {
         leadData.put("Company", company);
         leadData.put("LastName", lastName);
         requestManager.buildSpec(leadData);
+    }
+
+    /**
+     * Sets a json object according to input String.
+     *
+     * @param jsonBodyString - Input data as String.
+     */
+    @Given("a user provides the following json")
+    public void aUserProvidesTheFollowingJson(String jsonBodyString) {
+        requestManager.buildSpec(jsonBodyString);
     }
 }

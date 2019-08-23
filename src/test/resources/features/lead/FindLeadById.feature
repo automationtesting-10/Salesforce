@@ -1,6 +1,6 @@
 Feature: Find lead by Id
 
-  @FindLead
+  @FindLead @Acceptance
   Scenario: Find lead by Id with correct Id
     When a user finds an existing lead by Id
     Then the status code is 200
@@ -10,10 +10,12 @@ Feature: Find lead by Id
     And response body includes the following
       | attributes.type | Lead |
 
+  @Negative
   Scenario: Find lead by Id that does not exist
     When a user finds a lead by Id 00Q3i000002MKLeEA
     Then the status code is 404
 
+  @Negative
   Scenario: Find lead by Id that is malformed
     When a user finds a lead by Id 00Q3i000002MKLeEA1
     Then the status code is 400
