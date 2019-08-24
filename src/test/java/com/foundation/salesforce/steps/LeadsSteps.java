@@ -24,6 +24,7 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -36,6 +37,7 @@ public class LeadsSteps {
     private Context context;
     private RestClientApi requestManager;
     private Response response;
+    private Map<String, String> leadData;
 
     /**
      * Initializes the class setting the context.
@@ -124,10 +126,10 @@ public class LeadsSteps {
     /**
      * Sets a json object according to input map.
      *
-     * @param inputFields - Input data.
+     * @param inputFields - Input data as a Map.
      */
     @Given("a user sets json object")
-    public void aUserSetsJsonObjectWithRequiredFields(Map<String, String> inputFields) {
+    public void aUserSetsJsonObject(Map<String, String> inputFields) {
         requestManager.buildSpec(inputFields);
     }
 
@@ -196,5 +198,29 @@ public class LeadsSteps {
     @And("the Id in response is the same as the one looked for")
     public void theIdInResponseIsTheSameAsTheOneLookedFor() {
         Assert.assertEquals(response.jsonPath().get("Id"), context.getLead().getId());
+    }
+
+    /**
+     * Arranges a map with input data for lead creation.
+     *
+     * @param company - Lead's company.
+     * @param lastName - Lead's last name.
+     */
+    @Given("a user specifies (.*) and (.*)")
+    public void aUserSpecifiesCompanyAndLastName(String company, String lastName) {
+        leadData = new HashMap<>();
+        leadData.put("Company", company);
+        leadData.put("LastName", lastName);
+        requestManager.buildSpec(leadData);
+    }
+
+    /**
+     * Sets a json object according to input String.
+     *
+     * @param jsonBodyString - Input data as String.
+     */
+    @Given("a user provides the following json")
+    public void aUserProvidesTheFollowingJson(String jsonBodyString) {
+        requestManager.buildSpec(jsonBodyString);
     }
 }
