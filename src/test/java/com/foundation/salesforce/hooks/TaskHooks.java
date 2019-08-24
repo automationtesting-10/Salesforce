@@ -14,10 +14,12 @@ package com.foundation.salesforce.hooks;
 
 import com.foundation.salesforce.core.api.TaskApi;
 import com.foundation.salesforce.entities.Context;
-import com.foundation.salesforce.entities.Task;
+
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+
 import io.restassured.response.Response;
+
 import org.json.JSONObject;
 
 /**
@@ -44,29 +46,22 @@ public class TaskHooks {
     /**
      * Creates a Task before the scenarios tagged as: @FindTask, @DeleteTask, @UpdateTask.
      */
-    @Before("@FindTask, @DeleteTask, @UpdateTask")
+    @Before("@FindTask, @DeleteTask, @UpdateTask, @UpdateTasks")
     public void before_delete_task() {
         JSONObject jsonContent = new JSONObject();
         jsonContent.put("Status","Not started");
         jsonContent.put("Priority","Low");
         taskApi.setContent(jsonContent);
         Response response = taskApi.postContent();
+        context.setResponse(response);
         response.prettyPrint();
-        context.getTask().setId(response.jsonPath().getString("id"));
-    }
-
-    /**
-     * Saves Task id after creation.
-     */
-    @After(value = "@CreateTask", order = 1)
-    public void save_created_task() {
         context.getTask().setId(context.getResponse().jsonPath().getString("id"));
     }
 
     /**
-     * Deletes any Task(s) created by the tagged scenarios specified.
+     * Deletes any created Task(s) in order to keep the environment clean.
      */
-    @After(value = "@CreateTask, @FindTask, @UpdateTask, @CreateTasks", order = 0)
+    @After(value = "@CreateTask, @CreateTasks, @UpdateTask, @UpdateTasks, @FindTask")
     public void after_create_task() {
         taskApi.deleteTaskById(context.getTask().getId());
     }

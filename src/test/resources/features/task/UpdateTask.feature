@@ -16,19 +16,18 @@ Feature: Update Tasks in Salesforce
     When user patches Task 00T3i000005aHNREA2
     Then status code is 404
 
-#  @UpdateTasks @Functional
-#  Scenario Outline: User updates sequentially multiple tasks by specifying at least a status and priority
-#    Given user specifies <Status> and <Priority>
-#    When user patches an existing task
-#    Then the status code is 204
-#    Examples:
-#      | Status                  | Priority |
-#      | Not Started             | Low      |
-#      | Deferred                | Normal   |
-#      | Waiting on someone else | High     |
-#      | Completed               | Normal   |
-#      | In Progress             | Low      |
-
+  @UpdateTasks @Functional
+  Scenario Outline: User updates sequentially multiple tasks by specifying at least a status and priority
+    Given user specifies <Status> and <Priority>
+    When user patches an existing task
+    Then status code is 204
+    Examples:
+      | Status                  | Priority |
+      | Not Started             | Low      |
+      | Deferred                | Normal   |
+      | Waiting on someone else | High     |
+      | Completed               | Normal   |
+      | In Progress             | Low      |
 
   @UpdateTask @Functional
   Scenario: User updates a task by specifying status, priority and description

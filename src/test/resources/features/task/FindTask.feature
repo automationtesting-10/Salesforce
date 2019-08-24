@@ -1,4 +1,4 @@
-Feature: Manage Tasks in Salesforce
+Feature: Find specific Task in Salesforce
 
   @FindTask @Acceptance
   Scenario: A user searches for an existing task
