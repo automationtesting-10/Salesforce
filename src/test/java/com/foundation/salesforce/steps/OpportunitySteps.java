@@ -52,7 +52,6 @@ public class OpportunitySteps {
         opportunityApi = OpportunityApi.getInstance();
     }
 
-
     /**
      * Sets a map according to input map.
      *
