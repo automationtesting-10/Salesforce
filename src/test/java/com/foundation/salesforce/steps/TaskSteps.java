@@ -102,7 +102,7 @@ public class TaskSteps {
     /**
      * Checks the resulting status code.
      */
-    @Then("status code is (\\d+)")
+    @Then("status code is ([\\d]{3})")
     public void verify_status_code(int statusCode){
         Assert.assertEquals(context.getResponse().getStatusCode(), statusCode);
     }
