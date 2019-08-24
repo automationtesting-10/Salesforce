@@ -5,6 +5,7 @@ import com.foundation.salesforce.entities.Context;
 import com.foundation.salesforce.entities.Opportunity;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import io.restassured.response.Response;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,9 @@ import java.util.Map;
 public class OpportunityHooks {
 
     private final Context context;
-    private Opportunity opportuniy;
+    private Opportunity opportunity;
+    private OpportunityApi opportunityApi;
+    private Response response;
 
     /**
      * Constructor of class.
@@ -27,7 +30,8 @@ public class OpportunityHooks {
      */
     public OpportunityHooks(Context context) {
         this.context = context;
-        this.opportuniy = context.getOpportunity();
+        this.opportunity = context.getOpportunity();
+        opportunityApi = OpportunityApi.getInstance();
     }
 
     /**
@@ -35,16 +39,21 @@ public class OpportunityHooks {
      */
     @After("@deleteNewOpportunity")
     public void afterScenarioDelete() {
-        OpportunityApi.getInstance().deleteOpportunityById(opportuniy.getId());
+        opportunityApi.deleteOpportunityById(opportunity.getId());
     }
 
     /**
-     * Creates a contact before scenario.
+     * Creates a opportunity before scenario.
      */
-    @Before("@create-contact")
-    public void beforeScenario() {
-        Map<String,String> createNewContat = new HashMap<>();
-        createNewContat.put("LastName", "Contact_Test");
-        contact.setId(ContactAPI.getInstance().createContact(createNewContat));
+    @Before("@createNewOpportunity")
+    public void beforeScenarioCreate() {
+        Map<String,String> createNewOpportunity = new HashMap<>();
+        createNewOpportunity.put("Name", "TestApi");
+        createNewOpportunity.put("CloseDate", "2019-01-01");
+        createNewOpportunity.put("StageName", "Prospecting");
+        opportunityApi.getInstance().setContent(createNewOpportunity);
+        response = opportunityApi.createOpportunity();
+        context.setResponse(response);
+        opportunity.setId(response.jsonPath().getString("id"));
     }
 }

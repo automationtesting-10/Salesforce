@@ -14,6 +14,7 @@ package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.OpportunityApi;
 import com.foundation.salesforce.core.restClient.RestClientApi;
+import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
 import com.foundation.salesforce.entities.Opportunity;
 import cucumber.api.PendingException;
@@ -51,27 +52,77 @@ public class OpportunitySteps {
         opportunityApi = OpportunityApi.getInstance();
     }
 
+
+    /**
+     * Sets a map according to input map.
+     *
+     * @param inputBody that is input data
+     */
     @Given("User set up the data:")
     public void SetUpTheData(Map<String, String> inputBody) {
         opportunityApi.setContent(inputBody);
     }
-//
-//    @When("User send request post to opportunity endpoint")
-//    public void SendRequestPostToOpportunityEndpoint() {
-//        this.response = opportunityApi.createOpportunity();
-//        opportunity.setId(response.jsonPath().getString("id"));
-//        this.response.prettyPrint();
-//    }
 
+    /**
+     * Checks the resulting status code.
+     *
+     * @param statusCode of integer type
+     */
     @Then("^User get a \"([^\"]*)\" status code as response$")
     public void GetAStatusCodeAsResponse(int statusCode) {
         Assert.assertEquals(response.getStatusCode(),statusCode);
     }
 
+    /**
+     * Sends through a method request the data needed a opportunity.
+     *
+     * @param method for end point
+     */
     @When("User send request (.*) to opportunity endpoint")
-    public void SendRequestPOSTToOpportunityEndpoint(String method) {
+    public void SendRequestMethodToOpportunityEndpoint(String method) {
         response = opportunityApi.opportunityResponse(method);
         opportunity.setId(response.jsonPath().getString("id"));
         this.response.prettyPrint();
     }
+
+    /**
+     * Checks the response obtained after creating a Opportunity.
+     *
+     * @param responseOpportunity a RestAssured response structure.
+     */
+    @And("The message of the response is:")
+    public void MessageOfTheResponseIs(Map<String, String> responseOpportunity) {
+        for (Map.Entry<String, String> field : responseOpportunity.entrySet()) {
+            Assert.assertEquals(response.jsonPath().get(field.getKey()).toString(), field.getValue());
+        }
+    }
+
+    /**
+     * Update an existing Task.
+     */
+    @When("User send request PATCH to new opportunity endpoint")
+    public void SendRequestPATCHToNewOpportunityEndpoint() {
+        response = opportunityApi.updateOpportunityById(opportunity.getId());
+        this.response.prettyPrint();
+    }
+
+    /**
+     * Delete an existing Task.
+     */
+    @When("User send request DELETE to new opportunity endpoint")
+    public void SendRequestDELETEToNewOpportunityEndpoint() {
+        this.response = opportunityApi.deleteOpportunityById(opportunity.getId());
+        this.response.prettyPrint();
+    }
+
+    /**
+     *
+     * @param schemaTypeName
+     */
+    @And("User verify response in the (.*)")
+    public void userVerifyResponseInTheOpportunityScheme(String schemaTypeName) {
+        boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
+        Assert.assertTrue(actual);
+    }
+
 }

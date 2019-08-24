@@ -33,7 +33,7 @@ public class OpportunityApi {
     private Response response;
 
     /**
-     * Constructor of AccountAPI.
+     * Constructor of OpportunityAPI.
      */
     protected OpportunityApi() {
         restClient = RestClientApi.getInstance();
@@ -43,14 +43,14 @@ public class OpportunityApi {
     /**
      * Returns the instance the opportunity API.
      *
-     * @return a account API.
+     * @return a opportunity API.
      */
     public static OpportunityApi getInstance() {
         return new OpportunityApi();
     }
 
     /**
-     * Add a deserialized json content to the body of 'request' Requestpecification attribute of this class.
+     * Add a deserialized json content to the body of 'request' Requestspecification attribute of this class.
      *
      * @param opportunityBody a flat deserialized String containing the key/value data to be provided to a POST or
      *      PATCH request.
@@ -60,7 +60,7 @@ public class OpportunityApi {
     }
 
     /**
-     * Add a json content to the body of 'request' Requestpecification attribute contained in a Map format.
+     * Add a json content to the body of 'request' Requestspecification attribute contained in a Map format.
      *
      * @param opportunityBody a Map structure containing the key/value data to be provided to a POST or PATCH request.
      */
@@ -69,7 +69,7 @@ public class OpportunityApi {
     }
 
     /**
-     * Adds content to the body of 'request' Requestpecification attribute contained within a JSONObject.
+     * Adds content to the body of 'request' Requestspecification attribute contained within a JSONObject.
      *
      * @param opportunityBody a JSONObject containing the key/value data to be provided to a POST or PATCH request.
      */
@@ -78,7 +78,7 @@ public class OpportunityApi {
     }
 
     /**
-     * Return the response after requesting an opportunities.
+     * Return the response after requesting an Opportunities.
      *
      * @return the RestAssured response.
      */
@@ -100,9 +100,21 @@ public class OpportunityApi {
     }
 
     /**
+     * Update a previously created Task specified by its id.
+     *
+     * @param id uniquely identifies a given Opportunity
+     * @return a RestAssured Response structure as a result of a successful PATCH request.
+     */
+    public Response updateOpportunityById(String id) {
+        finalEndpoint = OPPORTUNITY_ENDPOINT.concat("/".concat(id));
+        response = restClient.patch(OPPORTUNITY_ENDPOINT);
+        return response;
+    }
+
+    /**
      * Delete a previously created Task specified by its id.
      *
-     * @param id uniquely identifies a given Task.
+     * @param id uniquely identifies a given Opportunity.
      * @return a RestAssured Response structure as a result of a successful DELETE request.
      */
     public Response deleteOpportunityById(String id) {
@@ -111,6 +123,12 @@ public class OpportunityApi {
         return response;
     }
 
+    /**
+     * Returns a response after requesting a post.
+     *
+     * @param method to do the request.
+     * @return a RestAssured Response structure.
+     */
     public Response opportunityResponse(String method) {
         return restClient.apiResponse(method,OPPORTUNITY_ENDPOINT);
     }
