@@ -61,7 +61,7 @@ public class TaskHooks {
     /**
      * Deletes any created Task(s) in order to keep the environment clean.
      */
-    @After(value = "@CreateTask, @CreateTasks, @UpdateTask, @UpdateTasks, @FindTask")
+    @After(value = "@CreateTask, @CreateTasks, @UpdateTask, @UpdateTasks, @FindTask" + "~@Negative")
     public void after_create_task() {
         taskApi.deleteTaskById(context.getTask().getId());
     }
