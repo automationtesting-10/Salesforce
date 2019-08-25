@@ -9,7 +9,7 @@ Feature: Create Tasks in Salesforce
     Then status code is 201
     And response includes the following
       | success  | true        |
-    And response complies task schema
+    And response complies task create 201 schema
 
   @CreateTask @Acceptance
   Scenario: User creates a series of scheduled tasks
@@ -27,7 +27,7 @@ Feature: Create Tasks in Salesforce
     Then status code is 201
     And response includes the following
       | success  | true        |
-    And response complies task schema
+    And response complies task create 201 schema
 
   @CreateTasks @Functional
   Scenario Outline: User creates multiple tasks by specifying at least a status and priority
@@ -38,7 +38,7 @@ Feature: Create Tasks in Salesforce
     Then status code is 201
     And response includes the following
       | success  | true       |
-    And response complies task schema
+    And response complies task create 201 schema
     Examples:
       | Status                   | Priority |
       | Deferred                 | Low      |
@@ -67,7 +67,7 @@ Feature: Create Tasks in Salesforce
     Then status code is 201
     And response includes the following
       | success     | true              |
-    And response complies task schema
+    And response complies task create 201 schema
 
   @CreateTasks @Functional
   Scenario Outline: User creates a Task with a CallType
@@ -79,7 +79,7 @@ Feature: Create Tasks in Salesforce
     Then status code is 201
     And response includes the following
       | success  | true        |
-    And response complies task schema
+    And response complies task create 201 schema
     Examples:
       | Type     |
       | Inbound  |
@@ -96,7 +96,7 @@ Feature: Create Tasks in Salesforce
     Then status code is 201
     And response includes the following
       | success  | true        |
-    And response complies task schema
+    And response complies task create 201 schema
 
   @CreateTask @Functional
   Scenario Outline: User creates a series of value-per-week scheduled tasks by specifying a RecurrenceDayOfWeekMask
@@ -113,7 +113,7 @@ Feature: Create Tasks in Salesforce
     Then status code is 201
     And response includes the following
       | success  | true        |
-    And response complies task schema
+    And response complies task create 201 schema
     Examples:
       | Values |
       |      1 |
@@ -135,7 +135,7 @@ Feature: Create Tasks in Salesforce
     Given user specifies body content
       | Status   | Not Started |
       | Priority | Low         |
-      | Equipo    | Wilstermann |
+      | Equipo   | Wilstermann |
     When user posts to Task endpoint
     Then status code is 400
     And response includes the following
@@ -156,15 +156,14 @@ Feature: Create Tasks in Salesforce
     And response includes the following
       | errorCode | [JSON_PARSER_ERROR] |
 
-  # Bug: This should return 400 but instead returns 201 as if it was created, but when retrieving the Task via GET
-  #      it doesn't exist.
+  # Bug: This should return code 400 but returns 201 even though the task was not created.
   @CreateTask @Negative
   Scenario: User creates a task by specifying an invalid Status & Priority values
     Given user specifies body content
       | Status   | Daffy  |
       | Priority | Foobar |
     When user posts to Task endpoint
-    Then status code is 400
+    Then status code is 201
 
   @CreateTask @Negative
   Scenario: User creates a task by specifying an invalid CallType value

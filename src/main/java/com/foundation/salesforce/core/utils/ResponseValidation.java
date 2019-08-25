@@ -21,6 +21,9 @@ import org.json.JSONTokener;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * ResponseValidation performs json schema validation against a json spec stored in resources directory.
@@ -59,6 +62,7 @@ final public class ResponseValidation {
     public boolean matchesJsonSchema(String schemaTypeName, Response response) {
         schemaTypeName = parseSchemaName(schemaTypeName);
         InputStream inputStream = null;
+        List violations = new ArrayList<>();
         try  {
             inputStream = getClass().getClassLoader()
                     .getResourceAsStream("schemas/" + schemaTypeName.concat(".json"));
@@ -67,6 +71,9 @@ final public class ResponseValidation {
             schema.validate(new JSONObject(response.jsonPath().getMap("$")));
             return true;
         } catch (ValidationException npvex) {
+            violations = npvex.getCausingExceptions().stream().map(ValidationException::getMessage)
+                    .collect(Collectors.toList());
+            EventLogger.debug(violations.toString(), npvex);
             return false;
         } finally {
             if (inputStream != null) {
