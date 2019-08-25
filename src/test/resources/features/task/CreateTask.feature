@@ -87,7 +87,19 @@ Feature: Create Tasks in Salesforce
       | Internal |
 
   @CreateTask @Functional
-  Scenario Outline: User creates a series of nth/week scheduled tasks specifying a RecurrenceDayOfWeekMask
+  Scenario: User creates a task by specifying status, priority and subject
+    Given user specifies body content
+      | Status   | Not Started |
+      | Priority | Low         |
+      | Subject  | Salesforce  |
+    When user posts to Task endpoint
+    Then status code is 201
+    And response includes the following
+      | success  | true        |
+    And response complies task schema
+
+  @CreateTask @Functional
+  Scenario Outline: User creates a series of value-per-week scheduled tasks by specifying a RecurrenceDayOfWeekMask
     Given user specifies body content
       | Status                  | Not Started                  |
       | Priority                | Low                          |
@@ -121,6 +133,8 @@ Feature: Create Tasks in Salesforce
   @CreateTask @Negative
   Scenario: User creates a task by specifying invalid key
     Given user specifies body content
+      | Status   | Not Started |
+      | Priority | Low         |
       | Equipo    | Wilstermann |
     When user posts to Task endpoint
     Then status code is 400
@@ -142,3 +156,24 @@ Feature: Create Tasks in Salesforce
     And response includes the following
       | errorCode | [JSON_PARSER_ERROR] |
 
+  # Bug: This should return 400 but instead returns 201 as if it was created, but when retrieving the Task via GET
+  #      it doesn't exist.
+  @CreateTask @Negative
+  Scenario: User creates a task by specifying an invalid Status & Priority values
+    Given user specifies body content
+      | Status   | Daffy  |
+      | Priority | Foobar |
+    When user posts to Task endpoint
+    Then status code is 400
+
+  @CreateTask @Negative
+  Scenario: User creates a task by specifying an invalid CallType value
+    Given user specifies body content
+      | Status   | Not Started |
+      | Priority | Low         |
+      | CallType | Wilstermann |
+    When user posts to Task endpoint
+    Then status code is 400
+    And response includes the following
+      | errorCode | [INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST]                         |
+      | message   | [Call Type: bad value for restricted picklist field: Wilstermann] |
