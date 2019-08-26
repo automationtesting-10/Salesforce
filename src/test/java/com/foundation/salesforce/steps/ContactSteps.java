@@ -29,7 +29,7 @@ import java.util.Map;
  * @author Jesus Menacho
  * @version 1.0
  */
-public class ContactAcceptanceSteps {
+public class ContactSteps {
     private RestClientApi requestManager;
     private ContactApi contactApi;
     Contact contact = new Contact();
@@ -64,7 +64,7 @@ public class ContactAcceptanceSteps {
     /**
      * Method to let compare a recuest.
      *
-     * @param statusCode add
+     * @param statusCode to let me put the status code that want to compare.
      */
     @Then("User get a {string} status code")
     public void userGetAStatusCode(String statusCode) {
@@ -74,7 +74,7 @@ public class ContactAcceptanceSteps {
     /**
      * Method to led a specifies a new contact.
      *
-     * @param inputContent
+     * @param inputContent specified as data table in gherkin feature file.
      */
     @Given("User specifies new contact with firstName")
     public void userSpecifiesNewContactWithFirstName(Map<String, String> inputContent) {
@@ -110,7 +110,7 @@ public class ContactAcceptanceSteps {
     }
 
     /**
-     * Mehto let send a recuest to contact with first name and email.
+     * Method let send a recuest to contact with first name and email.
      */
     @When("User send de request post to contact endpoint with firstName, email")
     public void userSendDeRequestPostToContactEndpointWithFirstNameEmail() {
@@ -130,7 +130,7 @@ public class ContactAcceptanceSteps {
     /**
      * Method to let user specifies new contact with first name, email and title.
      *
-     * @param inputContent 
+     * @param inputContent the input is HasMap that containt the value firstName, email, title.
      */
     @Given("User specifies new contact with firstName, email, title")
     public void userSpecifiesNewContactWithFirstNameEmailTitle(Map<String, String> inputContent) {
@@ -167,11 +167,11 @@ public class ContactAcceptanceSteps {
     /**
      * Method to le Delete a contact by id.
      *
-     * @param arg0
+     * @param contactID
      */
     @When("User deletes a Contact by Id (.*)")
-    public void userDeletesAContactByIdQIMRlqEAG(int arg0) {
-        response = requestManager.delete(EndPoints.CONTACT_ENDPOINT + "/" + arg0);
+    public void userDeletesAContactByIdQIMRlqEAG(int contactID) {
+        response = requestManager.delete(EndPoints.CONTACT_ENDPOINT + "/" + contactID);
         response.prettyPrint();
     }
 
@@ -187,11 +187,11 @@ public class ContactAcceptanceSteps {
     /**
      * Method to led find a contact by id.
      *
-     * @param arg0
+     * @param contactID
      */
     @When("User finds a contact by Id (.*)")
-    public void userFindsAContactByIdQIMKLeEA(int arg0) {
-        response = requestManager.get(EndPoints.CONTACT_ENDPOINT + "/" + arg0);
+    public void userFindsAContactByIdQIMKLeEA(int contactID) {
+        response = requestManager.get(EndPoints.CONTACT_ENDPOINT + "/" + contactID);
         response.prettyPrint();
     }
 
@@ -246,11 +246,11 @@ public class ContactAcceptanceSteps {
     /**
      * Method to let updates contact by id.
      *
-     * @param arg3
+     * @param contactID
      */
     @When("User updates contact by Id (.*)")
-    public void userUpdatesContactByIdFSA(int arg3) {
-        response = requestManager.get(EndPoints.CONTACT_ENDPOINT + "/" + arg3);
+    public void userUpdatesContactByIdFSA(int contactID) {
+        response = requestManager.get(EndPoints.CONTACT_ENDPOINT + "/" + contactID);
         response.prettyPrint();
 
     }
@@ -258,7 +258,7 @@ public class ContactAcceptanceSteps {
     /**
      * Method to let build specifications all right the user provider json.
      *
-     * @param jsonBodyString
+     * @param jsonBodyString in this
      */
     @Given("User provides the following json")
     public void userProvidesTheFollowingJson(String jsonBodyString) {
