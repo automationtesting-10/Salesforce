@@ -36,7 +36,7 @@ public class OpportunityHooks {
     /**
      * Deletes an opportunity by id after scenario.
      */
-    @After("@deleteNewOpportunity")
+    @After("@DeleteOpportunity")
     public void afterScenarioDelete() {
         opportunityApi.deleteOpportunityById(opportunity.getId());
     }
@@ -44,7 +44,7 @@ public class OpportunityHooks {
     /**
      * Creates a opportunity before scenario.
      */
-    @Before("@createNewOpportunity")
+    @Before("@CreateOpportunity")
     public void beforeScenarioCreate() {
         Map<String,String> createNewOpportunity = new HashMap<>();
         createNewOpportunity.put("Name", "TestApi");

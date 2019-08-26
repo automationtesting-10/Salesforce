@@ -23,6 +23,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.response.Response;
+import org.json.JSONObject;
 import org.testng.Assert;
 
 import java.util.Map;
@@ -42,7 +43,7 @@ public class OpportunitySteps {
     private Response response;
 
     /**
-     * Constructor of contact com.foundation.salesforce.steps sending the context.
+     * Constructor of opportunity com.foundation.salesforce.steps sending the context.
      *
      * @param context init the context.
      */
@@ -115,13 +116,26 @@ public class OpportunitySteps {
     }
 
     /**
+     * Validates Json schema of creation response.
      *
-     * @param schemaTypeName
+     * @param schemaTypeName is Schema to validate.
      */
     @And("User verify response in the (.*)")
-    public void userVerifyResponseInTheOpportunityScheme(String schemaTypeName) {
+    public void VerifyResponseInTheOpportunityScheme(String schemaTypeName) {
         boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
         Assert.assertTrue(actual);
     }
 
+    /**
+     * Sets a map according to input map.
+     *
+     * @param inputBody that is input data.
+     */
+    @Given("User set up all the data:")
+    public void SetUpAllTheData(Map<String, String> inputBody) {
+        JSONObject finalBody = new JSONObject(inputBody);
+        String auxAccountId = context.getAccount().getId();
+        finalBody.put("AccountId", auxAccountId);
+        opportunityApi.setContent(finalBody);
+    }
 }
