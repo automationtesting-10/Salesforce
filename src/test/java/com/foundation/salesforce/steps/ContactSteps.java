@@ -66,7 +66,7 @@ public class ContactSteps {
     }
 
     /**
-     * Method to let compare a recuest.
+     * Method to let compare a request.
      *
      * @param statusCode The status code that want to compare.
      */
@@ -191,7 +191,7 @@ public class ContactSteps {
     /**
      * Method to led find a contact by id.
      *
-     * @param contactID
+     * @param contactID parameter to contact id to compare.
      */
     @When("User finds a contact by Id (.*)")
     public void userFindsAContactByIdQIMKLeEA(int contactID) {
@@ -211,7 +211,7 @@ public class ContactSteps {
     /**
      * Method to le verify status code.
      *
-     * @param statusCode
+     * @param statusCode parameter the status code to compare.
      */
     @Then("The status code is (\\d+)")
     public void verify_status_code(int statusCode) {
@@ -221,7 +221,7 @@ public class ContactSteps {
     /**
      * Method to let set build specifications with the last name.
      *
-     * @param inputFields
+     * @param inputFields parameter the input field to compare.
      */
     @Given("User sets the lastName")
     public void userSetsTheLastName(Map<String, String> inputFields) {
@@ -240,7 +240,7 @@ public class ContactSteps {
     /**
      * Method to let set the last name to the contact.
      *
-     * @param inputFields
+     * @param inputFields parameter the input fields.
      */
     @Given("User sets lastName to the contact")
     public void userSetsLastNameToTheContact(Map<String, String> inputFields) {
@@ -250,7 +250,7 @@ public class ContactSteps {
     /**
      * Method to let updates contact by id.
      *
-     * @param contactID
+     * @param contactID parameter the contact id to let compare.
      */
     @When("User updates contact by Id (.*)")
     public void userUpdatesContactByIdFSA(int contactID) {
@@ -268,5 +268,4 @@ public class ContactSteps {
     public void userProvidesTheFollowingJson(String jsonBodyString) {
         requestManager.buildSpec(jsonBodyString);
     }
-
 }
