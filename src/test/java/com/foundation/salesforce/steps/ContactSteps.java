@@ -171,7 +171,7 @@ public class ContactSteps {
     /**
      * Method to le Delete a contact by id.
      *
-     * @param contactID 
+     * @param contactID parameter the contact id to compare.
      */
     @When("User deletes a Contact by Id (.*)")
     public void userDeletesAContactByIdQIMRlqEAG(int contactID) {
@@ -262,7 +262,7 @@ public class ContactSteps {
     /**
      * Method to let build specifications all right the user provider json.
      *
-     * @param jsonBodyString in this
+     * @param jsonBodyString in param type json to compare.
      */
     @Given("User provides the following json")
     public void userProvidesTheFollowingJson(String jsonBodyString) {
