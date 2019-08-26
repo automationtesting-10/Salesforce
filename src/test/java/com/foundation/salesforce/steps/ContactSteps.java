@@ -106,7 +106,7 @@ public class ContactSteps {
     /**
      * Method to let me specifies new contact with the first name and email.
      *
-     * @param inputContent 
+     * @param inputContent
      */
     @Given("User specifies new contact with firstName, email")
     public void userSpecifiesNewContactWithFirstNameEmail(Map<String, String> inputContent) {
@@ -152,7 +152,7 @@ public class ContactSteps {
     /**
      * Method to let get the statutus with the first name, email and title.
      *
-     * @param statusCode
+     * @param statusCode parameter the status code to compare.
      */
     @Then("User get a {string} status code with firstName, email, title")
     public void userGetAStatusCodeWithFirstNameEmailTitle(String statusCode) {
@@ -171,7 +171,7 @@ public class ContactSteps {
     /**
      * Method to le Delete a contact by id.
      *
-     * @param contactID
+     * @param contactID 
      */
     @When("User deletes a Contact by Id (.*)")
     public void userDeletesAContactByIdQIMRlqEAG(int contactID) {
