@@ -14,9 +14,10 @@ package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.AccountApi;
 import com.foundation.salesforce.core.restClient.RestClientApi;
-import com.foundation.salesforce.core.utils.EndPoints;
 import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
+import static com.foundation.salesforce.core.utils.EndPoints.ACCOUNT_ENDPOINT;
+
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -26,19 +27,15 @@ import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
 import io.restassured.response.Response;
 import org.testng.Assert;
-
 import java.util.Map;
 
-import static com.foundation.salesforce.core.utils.EndPoints.ACCOUNT_ENDPOINT;
-
 /**
- * AccountStep class with the steps for the account feature
+ * AccountStep class with the steps for the account feature.
  *
  * @author John Salazar Pinto
  * @version 1.0
  */
 public class AccountStep {
-
     private RestClientApi restClientApi;
     private AccountApi accountApi;
     private String idAccount;
@@ -86,7 +83,7 @@ public class AccountStep {
     }
 
     /**
-     * Creates the account
+     * Creates the account.
      */
     @When("^I create an Account with the name")
     public void iSendThePostWithTheName() {
@@ -96,7 +93,7 @@ public class AccountStep {
     }
 
     /**
-     * Deletes an account by id
+     * Deletes an account by id.
      */
     @When("^I delete an account that previusly was created$")
     public void iFillTheDeleteRequest() {
@@ -105,12 +102,10 @@ public class AccountStep {
         response.prettyPrint();
     }
 
-    @Then("I delete the account that previously was created is {int}")
-    public void iDeleteTheAccountThatPreviouslyWasCreatedIs(int statusCode) {
-        json = response.then().statusCode(statusCode);
-        Assert.assertEquals(response.getStatusCode(), statusCode);
-    }
-
+    /**
+     * Verifies response's status code.
+     * @param statusCode Expected status for delete account
+     */
     @Then("the status code is a number {int}")
     public void theStatusCodeIs(int statusCode) {
         json = response.then().statusCode(statusCode);

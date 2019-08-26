@@ -5,3 +5,4 @@ Feature: Modify an existing Account
     Given a user sets json object for the modify account
       | Name | employee |
     When the user updates existing account by Id
+    Then the status code is a number 204

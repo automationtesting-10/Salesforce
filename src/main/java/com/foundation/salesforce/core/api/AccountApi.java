@@ -14,9 +14,8 @@ package com.foundation.salesforce.core.api;
 
 import com.foundation.salesforce.core.restClient.Authentication;
 import com.foundation.salesforce.core.restClient.RestClientApi;
-import io.restassured.response.Response;
-
 import static com.foundation.salesforce.core.utils.EndPoints.ACCOUNT_ENDPOINT;
+import io.restassured.response.Response;
 
 /**
  * AccountApi class.
@@ -45,8 +44,8 @@ public class AccountApi {
      * Constructor of AccountAPI.
      */
     protected AccountApi() {
-            restClient = RestClientApi.getInstance();
-            restClient.setRequest(Authentication.requestSpecification());
+        restClient = RestClientApi.getInstance();
+        restClient.setRequest(Authentication.requestSpecification());
     }
 
     /**
@@ -60,6 +59,7 @@ public class AccountApi {
 
     /**
      * Returns the response from account API.
+     *
      * @return response api
      */
     public Response getAccount() {

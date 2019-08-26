@@ -123,7 +123,7 @@ public class RestClientApi {
      * Returns a response after requesting a post.
      *
      * @param httpMethod to do the request.
-     * @param endPoint   URI.
+     * @param endPoint URI.
      * @return a RestAssured Response structure.
      */
     public Response apiResponse(String httpMethod, final String endPoint) {
@@ -132,6 +132,7 @@ public class RestClientApi {
 
     /**
      * Returns a response after requesting a post.
+     *
      * @param endpoint URI.
      * @param valuesForTheBody body of the post
      * @return responce of the post

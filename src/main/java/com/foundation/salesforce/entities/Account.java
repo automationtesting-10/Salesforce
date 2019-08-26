@@ -19,7 +19,6 @@ package com.foundation.salesforce.entities;
  * @version 1.0
  */
 public class Account {
-
     private String id;
 
     /**
