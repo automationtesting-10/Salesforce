@@ -48,7 +48,7 @@ public class EventLogger {
      * @param message A customized message that briefly summarizes the situation.
      */
     public static void debug(String message) {
-        logger.info(message);
+        logger.debug(message);
     }
 
     /**
@@ -59,7 +59,7 @@ public class EventLogger {
      *                            Java Virtual Machine or by the Java throw statement.
      */
     public static void debug(String message, Throwable throwableException) {
-        logger.info(message, throwableException);
+        logger.debug(message, throwableException);
     }
 
     /**
@@ -88,7 +88,7 @@ public class EventLogger {
      * @param message A customized message that briefly summarizes the situation.
      */
     public static void warn(String message) {
-        logger.info(message);
+        logger.warn(message);
     }
 
     /**
@@ -99,7 +99,7 @@ public class EventLogger {
      *                            Java Virtual Machine or by the Java throw statement.
      */
     public static void warn(String message, Throwable throwableException) {
-        logger.info(message, throwableException);
+        logger.warn(message, throwableException);
     }
 
     /**
@@ -108,7 +108,7 @@ public class EventLogger {
      * @param message A customized message that briefly summarizes the situation.
      */
     public static void error(String message) {
-        logger.info(message);
+        logger.error(message);
     }
 
     /**
@@ -119,7 +119,7 @@ public class EventLogger {
      *                            Java Virtual Machine or by the Java throw statement.
      */
     public static void error(String message, Throwable throwableException) {
-        logger.info(message, throwableException);
+        logger.error(message, throwableException);
     }
 
     /**
@@ -128,7 +128,7 @@ public class EventLogger {
      * @param message A customized message that briefly summarizes the situation.
      */
     public static void fatal(String message) {
-        logger.info(message);
+        logger.fatal(message);
     }
 
     /**
@@ -139,6 +139,6 @@ public class EventLogger {
      *                            Java Virtual Machine or by the Java throw statement.
      */
     public static void fatal(String message, Throwable throwableException) {
-        logger.info(message, throwableException);
+        logger.fatal(message, throwableException);
     }
 }

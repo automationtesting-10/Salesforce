@@ -73,14 +73,14 @@ final public class ResponseValidation {
         } catch (ValidationException npvex) {
             violations = npvex.getCausingExceptions().stream().map(ValidationException::getMessage)
                     .collect(Collectors.toList());
-            EventLogger.debug(violations.toString(), npvex);
+            EventLogger.error(violations.toString(), npvex);
             return false;
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException ioex) {
+                    EventLogger.error(ioex.getMessage(), ioex);
                 }
             }
         }
