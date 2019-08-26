@@ -28,9 +28,9 @@ Feature: Manage Tasks in Salesforce
   @funtional
   Scenario: User creates a new user contact with firstName, email, title
     Given User specifies new contact with firstName, email, title
-      | lastName   |  testName   |
-      | firstname  |  testfirstName  |
-      | email   |  testemail  |
-      | title   |  title |
+      | lastName   |  testName      |
+      | firstname  |  testfirstName |
+      | email      |  testemail     |
+      | title      |  title         |
     When User send de request post to contact endpoint with firstName, email, title
     Then User get a "201" status code with firstName, email, title
