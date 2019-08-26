@@ -40,7 +40,7 @@ public final class ContactApi {
     /**
      * Method let get the new instance to the class.
      *
-     * @return ContactApi.
+     * @return ContactApi the variable return the contact.
      */
     public static ContactApi getInstance() {
         return new ContactApi();
