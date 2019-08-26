@@ -9,6 +9,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jala Foundation.
  */
+
 package com.foundation.salesforce.entities;
 
 /**
@@ -24,9 +25,9 @@ public class Contact {
     String Title;
 
     /**
-     * Method to return the lasName from the user.
+     * Method to return the lastName from the user.
      *
-     * @return lastName
+     * @return lastName the last name.
      */
     public String getLastName() {
         return lastName;
@@ -35,7 +36,7 @@ public class Contact {
     /**
      * Method to let lastName from the user.
      *
-     * @param lastName
+     * @param lastName the last name to the user..
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
@@ -44,7 +45,7 @@ public class Contact {
     /**
      * Method to let the return the firstName from the first name.
      *
-     * @return firstName
+     * @return firstName variable to return the last name.
      */
     public String getFirstName() {
         return firstName;
@@ -53,7 +54,7 @@ public class Contact {
     /**
      * Method to let the firstName to the user.
      *
-     * @param firstName
+     * @param firstName the last name parameter.
      */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -62,7 +63,7 @@ public class Contact {
     /**
      * Method to let get the email form the user.
      *
-     * @return
+     * @return getEmail email to the user return.
      */
     public String getEmail() {
         return email;
@@ -71,7 +72,7 @@ public class Contact {
     /**
      * Method to let get a email from the user.
      *
-     * @param email
+     * @param email the user email parameter.
      */
     public void setEmail(String email) {
         this.email = email;
@@ -80,7 +81,7 @@ public class Contact {
     /**
      * Method to let return the title to the user.
      *
-     * @return Title.
+     * @return Title from the user parameter.
      */
     public String getTitle() {
         return Title;
@@ -89,7 +90,7 @@ public class Contact {
     /**
      * Method to let a title to the user.
      *
-     * @param title
+     * @param title the title that had the user parameter.
      */
     public void setTitle(String title) {
         Title = title;
