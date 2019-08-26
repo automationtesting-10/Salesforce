@@ -71,7 +71,7 @@ public class LeadHooks {
     /**
      * Sets context's lead id after LeadCreation scenario.
      */
-    @After(value = "@LeadCreation, @SeveralLeadsCreation", order = 1)
+    @After(value = "@LeadCreation, @MultipleLeadsCreation", order = 1)
     public void saveLeadAfterCreation() {
         Map<String, String> creationResponse = context.getResponse().jsonPath().getMap("$");
         context.getLead().setId(creationResponse.get("id"));

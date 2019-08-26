@@ -21,6 +21,7 @@ import java.util.Date;
  * @author John Salazar Pinto.
  * @version 1.0
  */
+
 public abstract class ValueAppender {
     private static String suffix;
     private static String testerName = PropertiesReader.getInstance().getConfig().getTesterName();

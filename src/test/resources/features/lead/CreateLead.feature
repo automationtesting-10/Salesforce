@@ -11,8 +11,9 @@ Feature: Create lead
       | Vary | Accept-Encoding |
     And response body includes the following
       | success | true |
+    And response passes lead schema validation
 
-  @Functional
+  @Negative
   Scenario: Create a lead sending json with required LastName field missing
     Given a user sets json object
       | Company | TestCompany |
@@ -22,7 +23,7 @@ Feature: Create lead
       | errorCode | REQUIRED_FIELD_MISSING                  |
       | message   | Required fields are missing: [LastName] |
 
-  @Functional
+  @Negative
   Scenario: Create a lead sending json with required Company field missing
     Given a user sets json object
       | LastName | TestLastName |
@@ -32,7 +33,7 @@ Feature: Create lead
       | errorCode | REQUIRED_FIELD_MISSING                 |
       | message   | Required fields are missing: [Company] |
 
-  @Functional
+  @Negative
   Scenario: Create a lead sending json with any required field
     Given a user sets json object
       | FirstName | TestFirstName |
@@ -47,6 +48,11 @@ Feature: Create lead
     Given a user specifies <Company> and <LastName>
     When the user creates the lead
     Then the status code is 201
+    And headers include the following
+      | Vary | Accept-Encoding |
+    And response body includes the following
+      | success | true |
+    And response passes lead schema validation
     Examples:
       | Company      | LastName      |
       | TestCompany1 | TestLastName1 |

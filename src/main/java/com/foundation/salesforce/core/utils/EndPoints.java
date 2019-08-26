@@ -19,7 +19,7 @@ package com.foundation.salesforce.core.utils;
  * @version 1.0
  */
 public final class EndPoints {
-    public static String ACCOUNT_ENDPOINT = "/services/data/v46.0/sobjects/Account";
+    public static String ACCOUNT_ENDPOINT = "/services/data/v39.0/sobjects/Account";
     public static String OPPORTUNITY_ENDPOINT = "/services/data/v46.0/sobjects/Opportunity";
     public static String TASK_ENDPOINT = "/services/data/v46.0/sobjects/Task";
     public static String CONTACT_ENDPOINT = "/services/data/v39.0/sobjects/Contact";
