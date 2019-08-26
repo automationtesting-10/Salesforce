@@ -9,6 +9,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jala Foundation.
  */
+
 package com.foundation.salesforce.core.api;
 
 import com.foundation.salesforce.core.restClient.Authentication;
