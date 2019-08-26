@@ -46,7 +46,7 @@ public class ContactAcceptanceSteps {
     /**
      * Method to let a build a new contact.
      *
-     * @param inputContent
+     * @param inputContent specified as data table in gherkin feature file.
      */
     @Given("user specifies new contact$")
     public void userCreateNewContact(Map<String, String> inputContent) {
