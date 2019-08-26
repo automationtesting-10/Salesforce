@@ -1,5 +1,5 @@
 /*
- * @(#) TaskAcceptanceSteps.java Copyright (c) 2019 Jala Foundation.
+ * @(#) TaskSteps.java Copyright (c) 2019 Jala Foundation.
  * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
@@ -14,35 +14,34 @@ package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.TaskApi;
 import com.foundation.salesforce.core.utils.ResponseValidation;
-import com.foundation.salesforce.entities.Task;
+import com.foundation.salesforce.entities.Context;
 
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
+import org.json.JSONObject;
+
 import org.testng.Assert;
 
 import java.util.Map;
 
 /**
- * TaskAcceptanceSteps
+ * TaskSteps
  *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
-public class TaskAcceptanceSteps {
-    private ValidatableResponse json;
-    private Response response;
+public class TaskSteps {
+    private Context context;
     private TaskApi taskApi;
-    private Task task;
 
     /**
      * Class constructor.
-     * A class constructor instantiates a very shiny and beautiful TaskAcceptanceSteps object.
+     * A class constructor instantiates a very shiny and beautiful TaskSteps object.
      * Under normal conditions, a step definition class shouldn't have a constructor method,
      * but for Dependency injection purposes, we are defining a constructor that ultimately is to be
      * scanned and set up by our DI library, i.e. picocontainer.
@@ -50,10 +49,10 @@ public class TaskAcceptanceSteps {
      * If there's the need for a more specific comment here, please refer to the documentation on
      * dependency injection and specifically about the picocontainer library.
      *
-     * @param task An object Task taht is going to be instantiated by the DI library.
+     * @param context An object Task that is going to be instantiated by the DI library.
      */
-    public TaskAcceptanceSteps(Task task) {
-        this.task = task;
+    public TaskSteps(Context context) {
+        this.context = context;
         taskApi = TaskApi.getInstance();
     }
 
@@ -67,21 +66,45 @@ public class TaskAcceptanceSteps {
     }
 
     /**
+     *
+     * @param inputContent specified as data table in gherkin feature file.
+     */
+    @Given("user specifies json content")
+    public void user_specifies_content(String inputContent) {
+        taskApi.setContent(inputContent);
+    }
+
+    /**
      *  Sends through a POST request the data needed to create a Task.
      */
     @When("user posts to Task endpoint$")
     public void user_posts_content() {
-        this.response = taskApi.postContent();
-        task.setId(response.jsonPath().getString("id"));
-        this.response.prettyPrint();
+        Response response = taskApi.postContent();
+        context.setResponse(response);
+        context.getTask().setId(response.jsonPath().getString("id"));
+        response.prettyPrint();
+    }
+
+    /**
+     * Feeds multiple data values for the creation of multiple Task sObjects in SalesForce.
+     *
+     * @param status Initial status the Task will be granted.
+     * @param priority Initial priority level the Task will be granted.
+     */
+    @Given("user specifies (.*) and (.*)")
+    public void user_specifies_status_priority(String status, String priority) {
+        JSONObject jsonContent = new JSONObject();
+        jsonContent.put("Status", status);
+        jsonContent.put("Priority", priority);
+        taskApi.setContent(jsonContent);
     }
 
     /**
      * Checks the resulting status code.
      */
-    @Then("status code is (\\d+)")
+    @Then("status code is ([\\d]{3})")
     public void verify_status_code(int statusCode){
-        Assert.assertEquals(response.getStatusCode(), statusCode);
+        Assert.assertEquals(context.getResponse().getStatusCode(), statusCode);
     }
 
     /**
@@ -92,13 +115,13 @@ public class TaskAcceptanceSteps {
     @And("response includes the following$")
     public void response_includes(Map<String, String> response) {
         for (Map.Entry<String, String> field : response.entrySet()) {
-            Assert.assertEquals(this.response.jsonPath().get(field.getKey()).toString(), field.getValue());
+            Assert.assertEquals(context.getResponse().jsonPath().get(field.getKey()).toString(), field.getValue());
         }
     }
 
     @And("response complies (.*)")
     public void response_is_valid (String schemaTypeName) {
-        boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
+        boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, context.getResponse());
         Assert.assertTrue(actual);
     }
 
@@ -107,8 +130,9 @@ public class TaskAcceptanceSteps {
      */
     @When("user patches an existing task")
     public void user_patches_content() {
-        this.response = taskApi.patchContent(task.getId());
-        this.response.prettyPrint();
+        Response response = taskApi.patchContent(context.getTask().getId());
+        context.setResponse(response);
+        response.prettyPrint();
     }
 
     /**
@@ -116,10 +140,11 @@ public class TaskAcceptanceSteps {
      *
      * @param id the id of the Task intended to add content to its body.
      */
-    @When("user patches Task (.*)")
+    @When("user patches Task ([\\w]{18})")
     public void user_patches_content(String id) {
-        this.response = taskApi.patchContent(id);
-        this.response.prettyPrint();
+        Response response = taskApi.patchContent(id);
+        context.setResponse(response);
+        response.prettyPrint();
     }
 
     /**
@@ -127,17 +152,19 @@ public class TaskAcceptanceSteps {
      */
     @When("user searches for an existing task")
     public void user_searches_existing(){
-        this.response = taskApi.findTaskById(task.getId());
-        this.response.prettyPrint();
+        Response response = taskApi.findTaskById(context.getTask().getId());
+        context.setResponse(response);
+        response.prettyPrint();
     }
 
     /**
      * Search a task based on its id.
      */
-    @When("user searches for task (.*)")
+    @When("user searches for task ([\\w]{18})")
     public void user_searches_for(String taskId){
-        this.response = taskApi.findTaskById(taskId);
-        this.response.prettyPrint();
+        Response response = taskApi.findTaskById(taskId);
+        context.setResponse(response);
+        response.prettyPrint();
     }
 
     /**
@@ -145,17 +172,19 @@ public class TaskAcceptanceSteps {
      */
     @When("user makes a delete request for an existing task")
     public void user_makes_delete_request_existing(){
-        this.response = taskApi.deleteTaskById(task.getId());
-        this.response.prettyPrint();
+        Response response = taskApi.deleteTaskById(context.getTask().getId());
+        context.setResponse(response);
+        response.prettyPrint();
     }
 
     /**
      * Delete a Task based on its id string.
      */
-    @When("user makes a delete request for task (.*)")
+    @When("user makes a delete request for task ([\\w]{18})")
     public void user_makes_delete_request(String taskId){
-        this.response = taskApi.deleteTaskById(taskId);
-        this.response.prettyPrint();
+        Response response = taskApi.deleteTaskById(taskId);
+        context.setResponse(response);
+        response.prettyPrint();
     }
 
     /**
@@ -163,7 +192,8 @@ public class TaskAcceptanceSteps {
      */
     @When("user makes a get request to endpoint")
     public void user_retrieves_summary() {
-        this.response = taskApi.retrieveSummaryForTask();
-        this.response.prettyPrint();
+        Response response = taskApi.retrieveSummaryForTask();
+        context.setResponse(response);
+        response.prettyPrint();
     }
 }
