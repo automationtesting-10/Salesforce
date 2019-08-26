@@ -17,7 +17,7 @@ import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
 import com.foundation.salesforce.entities.Opportunity;
-import cucumber.api.PendingException;
+
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -55,7 +55,7 @@ public class OpportunitySteps {
     /**
      * Sets a map according to input map.
      *
-     * @param inputBody that is input data
+     * @param inputBody that is input data.
      */
     @Given("User set up the data:")
     public void SetUpTheData(Map<String, String> inputBody) {
@@ -75,7 +75,7 @@ public class OpportunitySteps {
     /**
      * Sends through a method request the data needed a opportunity.
      *
-     * @param method for end point
+     * @param method for end point.
      */
     @When("User send request (.*) to opportunity endpoint")
     public void SendRequestMethodToOpportunityEndpoint(String method) {
