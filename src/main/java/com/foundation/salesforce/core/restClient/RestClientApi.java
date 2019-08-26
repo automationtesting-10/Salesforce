@@ -16,6 +16,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -127,6 +128,18 @@ public class RestClientApi {
      */
     public Response apiResponse(String httpMethod, final String endPoint) {
         return given().spec(request).when().request(httpMethod, endPoint);
+    }
+
+    /**
+     * Returns a response after requesting a post.
+     *
+     * @param endpoint URI.
+     * @param valuesForTheBody body of the post
+     * @return responce of the post
+     * @throws JSONException
+     */
+    public Response apiResponsePost(final String endpoint, JSONObject valuesForTheBody) {
+        return given().spec(request.body(valuesForTheBody.toString())).post(endpoint);
     }
 
     /**

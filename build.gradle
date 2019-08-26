@@ -15,7 +15,7 @@ plugins {
 }
 
 dependencies {
-    implementation 'io.rest-assured:rest-assured:4.0.0'    
+    implementation 'io.rest-assured:rest-assured:4.0.0'
     testCompile 'io.cucumber:cucumber-java:4.3.1'
     testCompile group: 'info.cukes', name: 'cucumber-picocontainer', version: '1.2.5'
     compile group: 'io.cucumber', name: 'cucumber-testng', version: '4.7.1'
