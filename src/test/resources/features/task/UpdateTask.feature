@@ -41,7 +41,7 @@ Feature: Update Tasks in Salesforce
     When user patches an existing task
     Then status code is 204
 
-  @UpdateTasks @Functional
+  @UpdateTask @Functional
   Scenario Outline: User updates a Task with a CallType
     Given user specifies body content
       | CallType | <Type>      |

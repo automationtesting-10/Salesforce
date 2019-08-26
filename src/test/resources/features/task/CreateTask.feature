@@ -29,7 +29,7 @@ Feature: Create Tasks in Salesforce
       | success  | true        |
     And response complies task create 201 schema
 
-  @CreateTasks @Functional
+  @CreateTask @Functional
   Scenario Outline: User creates multiple tasks by specifying at least a status and priority
     Given user specifies body content
       | Status   | <Status>   |
@@ -69,7 +69,7 @@ Feature: Create Tasks in Salesforce
       | success     | true              |
     And response complies task create 201 schema
 
-  @CreateTasks @Functional
+  @CreateTask @Functional
   Scenario Outline: User creates a Task with a CallType
     Given user specifies body content
       | Status   | Not Started |

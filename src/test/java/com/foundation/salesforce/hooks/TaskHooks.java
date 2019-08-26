@@ -46,7 +46,7 @@ public class TaskHooks {
     /**
      * Creates a Task before the scenarios tagged as: @FindTask, @DeleteTask, @UpdateTask.
      */
-    @Before("@FindTask, @DeleteTask, @UpdateTask, @UpdateTasks")
+    @Before("@FindTask, @DeleteTask, @UpdateTask")
     public void before_delete_task() {
         JSONObject jsonContent = new JSONObject();
         jsonContent.put("Status","Not started");
@@ -61,7 +61,7 @@ public class TaskHooks {
     /**
      * Deletes any created Task(s) in order to keep the environment clean.
      */
-    @After(value = "@CreateTask, @CreateTasks, @UpdateTask, @UpdateTasks, @FindTask" + "~@Negative")
+    @After(value = "@CreateTask, @UpdateTask, @FindTask" + "~@Negative")
     public void after_create_task() {
         taskApi.deleteTaskById(context.getTask().getId());
     }
