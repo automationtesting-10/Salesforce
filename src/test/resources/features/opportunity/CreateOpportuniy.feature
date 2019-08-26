@@ -16,13 +16,16 @@ Feature: Create Opportunity in Salesforce
   @DeleteAccount @FindAccount @DeleteOpportunity
   Scenario: Creates a new opportunity with Opportunity Information date.
     Given User set up all the data:
-      | Name       | test_2.0                   |
-      | CloseDate  | 2019-02-02                 |
-      | StageName  | Prospecting                |
-      | Type       | Existing Customer - Upgrade|
-      | LeadSource | Web                        |
-      | IsPrivate  | true                       |
-      | Amount     | 123.0                      |
+      | Name       | test_2.0                    |
+      | CloseDate  | 2019-02-02                  |
+      | StageName  | Prospecting                 |
+      | Type       | Existing Customer - Upgrade |
+      | LeadSource | Web                         |
+      | IsPrivate  | true                        |
+      | Amount     | 123.0                       |
+      | Private    | true                        |
+      | Probability| 30.0                        |
+      | NextStep   | right                       |
     When User send request POST to opportunity endpoint
     Then User get a "201" status code as response
     And The message of the response is:
@@ -30,7 +33,7 @@ Feature: Create Opportunity in Salesforce
     And User verify response in the opportunity create schema
 
   @DeleteOpportunity @Functional
-  Scenario Outline: User creates multiple opportunity by specifying at least a Stage Name
+  Scenario Outline: Creates multiple opportunity by specifying at least a Stage Name
     Given User set up the data:
       | Name       | test_3.0     |
       | CloseDate  | 2019-03-03   |
@@ -52,5 +55,3 @@ Feature: Create Opportunity in Salesforce
     | Negotiation/Review  |
     | Closed Won          |
     | Closed Lost         |
-
-    Scenario:
