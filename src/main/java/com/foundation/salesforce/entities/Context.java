@@ -25,6 +25,7 @@ public class Context {
     private Task task;
     private Lead lead;
     private Response response;
+    private Account account;
 
     /**
      * Context for creation of the constructor.
@@ -33,6 +34,7 @@ public class Context {
         this.opportunity = new Opportunity();
         this.task = new Task();
         this.lead = new Lead();
+        this.account = new Account();
     }
 
     /**
@@ -51,6 +53,15 @@ public class Context {
      */
     public Task getTask() {
         return task;
+    }
+
+    /**
+     * Allows to get the Account.
+     *
+     * @return Account.
+     */
+    public Account getAccount() {
+        return account;
     }
 
     /**
