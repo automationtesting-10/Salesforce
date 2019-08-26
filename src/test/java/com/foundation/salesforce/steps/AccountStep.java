@@ -67,7 +67,8 @@ public class AccountStep {
      */
     @When("^I get all accounts created$")
     public void iSetUpAGETRequestToAccountEndpoint() {
-        accountApi.getInstance().getAccount();
+        response = accountApi.getInstance().getAccount();
+        context.setResponse(response);
     }
 
     /**
@@ -131,7 +132,6 @@ public class AccountStep {
     @When("the user updates existing account by Id")
     public void theUserUpdatesExistingLeadById() {
         response = restClientApi.patch(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
-        System.out.println(context.getAccount().getId());
         response.prettyPrint();
     }
 

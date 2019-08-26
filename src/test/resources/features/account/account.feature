@@ -5,3 +5,4 @@ Feature: Acceptance Accounts tests
 
   Scenario: Get Accounts
     When I get all accounts created
+    Then the status code is a number 200
