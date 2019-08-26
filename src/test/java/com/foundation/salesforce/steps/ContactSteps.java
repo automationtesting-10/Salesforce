@@ -68,7 +68,7 @@ public class ContactSteps {
     /**
      * Method to let compare a recuest.
      *
-     * @param statusCode to let me put the status code that want to compare.
+     * @param statusCode The status code that want to compare.
      */
     @Then("User get a {string} status code")
     public void userGetAStatusCode(String statusCode) {
@@ -96,7 +96,7 @@ public class ContactSteps {
     /**
      * Method let me get the status code with first name.
      *
-     * @param statusCode
+     * @param statusCode parameter to compare the status code.
      */
     @Then("User get a {string} status code with firstName")
     public void userGetAStatusCodeWithFirstName(String statusCode) {
@@ -106,7 +106,7 @@ public class ContactSteps {
     /**
      * Method to let me specifies new contact with the first name and email.
      *
-     * @param inputContent
+     * @param inputContent 
      */
     @Given("User specifies new contact with firstName, email")
     public void userSpecifiesNewContactWithFirstNameEmail(Map<String, String> inputContent) {
