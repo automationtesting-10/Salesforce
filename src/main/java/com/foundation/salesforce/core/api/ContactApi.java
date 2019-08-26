@@ -19,6 +19,8 @@ import io.restassured.response.Response;
 
 import java.util.Map;
 
+import static com.foundation.salesforce.core.utils.EndPoints.CONTACT_ENDPOINT;
+
 /**
  * Class let build endpoint.
  *
@@ -64,4 +66,34 @@ public final class ContactApi {
 
         restClientApi.buildSpec(Contactbody);
     }
+
+    /**
+     * Method to let delete account to end point.
+     * @param id uniquely identifies a given Task.
+     * @return a RestAssured Response structure as a result of a successful DELETE request.
+     */
+    public Response deleteTaskById(String id) {
+
+        return restClientApi.delete(CONTACT_ENDPOINT.concat("/").concat(id));
+    }
+
+    /**
+     * Returns a previously created Task specified by its id.
+     *
+     * @param id uniquely identifies a given Task.
+     * @return a RestAssured Response structure containing the values for all the keys associated to a given Task.
+     */
+    public Response findTaskById(String id) {
+        return restClientApi.get(CONTACT_ENDPOINT.concat("/").concat(id));
+    }
+
+    /**
+     * Returns an overview of Task's metadata as well as a list of the most recently used Task records.
+     *
+     * @return a RestAssured Response structure containing metada of the most recently used Task records.
+     */
+    public Response retrieveSummaryForTask() {
+        return restClientApi.get(CONTACT_ENDPOINT);
+    }
+
 }
