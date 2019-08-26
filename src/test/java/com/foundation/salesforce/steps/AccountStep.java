@@ -104,7 +104,8 @@ public class AccountStep {
 
     /**
      * Verifies response's status code.
-     * @param statusCode Expected status for delete account
+     *
+     * @param statusCode Expected status for delete account.
      */
     @Then("the status code is a number {int}")
     public void theStatusCodeIs(int statusCode) {

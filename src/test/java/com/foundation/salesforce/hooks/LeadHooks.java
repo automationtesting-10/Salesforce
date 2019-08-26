@@ -63,7 +63,7 @@ public class LeadHooks {
     /**
      * Deletes created lead after tagged scenarios.
      */
-    @After(value = "@LeadCreation, @FindLead, @UpdateLead", order = 0)
+    @After(value = "@LeadCreation, @FindLead, @UpdateLead, @MultipleLeadsCreation", order = 0)
     public void deleteLeadAfterCreation() {
         requestManager.delete(EndPoints.LEAD_ENDPOINT + "/" + context.getLead().getId());
     }
@@ -71,7 +71,7 @@ public class LeadHooks {
     /**
      * Sets context's lead id after LeadCreation scenario.
      */
-    @After(value = "@LeadCreation", order = 1)
+    @After(value = "@LeadCreation, @MultipleLeadsCreation", order = 1)
     public void saveLeadAfterCreation() {
         Map<String, String> creationResponse = context.getResponse().jsonPath().getMap("$");
         context.getLead().setId(creationResponse.get("id"));

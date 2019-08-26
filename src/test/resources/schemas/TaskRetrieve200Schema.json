@@ -1,0 +1,48 @@
+{
+  "recentItems": [
+    {
+      "Id": "string",
+      "Name": "string",
+      "attributes": {
+        "url": "string",
+        "type": "string"
+      }
+    }
+  ],
+  "objectDescribe": {
+    "name": "string",
+    "urls": {
+      "layouts": "string",
+      "sobject": "string",
+      "describe": "string",
+      "listviews": "string",
+      "rowTemplate": "string",
+      "quickActions": "string",
+      "defaultValues": "string",
+      "compactLayouts": "string",
+      "approvalLayouts": "string"
+    },
+    "label": "string",
+    "custom": "boolean",
+    "deletable": "boolean",
+    "isSubtype": "boolean",
+    "keyPrefix": "string",
+    "mergeable": "boolean",
+    "queryable": "boolean",
+    "createable": "boolean",
+    "layoutable": "boolean",
+    "mruEnabled": "boolean",
+    "searchable": "boolean",
+    "updateable": "boolean",
+    "feedEnabled": "boolean",
+    "hasSubtypes": "boolean",
+    "labelPlural": "string",
+    "triggerable": "boolean",
+    "undeletable": "boolean",
+    "activateable": "boolean",
+    "retrieveable": "boolean",
+    "customSetting": "boolean",
+    "replicateable": "boolean",
+    "deprecatedAndHidden": "boolean"
+  }
+}
