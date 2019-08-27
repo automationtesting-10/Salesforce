@@ -1,0 +1,53 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "array",
+  "title": "The Root Schema",
+  "items": {
+    "$id": "#/items",
+    "type": "object",
+    "title": "The Items Schema",
+    "required": [
+      "message",
+      "errorCode"
+    ],
+    "properties": {
+      "message": {
+        "$id": "#/items/properties/message",
+        "type": "string",
+        "title": "The Message Schema",
+        "default": "",
+        "examples": [
+          "Call Type: bad value for restricted picklist field: Wilstermann"
+        ],
+        "pattern": "^(.*)$"
+      },
+      "errorCode": {
+        "$id": "#/items/properties/errorCode",
+        "type": "string",
+        "title": "The Errorcode Schema",
+        "default": "",
+        "examples": [
+          "INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST"
+        ],
+        "pattern": "^(.*)$"
+      },
+      "fields": {
+        "$id": "#/items/properties/fields",
+        "type": "array",
+        "title": "The Fields Schema",
+        "items": {
+          "$id": "#/items/properties/fields/items",
+          "type": "string",
+          "title": "The Items Schema",
+          "default": "",
+          "examples": [
+            "CallType"
+          ],
+          "pattern": "^(.*)$"
+        }
+      }
+    }
+  }
+}
