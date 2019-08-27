@@ -176,7 +176,6 @@ public class OpportunitySteps {
     public void ConfiguresTheDataWithARandomNameOfCharacters(int lengthName, Map<String, String> inputBody) {
         JSONObject finalBody = new JSONObject(inputBody);
         String name = faker.number().digits(lengthName);
-        System.out.println("name : " + name);
         finalBody.put("Name", name);
         opportunityApi.setContent(finalBody);
     }
