@@ -29,8 +29,8 @@ import org.testng.annotations.AfterTest;
                 "html:target/cucumber-pretty",
                 "json:target/cucumber.json",
                 "rerun:target/rerun.txt"},
-        glue = {"com/foundation/salesforce/steps"},
-        features = {"src/test/resources/features/TaskAcceptance.feature"},
+        glue = {"com/foundation/salesforce/steps", "com/foundation/salesforce/hooks"},
+        features = {"src/test/resources/features/"},
         monochrome = true)
 public class RunCukesTest extends AbstractTestNGCucumberTests {
 
