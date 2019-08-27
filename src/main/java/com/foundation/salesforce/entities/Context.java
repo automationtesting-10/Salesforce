@@ -26,6 +26,7 @@ public class Context {
     private Lead lead;
     private Response response;
     private Account account;
+    private Case fCase;
 
     /**
      * Context for creation of the constructor.
@@ -35,6 +36,7 @@ public class Context {
         this.task = new Task();
         this.lead = new Lead();
         this.account = new Account();
+        this.fCase = new Case();
     }
 
     /**
@@ -62,6 +64,15 @@ public class Context {
      */
     public Account getAccount() {
         return account;
+    }
+
+    /**
+     * Allows to get the case.
+     *
+     * @return Case.
+     */
+    public Case getCase() {
+        return fCase;
     }
 
     /**
