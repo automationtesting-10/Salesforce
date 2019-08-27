@@ -17,6 +17,7 @@ import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.core.utils.EndPoints;
 import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
+
 import static com.foundation.salesforce.core.utils.EndPoints.ACCOUNT_ENDPOINT;
 
 import cucumber.api.java.en.And;
@@ -30,6 +31,7 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -47,6 +49,8 @@ public class AccountStep {
     private RequestSpecification request;
     private JSONObject bodyData;
     private Context context;
+    private Map<String, String> accountMap;
+
 
     /**
      * Initializes the class setting the context.
@@ -186,5 +190,61 @@ public class AccountStep {
             softAssert.assertEquals(responseFirstElement.get(field.getKey()), field.getValue());
         }
         softAssert.assertAll();
+    }
+    
+    /**
+     * Verifies response headers.
+     *
+     * @param headerFields - Expected headers and values.
+     */
+    @And("the headers include the following")
+    public void headersIncludeTheFollowing(Map<String, String> headerFields) {
+        SoftAssert softAssert = new SoftAssert();
+        for (Map.Entry<String, String> field : headerFields.entrySet()) {
+            softAssert.assertEquals(response.getHeader(field.getKey()), field.getValue());
+        }
+        softAssert.assertAll();
+    }
+
+    /**
+     * Verifies response's json body.
+     *
+     * @param bodyFields - Expected fields and values.
+     */
+    @And("the response body includes the following")
+    public void responseIncludesTheFollowing(Map<String, String> bodyFields) {
+        SoftAssert softAssert = new SoftAssert();
+        for (Map.Entry<String, String> field : bodyFields.entrySet()) {
+            softAssert.assertEquals(response.jsonPath().get(field.getKey()).toString(), field.getValue());
+        }
+        softAssert.assertAll();
+    }
+
+    @Given("a user specifies <Name>")
+    public void aUserSpecifiesName(String name) {
+        restClientApi = RestClientApi.getInstance();
+        accountMap = new HashMap<>();
+        accountMap.put("Name", name);
+        restClientApi.buildSpec(accountMap);
+    }
+
+
+    @When("user posts to Account endpoint")
+    public void userPostsToAccountEndpoint() {
+        response = restClientApi.post(ACCOUNT_ENDPOINT);
+        context.setResponse(response);
+        context.getAccount().setId(response.jsonPath().getString("id"));
+        response.prettyPrint();
+    }
+
+    /**
+     *
+     * @param inputContent specified as data table for the body.
+     */
+    @Given("user specifies account body content$")
+    public void user_specifies_content(Map<String, String> inputContent) {
+        accountApi.getInstance().getAccount();
+        restClientApi = RestClientApi.getInstance();
+        restClientApi.buildSpec(inputContent);
     }
 }
