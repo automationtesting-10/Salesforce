@@ -232,7 +232,9 @@ public class LeadsSteps {
      */
     @And("response passes (.*) validation")
     public void response_is_valid (String schemaTypeName) {
-        boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
+       // boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
+       // Assert.assertTrue(actual);
+        boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, context.getResponse());
         Assert.assertTrue(actual);
     }
 
