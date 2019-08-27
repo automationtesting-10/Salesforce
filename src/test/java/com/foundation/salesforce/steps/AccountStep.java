@@ -14,6 +14,7 @@ package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.AccountApi;
 import com.foundation.salesforce.core.restClient.RestClientApi;
+import com.foundation.salesforce.core.utils.EndPoints;
 import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
 import static com.foundation.salesforce.core.utils.EndPoints.ACCOUNT_ENDPOINT;
@@ -27,6 +28,8 @@ import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
+
 import java.util.Map;
 
 /**
@@ -152,5 +155,36 @@ public class AccountStep {
         response = restClientApi.post(ACCOUNT_ENDPOINT);
         response.prettyPrint();
         context.setResponse(response);
+    }
+
+    @When("a user finds an existing account by Id")
+    public void aUserFindsAnExistingAccountById() {
+        restClientApi = RestClientApi.getInstance();
+        response = restClientApi.get(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
+        response.prettyPrint();
+    }
+
+    @When("a user finds a account by Id {string}")
+    public void aUserFindsAAccountById(String leadId) {
+        restClientApi = RestClientApi.getInstance();
+        response = restClientApi.get(ACCOUNT_ENDPOINT + "/" + leadId);
+        response.prettyPrint();
+    }
+
+    @When("a user deletes a account by Id {string}")
+    public void aUserDeletesAAccountById(String leadId) {
+        restClientApi = RestClientApi.getInstance();
+        response = restClientApi.delete(ACCOUNT_ENDPOINT + "/" + leadId);
+        response.prettyPrint();
+    }
+
+    @And("response contains the following message")
+    public void responseContainsTheFollowing(Map<String, String> bodyFields) {
+        SoftAssert softAssert = new SoftAssert();
+        Map<String, String> responseFirstElement = response.jsonPath().getMap("[0]");
+        for (Map.Entry<String, String> field : bodyFields.entrySet()) {
+            softAssert.assertEquals(responseFirstElement.get(field.getKey()), field.getValue());
+        }
+        softAssert.assertAll();
     }
 }
