@@ -52,7 +52,7 @@ public final class ContactApi {
     /**
      * Method let set task body that let build request.
      *
-     * @param Contactbody
+     * @param Contactbody parameter return the contact the bodu json.
      */
     public void setContent(String Contactbody) {
         restClientApi.buildSpec(Contactbody);
@@ -61,7 +61,7 @@ public final class ContactApi {
     /**
      * Method let set task body that let build request.
      *
-     * @param Contactbody
+     * @param Contactbody parameter that contain the contact body json.
      */
     public void setContent(Map Contactbody) {
 
