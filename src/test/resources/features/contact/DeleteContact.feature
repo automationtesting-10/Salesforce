@@ -1,22 +1,20 @@
 Feature: Manage Tasks in Salesforce
-  Background: User is authenticated
-    Given a user sing in the web page SalesForce
-
   @Negative
-  Scenario: Delete a Contact by Id that has been already deleted
-    When User deletes a Contact by Id 123841239490100903
-    Then The status code is 404 contact
+  Scenario: Delete a Contact by Id that entity is deleted
+    When User finds a contact by Id 0033i000005UeY2AAK
+    Then The status code is 404
+    And response contains the following in contact
+      | errorCode | [ENTITY_IS_DELETED] |
 
-  @DeleteContact
-  Scenario: Delete a contact by correct Id
-    When User deletes an existing contact by Id
-    Then The status code is 204 ok delete contact
   @Negative
   Scenario: Find contact by Id that does not exist
-    When User finds a contact by Id 002340910190814900
+    When User finds a contact by Id 1133i000005UeY2AAK
     Then The status code is 404
+    And response contains the following in contact
+      | errorCode | [NOT_FOUND] |
 
-  @Negative
-  Scenario: Find lead by Id that is malformed
-    When User finds a contact by Id 0hn893023948293484
-    Then the status code is 400
+
+  @DeleteContact @Acceptance
+  Scenario: Delete a contact by correct Id
+    When User deletes an existing contact by Id
+    Then The status code is 204
