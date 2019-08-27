@@ -20,7 +20,7 @@ Feature: Creation funtional and acceptance
     Then the status code is a number 201
     And schema "account creation schema" is valid
 
-    @AccountCreation
+  @AccountCreation
   Scenario: Create a Account with a body incorrect
     Given I fill the request with the data required
       | Phone | 101010 |
@@ -48,3 +48,29 @@ Feature: Creation funtional and acceptance
       | account7 | Technology Partner          |
       | account8 | Other                       |
       | account8 | --None--                    |
+
+  @AccountCreation
+  Scenario Outline: User creates multiple accounts by specifying at least a status and priority
+    Given user specifies account body content
+      | Name     | <Name>     |
+      | Industry | <Industry> |
+    When user posts to Account endpoint
+    Then the status code is a number 201
+    And response includes the following
+      | success | true |
+    And response complies account create 201 schema
+    Examples:
+      | Name      | Industry           |
+      | account1  | Agriculture        |
+      | account2  | Apparel            |
+      | account3  | Banking            |
+      | account4  | Biothechnology     |
+      | account5  | Food & Beverage    |
+      | account6  | Healthcare         |
+      | account7  | Hospitality        |
+      | account8  | Insurance          |
+      | account9  | Retail             |
+      | account10 | Shipping           |
+      | account11 | Technology         |
+      | account12 | Telecommunications |
+      | account13 | --None--           |
