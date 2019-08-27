@@ -1,3 +1,4 @@
+@Lead
 Feature: Create lead
 
   @LeadCreation @Acceptance
@@ -9,9 +10,93 @@ Feature: Create lead
     Then the status code is 201
     And headers include the following
       | Vary | Accept-Encoding |
-    And response body includes the following
+    And the response includes the following
       | success | true |
-    And response passes lead schema validation
+    And the response passes lead creation schema validation
+
+  @LeadCreation @Functional
+  Scenario: Create a lead sending correct json with all required fields and some extra
+    Given a user sets json object
+      | Company         | TestCompany        |
+      | LastName        | TestLastName       |
+      | City            | TestCity           |
+      | Email           | emailtest@test.com |
+      | IsUnreadByOwner | true               |
+    When the user creates the lead
+    Then the status code is 201
+    And headers include the following
+      | Vary | Accept-Encoding |
+    And the response includes the following
+      | success | true |
+    And the response passes lead creation schema validation
+
+  @LeadCreation @Functional
+  Scenario Outline: Create a lead sending all required fields and optional fields with correct data
+    Given the user adds an optional field <Field> with <Value>
+    When the user creates the lead
+    Then the status code is 201
+    Examples:
+      | Field             | Value                  |
+      | City              | TestCity               |
+      | Email             | test@test.com          |
+      | Phone             | 123123123              |
+      | State             | TestState              |
+      | Title             | TestTitle              |
+      | Jigsaw            | TestJigsaw             |
+      | Rating            | Hot                    |
+      | Rating            | Warm                   |
+      | Rating            | Cold                   |
+      | Status            | Open - Not Contacted   |
+      | Status            | Working - Contacted    |
+      | Status            | Closed - Converted     |
+      | Status            | Closed - Not Converted |
+      | Street            | TestStreet             |
+      | Country           | TestCountry            |
+      | OwnerId           | 0053i000001OtatAAC     |
+      | Website           | TestWebsite            |
+      | Industry          | TestIndustry           |
+      | FirstName         | TestFirstName          |
+      | LeadSource        | TestLeadSource         |
+      | PostalCode        | 12313                  |
+      | Salutation        | Mr.                    |
+      | Salutation        | Ms.                    |
+      | Salutation        | Mrs.                   |
+      | Salutation        | Dr.                    |
+      | Salutation        | Prof.                  |
+      | Description       | TestDescription        |
+      | AnnualRevenue     | 123123123              |
+      | GeocodeAccuracy   | Address                |
+      | GeocodeAccuracy   | NearAddress            |
+      | GeocodeAccuracy   | Block                  |
+      | GeocodeAccuracy   | Street                 |
+      | GeocodeAccuracy   | ExtendedZip            |
+      | GeocodeAccuracy   | Zip                    |
+      | GeocodeAccuracy   | Neighborhood           |
+      | GeocodeAccuracy   | City                   |
+      | GeocodeAccuracy   | County                 |
+      | GeocodeAccuracy   | State                  |
+      | GeocodeAccuracy   | Unknown                |
+      | IsUnreadByOwner   | true                   |
+      | IsUnreadByOwner   | false                  |
+      | NumberOfEmployees | 123123                 |
+
+  @Negative
+  Scenario Outline: Create a lead sending all required fields and optional fields with incorrect data
+    Given the user adds an optional field <Field> with <Value>
+    When the user creates the lead
+    Then the status code is 400
+    Examples:
+      | Field             | Value              |
+      | Email             | test@testcom       |
+      | Rating            | TestRating         |
+      | Status            | TestStatus         |
+      | OwnerId           | 0053i000001OtatAA1 |
+      | AnnualRevenue     | RevenueTest        |
+      | GeocodeAccuracy   | Province           |
+      | IsUnreadByOwner   | True               |
+      | IsUnreadByOwner   | False              |
+      | Salutation        | TestSalutation     |
+      | NumberOfEmployees | testNumber         |
 
   @Negative
   Scenario: Create a lead sending json with required LastName field missing
@@ -19,7 +104,7 @@ Feature: Create lead
       | Company | TestCompany |
     When the user creates the lead
     Then the status code is 400
-    And response contains the following
+    And the response contains the following
       | errorCode | REQUIRED_FIELD_MISSING                  |
       | message   | Required fields are missing: [LastName] |
 
@@ -29,7 +114,7 @@ Feature: Create lead
       | LastName | TestLastName |
     When the user creates the lead
     Then the status code is 400
-    And response contains the following
+    And the response contains the following
       | errorCode | REQUIRED_FIELD_MISSING                 |
       | message   | Required fields are missing: [Company] |
 
@@ -39,7 +124,7 @@ Feature: Create lead
       | FirstName | TestFirstName |
     When the user creates the lead
     Then the status code is 400
-    And response contains the following
+    And the response contains the following
       | errorCode | REQUIRED_FIELD_MISSING                           |
       | message   | Required fields are missing: [LastName, Company] |
 
@@ -50,9 +135,9 @@ Feature: Create lead
     Then the status code is 201
     And headers include the following
       | Vary | Accept-Encoding |
-    And response body includes the following
+    And the response includes the following
       | success | true |
-    And response passes lead schema validation
+    And the response passes lead creation schema validation
     Examples:
       | Company      | LastName      |
       | TestCompany1 | TestLastName1 |
@@ -72,5 +157,12 @@ Feature: Create lead
     """
     When the user creates the lead
     Then the status code is 400
-    And response contains the following
+    And the response contains the following
       | errorCode | JSON_PARSER_ERROR |
+
+  @Negative
+  Scenario: Create a lead with empty body and not set contentType
+    When the user creates the lead
+    Then the status code is 415
+    And the response contains the following
+      | errorCode | UNSUPPORTED_MEDIA_TYPE |

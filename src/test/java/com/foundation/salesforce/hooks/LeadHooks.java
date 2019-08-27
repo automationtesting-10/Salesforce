@@ -48,7 +48,7 @@ public class LeadHooks {
     /**
      * Creates a lead before tagged scenarios.
      */
-    @Before("@DeleteLead, @FindLead, @UpdateLead")
+    @Before(value = "@DeleteLead, @FindLead, @UpdateLead, @DeleteDeleted, @UpdateDeleted", order = 0)
     public void createLeadBefore() {
         String company = ValueAppender.prefix() + "Company" + ValueAppender.suffix();
         requestManager.buildSpec("{\n" +
@@ -75,5 +75,13 @@ public class LeadHooks {
     public void saveLeadAfterCreation() {
         Map<String, String> creationResponse = context.getResponse().jsonPath().getMap("$");
         context.getLead().setId(creationResponse.get("id"));
+    }
+
+    /**
+     * Delete context's lead before delete a lead that has been already deleted scenario.
+     */
+    @Before(value = "@DeleteDeleted, @UpdateDeleted", order = 1)
+    public void deleteBeforeDelete() {
+        requestManager.delete(EndPoints.LEAD_ENDPOINT + "/" + context.getLead().getId());
     }
 }
