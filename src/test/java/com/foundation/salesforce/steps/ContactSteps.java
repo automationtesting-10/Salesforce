@@ -13,8 +13,8 @@
 package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.ContactApi;
-
 import com.foundation.salesforce.entities.Context;
+
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -91,7 +91,6 @@ public class ContactSteps {
      */
     @Given("User specifies new contact with firstName")
     public void userSpecifiesNewContactWithFirstName(Map<String, String> inputContent) {
-//        RestClientApi.getInstance().buildSpec(inputContent);
         contactApi.setContent(inputContent);
     }
 
