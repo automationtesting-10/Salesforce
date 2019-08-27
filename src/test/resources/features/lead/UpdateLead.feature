@@ -16,7 +16,7 @@ Feature: Update an existing lead
       | LastName | TestLastName |
     When the user updates lead by Id 00Q3i000002MQiqEA
     Then the status code is 404
-    And response contains the following
+    And the response contains the following
       | errorCode | NOT_FOUND |
 
   @Negative
@@ -26,7 +26,7 @@ Feature: Update an existing lead
       | LastName | TestLastName |
     When the user updates lead by Id 00Q3i000002MQiqEA1
     Then the status code is 400
-    And response contains the following
+    And the response contains the following
       | errorCode | MALFORMED_ID |
 
   @UpdateDeleted @Negative
@@ -37,7 +37,7 @@ Feature: Update an existing lead
     When the user updates existing lead by Id
     #When the user updates lead by Id 00Q3i000002MQiqEAG
     Then the status code is 404
-    And response contains the following
+    And the response contains the following
       | errorCode | ENTITY_IS_DELETED |
     #debería salir cross reference ñañaña
 
@@ -52,21 +52,15 @@ Feature: Update an existing lead
     """
     When the user updates existing lead by Id
     Then the status code is 400
-    And response contains the following
+    And the response contains the following
       | errorCode | JSON_PARSER_ERROR |
 
   @UpdateLead @Negative
   Scenario: Update a lead with empty body and not set contentType
     When the user updates existing lead by Id
     Then the status code is 400
-    And response contains the following
+    And the response contains the following
       | errorCode | INVALID_CONTENT_TYPE |
-
-    #poner content type pero no body
-  #{
-  #"message": "The HTTP entity body is required, but this request has no entity body.",
-  #"errorCode": "JSON_PARSER_ERROR"
-  #}
 
   @Negative
   Scenario: Update a lead from another owner
@@ -75,7 +69,7 @@ Feature: Update an existing lead
       | LastName | TestLastName |
     When the user updates lead by Id 00Q3i000001QlusEAC
     Then the status code is 404
-    And response contains the following
+    And the response contains the following
       | errorCode |  INVALID_CROSS_REFERENCE_KEY |
 
   @UpdateLead @Functional
@@ -131,4 +125,5 @@ Feature: Update an existing lead
       | AnnualRevenue     | RevenueTest        |
       | GeocodeAccuracy   | Province           |
       | IsUnreadByOwner   | True               |
+      | IsUnreadByOwner   | False              |
       | NumberOfEmployees | testNumber         |

@@ -10,9 +10,9 @@ Feature: Create lead
     Then the status code is 201
     And headers include the following
       | Vary | Accept-Encoding |
-    And response body includes the following
+    And the response includes the following
       | success | true |
-    And response passes lead creation schema validation
+    And the response passes lead creation schema validation
 
   @LeadCreation @Functional
   Scenario: Create a lead sending correct json with all required fields and some extra
@@ -26,9 +26,9 @@ Feature: Create lead
     Then the status code is 201
     And headers include the following
       | Vary | Accept-Encoding |
-    And response body includes the following
+    And the response includes the following
       | success | true |
-    And response passes lead creation schema validation
+    And the response passes lead creation schema validation
 
   @LeadCreation @Functional
   Scenario Outline: Create a lead sending all required fields and optional fields with correct data
@@ -83,6 +83,7 @@ Feature: Create lead
       | AnnualRevenue     | RevenueTest        |
       | GeocodeAccuracy   | Province           |
       | IsUnreadByOwner   | True               |
+      | IsUnreadByOwner   | False              |
       | NumberOfEmployees | testNumber         |
 
   @Negative
@@ -91,7 +92,7 @@ Feature: Create lead
       | Company | TestCompany |
     When the user creates the lead
     Then the status code is 400
-    And response contains the following
+    And the response contains the following
       | errorCode | REQUIRED_FIELD_MISSING                  |
       | message   | Required fields are missing: [LastName] |
 
@@ -101,7 +102,7 @@ Feature: Create lead
       | LastName | TestLastName |
     When the user creates the lead
     Then the status code is 400
-    And response contains the following
+    And the response contains the following
       | errorCode | REQUIRED_FIELD_MISSING                 |
       | message   | Required fields are missing: [Company] |
 
@@ -111,7 +112,7 @@ Feature: Create lead
       | FirstName | TestFirstName |
     When the user creates the lead
     Then the status code is 400
-    And response contains the following
+    And the response contains the following
       | errorCode | REQUIRED_FIELD_MISSING                           |
       | message   | Required fields are missing: [LastName, Company] |
 
@@ -122,9 +123,9 @@ Feature: Create lead
     Then the status code is 201
     And headers include the following
       | Vary | Accept-Encoding |
-    And response body includes the following
+    And the response includes the following
       | success | true |
-    And response passes lead creation schema validation
+    And the response passes lead creation schema validation
     Examples:
       | Company      | LastName      |
       | TestCompany1 | TestLastName1 |
@@ -144,19 +145,12 @@ Feature: Create lead
     """
     When the user creates the lead
     Then the status code is 400
-    And response contains the following
+    And the response contains the following
       | errorCode | JSON_PARSER_ERROR |
 
   @Negative
   Scenario: Create a lead with empty body and not set contentType
     When the user creates the lead
     Then the status code is 415
-    And response contains the following
-      | errorCode | UNSUPPORTED_MEDIA_TYPE |
-
-  @Negative
-  Scenario: Create a lead with empty body and contentType set
-    When the user creates the lead
-    Then the status code is 415
-    And response contains the following
+    And the response contains the following
       | errorCode | UNSUPPORTED_MEDIA_TYPE |
