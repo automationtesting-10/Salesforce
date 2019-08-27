@@ -13,7 +13,6 @@
 package com.foundation.salesforce.entities;
 
 import io.restassured.response.Response;
-import org.checkerframework.checker.units.qual.C;
 
 /**
  * Context class contains all objects that are shared between steps.
