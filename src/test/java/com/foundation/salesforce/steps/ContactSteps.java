@@ -13,8 +13,6 @@
 package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.ContactApi;
-import com.foundation.salesforce.core.restClient.RestClientApi;
-import com.foundation.salesforce.core.utils.EndPoints;
 
 import com.foundation.salesforce.entities.Context;
 import cucumber.api.java.en.And;
@@ -40,7 +38,7 @@ public class ContactSteps {
 
     /**
      * Class constructor.
-     * A class constructor instantiates a very shiny and beautiful TaskSteps object.
+     * A class constructor instantiates a very shiny and beautiful ContactSteps object.
      * Under normal conditions, a step definition class shouldn't have a constructor method,
      * but for Dependency injection purposes, we are defining a constructor that ultimately is to be
      * scanned and set up by our DI library, i.e. picocontainer.
