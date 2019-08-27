@@ -16,14 +16,11 @@ import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -35,8 +32,6 @@ import java.util.Map;
 public class CommonSteps {
     private Context context;
     private RestClientApi requestManager;
-    private Response response;
-    private Map<String, String> leadData;
 
     /**
      * Initializes the class setting the context.
@@ -107,7 +102,7 @@ public class CommonSteps {
      *
      * @param schemaTypeName - Schema to validate.
      */
-    @And("response passes (.*) validation")
+    @And("the response passes (.*) validation")
     public void response_is_valid (String schemaTypeName) {
         boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, context.getResponse());
         Assert.assertTrue(actual);
