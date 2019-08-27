@@ -20,6 +20,7 @@ import io.restassured.response.Response;
 import java.util.Map;
 
 import static com.foundation.salesforce.core.utils.EndPoints.CONTACT_ENDPOINT;
+import static com.foundation.salesforce.core.utils.EndPoints.TASK_ENDPOINT;
 
 /**
  * Class let build endpoint.
@@ -69,6 +70,49 @@ public final class ContactApi {
 
     /**
      * Method to let delete account to end point.
+     * @param id uniquely identifies a given contact.
+     * @return a RestAssured Response structure as a result of a successful DELETE request.
+     */
+    public Response deleteContactById(String id) {
+
+        return restClientApi.delete(CONTACT_ENDPOINT.concat("/").concat(id));
+    }
+
+    /**
+     * Returns a previously created contact specified by its id.
+     *
+     * @param id uniquely identifies a given contact.
+     * @return a RestAssured Response structure containing the values for all the keys associated to a given contact.
+     */
+    public Response findContactById(String id) {
+
+        return restClientApi.get(CONTACT_ENDPOINT.concat("/").concat(id));
+    }
+
+    /**
+     * Returns an overview of Task's metadata as well as a list of the most recently used Task records.
+     *
+     * @return a RestAssured Response structure containing metada of the most recently used Task records.
+     */
+    public Response retrieveSummaryForContact() {
+
+        return restClientApi.get(CONTACT_ENDPOINT);
+    }
+
+    /**
+     * Returns a RestAssured Response as a result of a successful POST request.
+     *
+     * @return Returns a RestAssured Response as a result of a successful PATCH request containing among other
+     * things, the id of the newly created Task.
+     */
+    public Response postContent() {
+
+        return restClientApi.post(CONTACT_ENDPOINT);
+    }
+
+    /**
+     * Delete a previously created Task specified by its id.
+     *
      * @param id uniquely identifies a given Task.
      * @return a RestAssured Response structure as a result of a successful DELETE request.
      */
@@ -78,22 +122,33 @@ public final class ContactApi {
     }
 
     /**
-     * Returns a previously created Task specified by its id.
+     * Returns a previously created contact specified by its id.
      *
-     * @param id uniquely identifies a given Task.
+     * @param id uniquely identifies a given contact.
      * @return a RestAssured Response structure containing the values for all the keys associated to a given Task.
      */
+
     public Response findTaskById(String id) {
+
         return restClientApi.get(CONTACT_ENDPOINT.concat("/").concat(id));
     }
 
     /**
-     * Returns an overview of Task's metadata as well as a list of the most recently used Task records.
+     * Returns a RestAssured Response as a result of a successful PATCH request.
      *
-     * @return a RestAssured Response structure containing metada of the most recently used Task records.
+     * @param id uniquely identifies the contact to be updated.
+     * @return Returns a RestAssured Response as a result of a successful PATCH request.
      */
-    public Response retrieveSummaryForTask() {
-        return restClientApi.get(CONTACT_ENDPOINT);
+    public Response patchContent(String id) {
+
+        return restClientApi.patch(CONTACT_ENDPOINT.concat("/").concat(id));
     }
 
+    /**
+     * Method return the response summary
+     * @return endPoint that have the contact endpoint.
+     */
+    public Response retrieveSummary() {
+        return restClientApi.get(CONTACT_ENDPOINT);
+    }
 }
