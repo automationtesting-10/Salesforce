@@ -68,7 +68,7 @@ public class OpportunitySteps {
      *
      * @param statusCode of integer type
      */
-    @Then("^User get a \"([^\"]*)\" status code as response$")
+    @Then("^User get a \"([\\d]{3})\" status code as response$")
     public void GetAStatusCodeAsResponse(int statusCode) {
         Assert.assertEquals(response.getStatusCode(),statusCode);
     }
@@ -137,5 +137,17 @@ public class OpportunitySteps {
         String auxAccountId = context.getAccount().getId();
         finalBody.put("AccountId", auxAccountId);
         opportunityApi.setContent(finalBody);
+    }
+
+    @When("User makes a DELETE request for opportunity (.*)")
+    public void MakeDeleteRequestForOpportunityTIAHOEAM(String opportunityId) {
+        Response response = opportunityApi.deleteOpportunityById(opportunityId);
+        context.setResponse(response);
+        response.prettyPrint();
+    }
+
+    @Given("User set up Json content:")
+    public void SetUpJsonContent(String inputContent) {
+        opportunityApi.setContent(inputContent);
     }
 }
