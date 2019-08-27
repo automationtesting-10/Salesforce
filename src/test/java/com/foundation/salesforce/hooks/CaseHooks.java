@@ -1,3 +1,15 @@
+/*
+ * @(#) CaseHooks.java Copyright (c) 2019 Jala Foundation.
+ * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of
+ * Jala Foundation, ("Confidential Information").  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Jala Foundation.
+ */
+
 package com.foundation.salesforce.hooks;
 
 import com.foundation.salesforce.core.restClient.Authentication;
@@ -11,6 +23,12 @@ import io.restassured.response.Response;
 
 import java.util.Map;
 
+/**
+ * CaseHooks class contains before and after actions for case endpoint.
+ *
+ * @author John Salazar Pinto
+ * @version 1.0
+ **/
 public class CaseHooks {
     private Context context;
     private RestClientApi restClientApi;

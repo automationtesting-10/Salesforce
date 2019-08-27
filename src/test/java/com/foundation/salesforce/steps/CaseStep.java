@@ -1,5 +1,5 @@
 /*
- * @(#) AccountStep.java Copyright (c) 2019 Jala Foundation.
+ * @(#) CaseStep.java Copyright (c) 2019 Jala Foundation.
  * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
@@ -12,7 +12,6 @@
 
 package com.foundation.salesforce.steps;
 
-import com.foundation.salesforce.core.api.AccountApi;
 import com.foundation.salesforce.core.api.CaseApi;
 import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.core.utils.ResponseValidation;
@@ -32,16 +31,14 @@ import java.util.Map;
 import static com.foundation.salesforce.core.utils.EndPoints.CASE_ENDPOINT;
 
 /**
- * AccountStep class with the steps for the account feature.
+ * CaseStep class with the steps for the case feature.
  *
  * @author John Salazar Pinto
  * @version 1.0
  */
 public class CaseStep {
     private RestClientApi restClientApi;
-    private AccountApi accountApi;
     private CaseApi caseApi;
-    private String idAccount;
     private Response response;
     private ValidatableResponse json;
     private RequestSpecification request;
@@ -58,17 +55,16 @@ public class CaseStep {
     }
 
 
-    @When("I create an case with the name")
+    @When("user creates an case with the type")
     public void iCreateAnCaseWithTheName() {
         response = restClientApi.post(CASE_ENDPOINT);
         response.prettyPrint();
         context.setResponse(response);
     }
 
-    @Given("I fill the request case with the data required")
+    @Given("user fills the request case with the data required")
     public void iFillTheRequest(Map<String, String> inputFields) {
         caseApi.getInstance().getCase();
-        //accountApi.getInstance().getAccount();
         restClientApi = RestClientApi.getInstance();
         restClientApi.buildSpec(inputFields);
     }
@@ -99,14 +95,14 @@ public class CaseStep {
         Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
-    @When("I delete an case that previusly was created")
+    @When("user deletes a case that previusly was created")
     public void iDeleteAnCaseThatPreviuslyWasCreated() {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.delete(CASE_ENDPOINT + "/" + context.getCase().getId());
         response.prettyPrint();
     }
 
-    @Given("a user sets json object for the modify case")
+    @Given("an user sets json object for the modify case")
     public void aUserSetsJsonObjectWithRequiredFields(Map<String, String> inputFields) {
         restClientApi = RestClientApi.getInstance();
         restClientApi.buildSpec(inputFields);
@@ -119,20 +115,20 @@ public class CaseStep {
         response.prettyPrint();
     }
 
-    @When("I get all case created")
+    @When("user gets all case created")
     public void iGetAllCaseCreated() {
-        response = accountApi.getInstance().getAccount();
+        response = caseApi.getInstance().getCase();
         context.setResponse(response);
     }
 
-    @When("a user finds an existing case by Id")
+    @When("an user finds an existing case by Id")
     public void aUserFindsAnExistingCaseById() {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.get(CASE_ENDPOINT + "/" + context.getCase().getId());
         response.prettyPrint();
     }
 
-    @When("a user finds a case by Id {string}")
+    @When("an user finds a case by Id {string}")
     public void aUserFindsACaseById(String leadId) {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.get(CASE_ENDPOINT + "/" + leadId);

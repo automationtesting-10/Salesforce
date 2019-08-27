@@ -1,5 +1,5 @@
 /*
- * @(#) AccountApi.java Copyright (c) 2019 Jala Foundation.
+ * @(#) CaseApi.java Copyright (c) 2019 Jala Foundation.
  * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
@@ -19,9 +19,9 @@ import io.restassured.response.Response;
 import static com.foundation.salesforce.core.utils.EndPoints.CASE_ENDPOINT;
 
 /**
- * AccountApi class.
+ * CaseApi class.
  *
- * @author John Salazar.
+ * @author John Salazar Pinto.
  * @version 1.0
  */
 public class CaseApi {
