@@ -22,8 +22,8 @@ public class Contact {
     String lastName;
     String firstName;
     String email;
-    String Title;
-
+    String title;
+    String id;
     /**
      * Method to return the lastName from the user.
      *
@@ -84,7 +84,7 @@ public class Contact {
      * @return Title from the user parameter.
      */
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     /**
@@ -93,6 +93,24 @@ public class Contact {
      * @param title the title that had the user parameter.
      */
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
+    }
+
+    /**
+     * Method return id to the user.
+     *
+     * @return id to the user.
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Method to let send the parameter id.
+     *
+     * @param id parameter from the user.
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 }
