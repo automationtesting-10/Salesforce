@@ -80,32 +80,53 @@ Feature: Create Opportunity in Salesforce
     | Closed Lost         |
 
   @DeleteOpportunity @Positive
-  Scenario: Creates an opportunity that the name is more than 120 characters long
-    Given User set up Json content:
-    """
-        {
-	      "Name": "this text is a test to see if 120 characters have been entered in this text, this text is a test to see if 120 character",
-	      "CloseDate": "2019-02-02",
-	      "StageName": "Closed Won"
-        }
-    """
+  Scenario: Creates an opportunity that the name is 120 characters long
+    Given User configures the data with a random name of 120 characters:
+      | CloseDate  | 2019-04-04   |
+      | StageName  | Prospecting  |
     When User send request POST to opportunity endpoint
     Then User get a "201" status code as response
       And The message of the response is:
         | success | true |
       And User verify response in the opportunity create schema
 
-  @Positive @Negative
+  @Negative
   Scenario: Creates an opportunity that the name is more than 120 characters long
+    Given User configures the data with a random name of 121 characters:
+      | CloseDate  | 2019-04-04   |
+      | StageName  | Prospecting  |
+    When User send request POST to opportunity endpoint
+    Then User get a "400" status code as response
+    And The message of the response is:
+      | errorCode | [STRING_TOO_LONG] |
+
+  @Negative
+  Scenario Outline: Creates multiple opportunities by specifying only the required values
+    Given User set up the data:
+      | Name      | <name>      |
+      | CloseDate | 2019-05-05  |
+      | StageName | <stageName> |
+    When User send request POST to opportunity endpoint
+    Then User get a "400" status code as response
+      And The message of the response is:
+        | errorCode | [REQUIRED_FIELD_MISSING] |
+    Examples:
+      | name | stageName   |
+      |      | Prospecting |
+      | work |             |
+      |      |             |
+
+  @CreateTask @Negative
+  Scenario: User creates a opportunity by specifying malformed json content
     Given User set up Json content:
     """
         {
-	      "Name": "this text is a test to see if 120 characters have been entered in this text, this text is a test to see if 120 characters",
-	      "CloseDate": "2019-02-02",
-	      "StageName": "Closed Won"
+          "Name" "TestApi",
+	      "CloseDate" "2000-05-08",
+	      "StageName" "Prospecting"
         }
     """
     When User send request POST to opportunity endpoint
     Then User get a "400" status code as response
     And The message of the response is:
-      | errorCode | [STRING_TOO_LONG] |
+      | errorCode | [JSON_PARSER_ERROR] |

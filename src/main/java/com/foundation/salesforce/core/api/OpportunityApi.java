@@ -100,19 +100,19 @@ public class OpportunityApi {
     }
 
     /**
-     * Update a previously created Task specified by its id.
+     * Update a previously created Opportunity specified by its id.
      *
      * @param id uniquely identifies a given Opportunity
      * @return a RestAssured Response structure as a result of a successful PATCH request.
      */
     public Response updateOpportunityById(String id) {
         finalEndpoint = OPPORTUNITY_ENDPOINT.concat("/".concat(id));
-        response = restClient.patch(OPPORTUNITY_ENDPOINT);
+        response = restClient.patch(finalEndpoint);
         return response;
     }
 
     /**
-     * Delete a previously created Task specified by its id.
+     * Delete a previously created Opportunity specified by its id.
      *
      * @param id uniquely identifies a given Opportunity.
      * @return a RestAssured Response structure as a result of a successful DELETE request.
@@ -120,6 +120,18 @@ public class OpportunityApi {
     public Response deleteOpportunityById(String id) {
         finalEndpoint = OPPORTUNITY_ENDPOINT.concat("/".concat(id));
         response = restClient.delete(finalEndpoint);
+        return response;
+    }
+
+    /**
+     * Find a previously created Opportunity specified by its id.
+     *
+     * @param id uniquely identifies a given Opportunity.
+     * @return a RestAssured Response structure as a result of a successful GET request.
+     */
+    public Response findOpportunityById(String id) {
+        finalEndpoint = OPPORTUNITY_ENDPOINT.concat("/".concat(id));
+        response = restClient.get(finalEndpoint);
         return response;
     }
 
