@@ -15,8 +15,9 @@ package com.foundation.salesforce.steps;
 import com.foundation.salesforce.core.api.ContactApi;
 import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.core.utils.EndPoints;
-import com.foundation.salesforce.entities.Contact;
 
+import com.foundation.salesforce.entities.Context;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -34,17 +35,24 @@ import java.util.Map;
  * @version 1.0
  */
 public class ContactSteps {
-    private RestClientApi requestManager;
     private ContactApi contactApi;
-    Contact contact = new Contact();
-    private Response response;
+    private Context context;
 
     /**
-     * Method to let a instance contactApi.
+     * Class constructor.
+     * A class constructor instantiates a very shiny and beautiful TaskSteps object.
+     * Under normal conditions, a step definition class shouldn't have a constructor method,
+     * but for Dependency injection purposes, we are defining a constructor that ultimately is to be
+     * scanned and set up by our DI library, i.e. picocontainer.
+     *
+     * If there's the need for a more specific comment here, please refer to the documentation on
+     * dependency injection and specifically about the picocontainer library.
+     *
+     * @param context An object Task that is going to be instantiated by the DI library.
      */
-    @Given("a user sing in the web page SalesForce")
-    public void autheticationUser() {
-        contactApi.getInstance();
+    public ContactSteps(Context context) {
+        this.context = context;
+        contactApi = ContactApi.getInstance();
     }
 
     /**
@@ -54,7 +62,7 @@ public class ContactSteps {
      */
     @Given("user specifies new contact$")
     public void userCreateNewContact(Map<String, String> inputContent) {
-        RestClientApi.getInstance().buildSpec(inputContent);
+        contactApi.setContent(inputContent);
     }
 
     /**
@@ -62,7 +70,10 @@ public class ContactSteps {
      */
     @When("User send de request post to contact endpoint")
     public void userSendDeRequestPostToContactEndpoint() {
-        response = RestClientApi.getInstance().post(EndPoints.CONTACT_ENDPOINT);
+        Response response = contactApi.postContent();
+        context.setResponse(response);
+        context.getContact().setId(response.jsonPath().getString("id"));
+        response.prettyPrint();
     }
 
     /**
@@ -72,7 +83,7 @@ public class ContactSteps {
      */
     @Then("User get a {string} status code")
     public void userGetAStatusCode(String statusCode) {
-        Assert.assertEquals(response.getStatusCode(), Integer.parseInt(statusCode));
+        Assert.assertEquals(context.getResponse().getStatusCode(), Integer.parseInt(statusCode));
     }
 
     /**
@@ -82,7 +93,8 @@ public class ContactSteps {
      */
     @Given("User specifies new contact with firstName")
     public void userSpecifiesNewContactWithFirstName(Map<String, String> inputContent) {
-        RestClientApi.getInstance().buildSpec(inputContent);
+//        RestClientApi.getInstance().buildSpec(inputContent);
+        contactApi.setContent(inputContent);
     }
 
     /**
@@ -90,7 +102,10 @@ public class ContactSteps {
      */
     @When("User send de request post to contact endpoint with firstName")
     public void userSendDeRequestPostToContactEndpointWithFirstName() {
-        response = RestClientApi.getInstance().post(EndPoints.CONTACT_ENDPOINT);
+        Response response = contactApi.postContent();
+        context.setResponse(response);
+        context.getContact().setId(response.jsonPath().getString("id"));
+        response.prettyPrint();
     }
 
     /**
@@ -100,7 +115,7 @@ public class ContactSteps {
      */
     @Then("User get a {string} status code with firstName")
     public void userGetAStatusCodeWithFirstName(String statusCode) {
-        Assert.assertEquals(response.getStatusCode(), Integer.parseInt(statusCode));
+        Assert.assertEquals(context.getResponse().getStatusCode(), Integer.parseInt(statusCode));
     }
 
     /**
@@ -110,7 +125,8 @@ public class ContactSteps {
      */
     @Given("User specifies new contact with firstName, email")
     public void userSpecifiesNewContactWithFirstNameEmail(Map<String, String> inputContent) {
-        RestClientApi.getInstance().buildSpec(inputContent);
+//        RestClientApi.getInstance().buildSpec(inputContent);
+        contactApi.setContent(inputContent);
     }
 
     /**
@@ -118,7 +134,10 @@ public class ContactSteps {
      */
     @When("User send de request post to contact endpoint with firstName, email")
     public void userSendDeRequestPostToContactEndpointWithFirstNameEmail() {
-        response = RestClientApi.getInstance().post(EndPoints.CONTACT_ENDPOINT);
+        Response response = contactApi.postContent();
+        context.setResponse(response);
+        context.getContact().setId(response.jsonPath().getString("id"));
+        response.prettyPrint();
     }
 
     /**
@@ -128,7 +147,7 @@ public class ContactSteps {
      */
     @Then("User get a {string} status code with firstName, email")
     public void userGetAStatusCodeWithFirstNameEmail(String statusCode) {
-        Assert.assertEquals(response.getStatusCode(), Integer.parseInt(statusCode));
+        Assert.assertEquals(context.getResponse().getStatusCode(), Integer.parseInt(statusCode));
     }
 
     /**
@@ -138,7 +157,8 @@ public class ContactSteps {
      */
     @Given("User specifies new contact with firstName, email, title")
     public void userSpecifiesNewContactWithFirstNameEmailTitle(Map<String, String> inputContent) {
-        RestClientApi.getInstance().buildSpec(inputContent);
+//        RestClientApi.getInstance().buildSpec(inputContent);
+        contactApi.setContent(inputContent);
     }
 
     /**
@@ -146,7 +166,10 @@ public class ContactSteps {
      */
     @When("User send de request post to contact endpoint with firstName, email, title")
     public void userSendDeRequestPostToContactEndpointWithFirstNameEmailTitle() {
-        response = RestClientApi.getInstance().post(EndPoints.CONTACT_ENDPOINT);
+        Response response = contactApi.postContent();
+        context.setResponse(response);
+        context.getContact().setId(response.jsonPath().getString("id"));
+        response.prettyPrint();
     }
 
     /**
@@ -156,7 +179,7 @@ public class ContactSteps {
      */
     @Then("User get a {string} status code with firstName, email, title")
     public void userGetAStatusCodeWithFirstNameEmailTitle(String statusCode) {
-        Assert.assertEquals(response.getStatusCode(), Integer.parseInt(statusCode));
+        Assert.assertEquals(context.getResponse().getStatusCode(), Integer.parseInt(statusCode));
     }
 
     /**
@@ -164,7 +187,8 @@ public class ContactSteps {
      */
     @When("User deletes an existing contact by Id")
     public void userDeletesAnExistingContactById() {
-        response = requestManager.delete(EndPoints.CONTACT_ENDPOINT + "/" + "00Q3i000002MRlqEA1");
+        Response response = contactApi.deleteTaskById(context.getContact().getId());
+        context.setResponse(response);
         response.prettyPrint();
     }
 
@@ -174,8 +198,9 @@ public class ContactSteps {
      * @param contactID parameter the contact id to compare.
      */
     @When("User deletes a Contact by Id (.*)")
-    public void userDeletesAContactByIdQIMRlqEAG(int contactID) {
-        response = requestManager.delete(EndPoints.CONTACT_ENDPOINT + "/" + contactID);
+    public void userDeletesAContactByIdQIMRlqEAG(String contactID) {
+        Response response = contactApi.deleteTaskById(contactID);
+        context.setResponse(response);
         response.prettyPrint();
     }
 
@@ -184,7 +209,8 @@ public class ContactSteps {
      */
     @When("User finds an existing Contact by Id")
     public void userFindsAnExistingContactById() {
-        response = requestManager.get(EndPoints.CONTACT_ENDPOINT + "/" + "");
+        Response response = contactApi.findTaskById(context.getContact().getId());
+        context.setResponse(response);
         response.prettyPrint();
     }
 
@@ -193,9 +219,10 @@ public class ContactSteps {
      *
      * @param contactID parameter to contact id to compare.
      */
-    @When("User finds a contact by Id (.*)")
-    public void userFindsAContactByIdQIMKLeEA(int contactID) {
-        response = requestManager.get(EndPoints.CONTACT_ENDPOINT + "/" + contactID);
+    @When("User finds a contact by Id ([\\w]{18})")
+    public void userFindsAContactByIdQIMKLeEA(String contactID) {
+        Response response = contactApi.deleteContactById(contactID);
+        context.setResponse(response);
         response.prettyPrint();
     }
 
@@ -204,7 +231,8 @@ public class ContactSteps {
      */
     @When("User retrieves the summary for Contact")
     public void userRetrievesTheSummaryForContact() {
-        response = requestManager.get(EndPoints.CONTACT_ENDPOINT);
+        Response response = contactApi.retrieveSummary();
+        context.setResponse(response);
         response.prettyPrint();
     }
 
@@ -215,7 +243,7 @@ public class ContactSteps {
      */
     @Then("The status code is (\\d+)")
     public void verify_status_code(int statusCode) {
-        Assert.assertEquals(response.getStatusCode(), statusCode);
+        Assert.assertEquals(context.getResponse().getStatusCode(), statusCode);
     }
 
     /**
@@ -225,7 +253,7 @@ public class ContactSteps {
      */
     @Given("User sets the lastName")
     public void userSetsTheLastName(Map<String, String> inputFields) {
-        requestManager.buildSpec(inputFields);
+        contactApi.setContent(inputFields);
     }
 
     /**
@@ -233,7 +261,8 @@ public class ContactSteps {
      */
     @When("User updates existing contact by Id")
     public void userUpdatesExistingContactById() {
-        response = requestManager.patch(EndPoints.CONTACT_ENDPOINT + "/" + "");
+        Response response = contactApi.patchContent(context.getContact().getId());
+        context.setResponse(response);
         response.prettyPrint();
     }
 
@@ -244,7 +273,7 @@ public class ContactSteps {
      */
     @Given("User sets lastName to the contact")
     public void userSetsLastNameToTheContact(Map<String, String> inputFields) {
-        requestManager.buildSpec(inputFields);
+        contactApi.setContent(inputFields);
     }
 
     /**
@@ -253,10 +282,10 @@ public class ContactSteps {
      * @param contactID parameter the contact id to let compare.
      */
     @When("User updates contact by Id (.*)")
-    public void userUpdatesContactByIdFSA(int contactID) {
-        response = requestManager.get(EndPoints.CONTACT_ENDPOINT + "/" + contactID);
+    public void userUpdatesContactByIdFSA(String contactID) {
+        Response response = contactApi.patchContent(contactID);
+        context.setResponse(response);
         response.prettyPrint();
-
     }
 
     /**
@@ -266,6 +295,20 @@ public class ContactSteps {
      */
     @Given("User provides the following json")
     public void userProvidesTheFollowingJson(String jsonBodyString) {
-        requestManager.buildSpec(jsonBodyString);
+        contactApi.setContent(jsonBodyString);
+    }
+
+    @And("response contains the following in contact")
+    public void responseContainsTheFollowingInContact(Map<String, String> bodyFields) {
+        for (Map.Entry<String, String> field : bodyFields.entrySet()) {
+            Assert.assertEquals(context.getResponse().jsonPath().get(field.getKey()).toString(), field.getValue());
+        }
+    }
+
+    @And("In response we can found the following contain")
+    public void inResponseWeCanFoundTheFollowingContain(Map<String, String> bodyFields) {
+        for (Map.Entry<String, String> field : bodyFields.entrySet()) {
+            Assert.assertEquals(context.getResponse().jsonPath().get(field.getKey()).toString(), field.getValue());
+        }
     }
 }
