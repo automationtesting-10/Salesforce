@@ -1,3 +1,4 @@
+@Lead
 Feature: Update an existing lead
 
   @UpdateLead @Acceptance
@@ -51,3 +52,10 @@ Feature: Update an existing lead
     Then the status code is 400
     And response contains the following
       | errorCode | JSON_PARSER_ERROR |
+
+  @UpdateLead @Negative
+  Scenario: Update a lead with empty body and not set contentType
+    When the user updates existing lead by Id
+    Then the status code is 400
+    And response contains the following
+      | errorCode | INVALID_CONTENT_TYPE |

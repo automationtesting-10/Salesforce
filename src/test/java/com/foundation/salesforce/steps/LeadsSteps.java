@@ -235,4 +235,20 @@ public class LeadsSteps {
         boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
         Assert.assertTrue(actual);
     }
+
+    @Given("a user sets json object with required fields")
+    public void aUserSetsJsonObjectWithRequiredFields(Map<String, String> requiredFields) {
+        leadData = new HashMap<>();
+        leadData = requiredFields;
+        System.out.println(leadData.toString());
+    }
+
+    @And("the user adds an optional field (.*) with (.*)")
+    public void addsAnOptionalFieldFieldWithValue(String fieldName, String value) {
+        leadData = new HashMap<>();
+        leadData.put("Company", "TestCompany");
+        leadData.put("LastName", "TestLastname");
+        leadData.put(fieldName, value);
+        requestManager.buildSpec(leadData);
+    }
 }

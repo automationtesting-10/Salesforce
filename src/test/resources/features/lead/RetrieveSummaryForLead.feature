@@ -1,3 +1,4 @@
+@Lead
 Feature: Retrieve summary for lead
 
   @Acceptance

@@ -1,3 +1,4 @@
+@Lead
 Feature: Find lead by Id
 
   @FindLead @Acceptance

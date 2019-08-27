@@ -1,3 +1,4 @@
+@Lead
 Feature: Delete lead by Id
 
   @DeleteLead @Acceptance
