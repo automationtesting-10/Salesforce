@@ -1,4 +1,5 @@
 Feature: Manage Tasks in Salesforce
+
   @UpdateContact @Acceptance
   Scenario: Update a Contact
     Given User sets the lastName

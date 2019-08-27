@@ -6,6 +6,7 @@ Feature: Manage Tasks in Salesforce
     | lastName   |  testName22   |
     When User send de request post to contact endpoint
     Then User get a "201" status code
+
   @CreateContact @funtional
   Scenario: User creates a new user contact with firstName
     Given User specifies new contact with firstName
