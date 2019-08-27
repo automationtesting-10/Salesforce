@@ -1,12 +1,32 @@
+/*
+ * @(#) ContactHooks.java Copyright (c) 2019 Jala Foundation.
+ * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
+ * All rights reserved.
+ *
+ * This software is the confidential and proprietary information of
+ * Jala Foundation, ("Confidential Information").  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Jala Foundation.
+ */
+
 package com.foundation.salesforce.hooks;
 
 import com.foundation.salesforce.core.api.ContactApi;
 import com.foundation.salesforce.core.utils.ValueAppender;
 import com.foundation.salesforce.entities.Context;
+
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+
 import io.restassured.response.Response;
 
+/**
+ * LeadHooks class contains before and after actions for lead endpoint.
+ *
+ * @author Jesus Menacho
+ * @version 1.0
+ **/
 public class ContactHooks {
     private Context context;
     private ContactApi contactApi;
