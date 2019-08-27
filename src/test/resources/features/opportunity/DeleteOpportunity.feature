@@ -10,12 +10,12 @@
     Scenario: Delete an opportunity that existed before
       When User makes a DELETE request for opportunity 0064P00000lbdzuQAA
       Then the status code is 404
-        And The message of the response is:
+        And the response includes the following
           | message | [entity is deleted] |
 
     @Negative
     Scenario: Delete a non-existent opportunity
       When User makes a DELETE request for opportunity 00T3i000005aHO0EAM
       Then the status code is 404
-      And The message of the response is:
+      And the response includes the following
         | message | [The requested resource does not exist] |

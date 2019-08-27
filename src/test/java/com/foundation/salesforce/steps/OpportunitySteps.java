@@ -66,16 +66,6 @@ public class OpportunitySteps {
     }
 
     /**
-     * Checks the resulting status code.
-     *
-     * @param statusCode of integer type
-     */
-    @Then("^User get a \"([\\d]{3})\" status code as response$")
-    public void GetAStatusCodeAsResponse(int statusCode) {
-        Assert.assertEquals(response.getStatusCode(),statusCode);
-    }
-
-    /**
      * Sends through a method request the data needed a opportunity.
      *
      * @param method for end point.
@@ -86,18 +76,6 @@ public class OpportunitySteps {
         opportunity.setId(response.jsonPath().getString("id"));
         context.setResponse(response);
         this.response.prettyPrint();
-    }
-
-    /**
-     * Checks the response obtained after creating a Opportunity.
-     *
-     * @param responseOpportunity a RestAssured response structure.
-     */
-    @And("The message of the response is:")
-    public void MessageOfTheResponseIs(Map<String, String> responseOpportunity) {
-        for (Map.Entry<String, String> field : responseOpportunity.entrySet()) {
-            Assert.assertEquals(response.jsonPath().get(field.getKey()).toString(), field.getValue());
-        }
     }
 
     /**
@@ -118,17 +96,6 @@ public class OpportunitySteps {
         response = opportunityApi.deleteOpportunityById(opportunity.getId());
         context.setResponse(response);
         this.response.prettyPrint();
-    }
-
-    /**
-     * Validates Json schema of creation response.
-     *
-     * @param schemaTypeName is Schema to validate.
-     */
-    @And("User verify response in the (.*)")
-    public void VerifyResponseInTheOpportunityScheme(String schemaTypeName) {
-        boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
-        Assert.assertTrue(actual);
     }
 
     /**
