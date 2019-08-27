@@ -1,3 +1,4 @@
+@Task
 Feature: Create Tasks in Salesforce
 
   @CreateTask @Acceptance
@@ -6,10 +7,10 @@ Feature: Create Tasks in Salesforce
       | Status   | Not Started |
       | Priority | Low         |
     When user posts to Task endpoint
-    Then status code is 201
-    And response includes the following
+    Then the status code is 201
+    And the response includes the following
       | success  | true        |
-    And response complies task create 201 schema
+    And the response passes task create 201 schema validation
 
   @CreateTask @Acceptance
   Scenario: User creates a series of scheduled tasks
@@ -24,10 +25,10 @@ Feature: Create Tasks in Salesforce
       | RecurrenceStartDateOnly | 2019-08-26T16:30:00.000+0000 |
       | RecurrenceEndDateOnly   | 2019-12-26T16:30:00.000+0000 |
     When user posts to Task endpoint
-    Then status code is 201
-    And response includes the following
+    Then the status code is 201
+    And the response includes the following
       | success  | true        |
-    And response complies task create 201 schema
+    And the response passes task create 201 schema validation
 
   @CreateTask @Functional
   Scenario Outline: User creates multiple tasks by specifying at least a status and priority
@@ -35,10 +36,10 @@ Feature: Create Tasks in Salesforce
       | Status   | <Status>   |
       | Priority | <Priority> |
     When user posts to Task endpoint
-    Then status code is 201
-    And response includes the following
+    Then the status code is 201
+    And the response includes the following
       | success  | true       |
-    And response complies task create 201 schema
+    And the response passes task create 201 schema validation
     Examples:
       | Status                   | Priority |
       | Deferred                 | Low      |
@@ -64,10 +65,10 @@ Feature: Create Tasks in Salesforce
       | Priority    | Low               |
       | Description | AT-10 API Testing |
     When user posts to Task endpoint
-    Then status code is 201
-    And response includes the following
+    Then the status code is 201
+    And the response includes the following
       | success     | true              |
-    And response complies task create 201 schema
+    And the response passes task create 201 schema validation
 
   @CreateTask @Functional
   Scenario Outline: User creates a Task with a CallType
@@ -76,10 +77,10 @@ Feature: Create Tasks in Salesforce
       | Priority | Low         |
       | CallType | <Type>      |
     When user posts to Task endpoint
-    Then status code is 201
-    And response includes the following
+    Then the status code is 201
+    And the response includes the following
       | success  | true        |
-    And response complies task create 201 schema
+    And the response passes task create 201 schema validation
     Examples:
       | Type     |
       | Inbound  |
@@ -93,10 +94,10 @@ Feature: Create Tasks in Salesforce
       | Priority | Low         |
       | Subject  | Salesforce  |
     When user posts to Task endpoint
-    Then status code is 201
-    And response includes the following
+    Then the status code is 201
+    And the response includes the following
       | success  | true        |
-    And response complies task create 201 schema
+    And the response passes task create 201 schema validation
 
   @CreateTask @Functional
   Scenario Outline: User creates a series of value-per-week scheduled tasks by specifying a RecurrenceDayOfWeekMask
@@ -110,10 +111,10 @@ Feature: Create Tasks in Salesforce
       | RecurrenceStartDateOnly | 2019-08-26T16:30:00.000+0000 |
       | RecurrenceEndDateOnly   | 2019-12-26T16:30:00.000+0000 |
     When user posts to Task endpoint
-    Then status code is 201
-    And response includes the following
+    Then the status code is 201
+    And the response includes the following
       | success  | true        |
-    And response complies task create 201 schema
+    And the response passes task create 201 schema validation
     Examples:
       | Values |
       |      1 |
@@ -137,10 +138,11 @@ Feature: Create Tasks in Salesforce
       | Priority | Low         |
       | Equipo   | Wilstermann |
     When user posts to Task endpoint
-    Then status code is 400
-    And response includes the following
+    Then the status code is 400
+    And the response includes the following
       | errorCode | [INVALID_FIELD]                                   |
       | message   | [No such column 'Equipo' on sobject of type Task] |
+    And the response passes task 400 schema validation
 
   @CreateTask @Negative
   Scenario: User creates a task by specifying malformed json content
@@ -152,18 +154,21 @@ Feature: Create Tasks in Salesforce
     }
     """
     When user posts to Task endpoint
-    Then status code is 400
-    And response includes the following
+    Then the status code is 400
+    And the response includes the following
       | errorCode | [JSON_PARSER_ERROR] |
+    And the response passes task 400 schema validation
 
   # Bug: This should return code 400 but returns 201 even though the task was not created.
+  @Bug
   @CreateTask @Negative
   Scenario: User creates a task by specifying an invalid Status & Priority values
     Given user specifies body content
       | Status   | Daffy  |
       | Priority | Foobar |
     When user posts to Task endpoint
-    Then status code is 201
+    Then the status code is 400
+    And the response passes task 400 schema validation
 
   @CreateTask @Negative
   Scenario: User creates a task by specifying an invalid CallType value
@@ -172,7 +177,8 @@ Feature: Create Tasks in Salesforce
       | Priority | Low         |
       | CallType | Wilstermann |
     When user posts to Task endpoint
-    Then status code is 400
-    And response includes the following
+    Then the status code is 400
+    And the response includes the following
       | errorCode | [INVALID_OR_NULL_FOR_RESTRICTED_PICKLIST]                         |
       | message   | [Call Type: bad value for restricted picklist field: Wilstermann] |
+    And the response passes task 400 schema validation

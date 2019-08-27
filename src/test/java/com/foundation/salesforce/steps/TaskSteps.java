@@ -100,32 +100,6 @@ public class TaskSteps {
     }
 
     /**
-     * Checks the resulting status code.
-     */
-    @Then("status code is ([\\d]{3})")
-    public void verify_status_code(int statusCode){
-        Assert.assertEquals(context.getResponse().getStatusCode(), statusCode);
-    }
-
-    /**
-     * Checks the response obtained after creating a Task.
-     *
-     * @param response a RestAssured.Response structure.
-     */
-    @And("response includes the following$")
-    public void response_includes(Map<String, String> response) {
-        for (Map.Entry<String, String> field : response.entrySet()) {
-            Assert.assertEquals(context.getResponse().jsonPath().get(field.getKey()).toString(), field.getValue());
-        }
-    }
-
-    @And("response complies (.*)")
-    public void response_is_valid (String schemaTypeName) {
-        boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, context.getResponse());
-        Assert.assertTrue(actual);
-    }
-
-    /**
      * Searches for an existing Task.
      */
     @When("user patches an existing task")
