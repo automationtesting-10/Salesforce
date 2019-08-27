@@ -116,7 +116,7 @@ Feature: Create Opportunity in Salesforce
       | work |             |
       |      |             |
 
-  @CreateTask @Negative
+  @DeleteOpportunity @Negative
   Scenario: User creates a opportunity by specifying malformed json content
     Given User set up Json content:
     """

@@ -101,7 +101,7 @@ public class OpportunitySteps {
     }
 
     /**
-     * Update an existing Task.
+     * Update an existing opportunity.
      */
     @When("User send request PATCH to new opportunity endpoint")
     public void SendRequestPATCHToNewOpportunityEndpoint() {
