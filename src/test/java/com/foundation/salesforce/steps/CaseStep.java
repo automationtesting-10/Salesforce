@@ -54,14 +54,21 @@ public class CaseStep {
         this.context = context;
     }
 
-
-    @When("user creates an case with the type")
+    /**
+     * User create a case with body type
+     */
+    @When("user creates a case with the type")
     public void iCreateAnCaseWithTheName() {
         response = restClientApi.post(CASE_ENDPOINT);
         response.prettyPrint();
         context.setResponse(response);
     }
 
+    /**
+     * The body is fill with the minimun data required.
+     *
+     * @param inputFields data of the body
+     */
     @Given("user fills the request case with the data required")
     public void iFillTheRequest(Map<String, String> inputFields) {
         caseApi.getInstance().getCase();
@@ -89,12 +96,20 @@ public class CaseStep {
         Assert.assertTrue(actual);
     }
 
+    /**
+     * Verifies response's status code.
+     *
+     * @param statusCode Expected status code.
+     */
     @Then("the status code case is a number {int}")
     public void theStatusCodeCaseIsANumber(int statusCode) {
         json = response.then().statusCode(statusCode);
         Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
+    /**
+     * This method delete a case thas was create by the hooks.
+     */
     @When("user deletes a case that previusly was created")
     public void iDeleteAnCaseThatPreviuslyWasCreated() {
         restClientApi = RestClientApi.getInstance();
@@ -109,18 +124,27 @@ public class CaseStep {
         context.setResponse(response);
     }
 
+    /**
+     * This method updates the data case.
+     */
     @When("the user updates existing case by Id")
     public void theUserUpdatesExistingCaseById() {
         response = restClientApi.patch(CASE_ENDPOINT + "/" + context.getCase().getId());
         response.prettyPrint();
     }
 
+    /**
+     * Gets all cases that was created
+     */
     @When("user gets all case created")
     public void iGetAllCaseCreated() {
         response = caseApi.getInstance().getCase();
         context.setResponse(response);
     }
 
+    /**
+     * Gets a case by Id.
+     */
     @When("an user finds an existing case by Id")
     public void aUserFindsAnExistingCaseById() {
         restClientApi = RestClientApi.getInstance();
@@ -128,6 +152,11 @@ public class CaseStep {
         response.prettyPrint();
     }
 
+    /**
+     * Delete an inexistent Id.
+     *
+     * @param leadId incorrect Id
+     */
     @When("an user finds a case by Id {string}")
     public void aUserFindsACaseById(String leadId) {
         restClientApi = RestClientApi.getInstance();
