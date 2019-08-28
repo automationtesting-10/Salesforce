@@ -74,8 +74,6 @@ public final class ResponseValidation {
         }
         JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
         Schema schema = SchemaLoader.load(rawSchema);
-
-        // TODO Refactor this Map/List validation
         try {
             Map map = response.jsonPath().getMap("$");
             JSONObject toBeChecked = new JSONObject(map);
@@ -99,16 +97,11 @@ public final class ResponseValidation {
             EventLogger.error(violations.toString(), vex);
             result = false;
         }
-        // END TODO Refactor this Map/List validation
-
-        if (inputStream != null) {
-            try {
-                inputStream.close();
-            } catch (IOException ioex) {
-                EventLogger.error(ioex.getMessage(), ioex);
-            }
+        try {
+            inputStream.close();
+        } catch (IOException ioex) {
+            EventLogger.error(ioex.getMessage(), ioex);
         }
-
         return result;
     }
 
