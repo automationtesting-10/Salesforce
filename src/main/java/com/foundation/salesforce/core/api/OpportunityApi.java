@@ -155,4 +155,14 @@ public class OpportunityApi {
     public Response opportunityContactRoleResponse(String method) {
         return restClient.apiResponse(method, OPPORTUNITY_CONTACT_ROLE_ENDPOINT);
     }
+
+    /**
+     * Returns a response after requesting a post.
+     *
+     * @param method to do the request.
+     * @return a RestAssured Response structure.
+     */
+    public Response opportunityContactRoleResponse(String method , String id) {
+        return restClient.apiResponse(method, OPPORTUNITY_CONTACT_ROLE_ENDPOINT.concat("/").concat(id));
+    }
 }

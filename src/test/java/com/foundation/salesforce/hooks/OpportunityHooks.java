@@ -3,6 +3,7 @@ package com.foundation.salesforce.hooks;
 import com.foundation.salesforce.core.api.OpportunityApi;
 import com.foundation.salesforce.entities.Context;
 import com.foundation.salesforce.entities.Opportunity;
+import com.foundation.salesforce.entities.OpportunityContactRole;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
@@ -20,6 +21,7 @@ public class OpportunityHooks {
     private final Context context;
     private Opportunity opportunity;
     private OpportunityApi opportunityApi;
+    private OpportunityContactRole opportunityContactRole;
     private Response response;
 
     /**
@@ -30,6 +32,7 @@ public class OpportunityHooks {
     public OpportunityHooks(Context context) {
         this.context = context;
         this.opportunity = context.getOpportunity();
+        this.opportunityContactRole = context.getOpportunityContactRole();
         opportunityApi = OpportunityApi.getInstance();
     }
 
