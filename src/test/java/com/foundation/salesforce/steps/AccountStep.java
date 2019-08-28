@@ -43,14 +43,12 @@ import java.util.Map;
 public class AccountStep {
     private RestClientApi restClientApi;
     private AccountApi accountApi;
-    private String idAccount;
     private Response response;
     private ValidatableResponse json;
     private RequestSpecification request;
     private JSONObject bodyData;
     private Context context;
     private Map<String, String> accountMap;
-
 
     /**
      * Initializes the class setting the context.
@@ -83,7 +81,7 @@ public class AccountStep {
      *
      * @param inputFields
      */
-    @Given("^I fill the request with the data required$")
+    @Given("^user fills the request with the data required$")
     public void iFillTheRequest(Map<String, String> inputFields) {
         accountApi.getInstance().getAccount();
         restClientApi = RestClientApi.getInstance();
