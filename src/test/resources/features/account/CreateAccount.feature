@@ -1,6 +1,6 @@
 Feature: Creation funtional and acceptance
 
-  @AccountCreation @Acceptance
+  @CreateAccount @Acceptance
   Scenario: Create an Account with minimun data required
     Given user fills the request with the data required
       | Name | Account536 |
@@ -8,7 +8,7 @@ Feature: Creation funtional and acceptance
     Then the status code is a number 201
     And schema "account creation schema" is valid
 
-  @AccountCreation @Funtional
+  @CreateAccount @Funtional
   Scenario: Create an Account with five data
     Given user fills the request with the data required
       | Name     | Account536       |
@@ -27,7 +27,7 @@ Feature: Creation funtional and acceptance
     When user creates an Account with the name
     Then the status code is a number 400
 
-  @AccountCreation @Funtional
+  @CreateAccount @Funtional
   Scenario Outline: User creates multiple accounts with type data
   by specifying at least a status and priority
     Given user specifies account body content
@@ -35,9 +35,9 @@ Feature: Creation funtional and acceptance
       | type | <Type> |
     When user posts to Account endpoint
     Then the status code is a number 201
-    And response includes the following
+    And the response includes the following
       | success | true |
-    And response complies account create 201 schema
+    And the response passes account create 201 schema validation
     Examples:
       | Name     | Type                        |
       | account1 | Prospect                    |
@@ -50,7 +50,7 @@ Feature: Creation funtional and acceptance
       | account8 | Other                       |
       | account8 | --None--                    |
 
-  @AccountCreation @Funtional
+  @CreateAccount @Funtional
   Scenario Outline: User creates multiple accounts with industry data
   specific  at least a status and priority
     Given user specifies account body content
@@ -58,9 +58,9 @@ Feature: Creation funtional and acceptance
       | Industry | <Industry> |
     When user posts to Account endpoint
     Then the status code is a number 201
-    And response includes the following
+    And the response includes the following
       | success | true |
-    And response complies account create 201 schema
+    And the response passes account create 201 schema validation
     Examples:
       | Name      | Industry           |
       | account1  | Agriculture        |
@@ -77,17 +77,17 @@ Feature: Creation funtional and acceptance
       | account12 | Telecommunications |
       | account13 | --None--           |
 
-  @AccountCreation @Funtional
+  @CreateAccount @Funtional
   Scenario Outline: User creates multiple accounts with rating data
   by specifying at least a status and priority
     Given user specifies account body content
       | Name   | <Name>   |
       | Rating | <Rating> |
     When user posts to Account endpoint
-    Then the status code is a number 201
-    And response includes the following
+    Then the status code is 201
+    And the response includes the following
       | success | true |
-    And response complies account create 201 schema
+    And the response passes account create 201 schema validation
     Examples:
       | Name     | Rating   |
       | account1 | Hot      |
@@ -95,17 +95,17 @@ Feature: Creation funtional and acceptance
       | account3 | Cold     |
       | account4 | --None-- |
 
-  @AccountCreation @Funtional
+  @CreateAccount @Funtional
   Scenario Outline: User creates multiple accounts with ownership data
   by specifying at least a status and priority
     Given user specifies account body content
       | Name      | <Name>      |
       | Ownership | <Ownership> |
     When user posts to Account endpoint
-    Then the status code is a number 201
-    And response includes the following
+    Then the status code is 201
+    And the response includes the following
       | success | true |
-    And response complies account create 201 schema
+    And the response passes account create 201 schema validation
     Examples:
       | Name     | Ownership  |
       | account1 | Public     |
@@ -114,7 +114,7 @@ Feature: Creation funtional and acceptance
       | account4 | Other      |
       | account5 | --None--   |
 
-  @AccountCreation @Funtional
+  @CreateAccount @Funtional
   Scenario: Create an Account with all possible data
     Given user fills the request with the data required
       | Name              | Account536            |
@@ -137,5 +137,5 @@ Feature: Creation funtional and acceptance
       | ShippingCountry   | eeuu                  |
       | BillingPostalCode | california23          |
     When user creates an Account with the name
-    Then the status code is a number 201
+    Then the status code is 201
     And schema "account creation schema" is valid

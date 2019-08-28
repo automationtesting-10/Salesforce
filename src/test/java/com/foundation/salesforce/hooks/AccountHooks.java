@@ -60,9 +60,9 @@ public class AccountHooks {
     }
 
     /**
-     * Deletes created account after scenarios.
+     * Deletes created accounts after scenarios.
      */
-    @After(value = "@AccountCreation, @FindAccount, @UpdateAccount", order = 0)
+    @After(value = "@CreateAccount, @FindAccount, @UpdateAccount", order = 0)
     public void deleteAccountAfterCreation() {
         restClientApi.delete(EndPoints.ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
     }
@@ -70,7 +70,7 @@ public class AccountHooks {
     /**
      * Sets context's account id after AccountCreation scenario.
      */
-    @After(value = "@AccountCreation", order = 1)
+    @After(value = "@CreateAccount", order = 1)
     public void saveAccountfterCreation() {
         Map<String, String> creationResponse = context.getResponse().jsonPath().getMap("$");
         context.getAccount().setId(creationResponse.get("id"));

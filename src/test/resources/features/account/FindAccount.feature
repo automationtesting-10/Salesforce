@@ -12,5 +12,5 @@ Feature: Acceptance Accounts tests
 
   @Negative
   Scenario: Find account by Id that does not exist
-    When an user finds a account by Id "00Q3i000002MKLeEA"
+    When an user finds an account by Id "00Q3i000002MKLeEA"
     Then the status code is a number 404

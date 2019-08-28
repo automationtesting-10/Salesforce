@@ -30,7 +30,6 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -78,7 +77,7 @@ public class AccountStep {
     /**
      * The body is fill with the minimun data required.
      *
-     * @param inputFields
+     * @param inputFields Specified as data table for the body.
      */
     @Given("^user fills the request with the data required$")
     public void iFillTheRequest(Map<String, String> inputFields) {
@@ -114,14 +113,14 @@ public class AccountStep {
      */
     @Then("the status code is a number {int}")
     public void theStatusCodeIs(int statusCode) {
-        json = response.then().statusCode(statusCode);
+        //  json = response.then().statusCode(statusCode);
         Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
     /**
      * Sets a json object according to input map.
      *
-     * @param inputFields - Input data.
+     * @param inputFields - Specified as data table for the body.
      */
     @Given("an user sets json object for the modify account")
     public void aUserSetsJsonObjectWithRequiredFields(Map<String, String> inputFields) {
@@ -158,6 +157,9 @@ public class AccountStep {
         context.setResponse(response);
     }
 
+    /**
+     * This method get an account.
+     */
     @When("an user finds an existing account by Id")
     public void aUserFindsAnExistingAccountById() {
         restClientApi = RestClientApi.getInstance();
@@ -165,20 +167,35 @@ public class AccountStep {
         response.prettyPrint();
     }
 
-    @When("an user finds a account by Id {string}")
+    /**
+     * This method get an account by Id.
+     *
+     * @param accountId Specified as data table for the body.
+     */
+    @When("an user finds an account by Id {string}")
     public void aUserFindsAAccountById(String accountId) {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.get(ACCOUNT_ENDPOINT + "/" + accountId);
         response.prettyPrint();
     }
 
-    @When("an user deletes a account by Id {string}")
+    /**
+     * This method deletes an account by Id
+     *
+     * @param accountId Specified as data table for the body
+     */
+    @When("an user deletes an account by Id {string}")
     public void aUserDeletesAAccountById(String accountId) {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.delete(ACCOUNT_ENDPOINT + "/" + accountId);
         response.prettyPrint();
     }
 
+    /**
+     * This method assert the response message.
+     *
+     * @param bodyFields Expected fields and values.
+     */
     @And("response contains the following message")
     public void responseContainsTheFollowing(Map<String, String> bodyFields) {
         SoftAssert softAssert = new SoftAssert();
@@ -188,7 +205,7 @@ public class AccountStep {
         }
         softAssert.assertAll();
     }
-    
+
     /**
      * Verifies response headers.
      *
@@ -217,15 +234,9 @@ public class AccountStep {
         softAssert.assertAll();
     }
 
-    @Given("a user specifies <Name>")
-    public void aUserSpecifiesName(String name) {
-        restClientApi = RestClientApi.getInstance();
-        accountMap = new HashMap<>();
-        accountMap.put("Name", name);
-        restClientApi.buildSpec(accountMap);
-    }
-
-
+    /**
+     * This method post an account.
+     */
     @When("user posts to Account endpoint")
     public void userPostsToAccountEndpoint() {
         response = restClientApi.post(ACCOUNT_ENDPOINT);
@@ -235,6 +246,7 @@ public class AccountStep {
     }
 
     /**
+     * This method build body content.
      *
      * @param inputContent specified as data table for the body.
      */
