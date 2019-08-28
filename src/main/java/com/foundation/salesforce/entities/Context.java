@@ -17,7 +17,7 @@ import io.restassured.response.Response;
 /**
  * Context class contains all objects that are shared between steps.
  *
- * @author Cristian Lujan
+ * @author Cristian Lujan, Jesus Menacho
  * @version 1.0
  */
 public class Context {
@@ -26,6 +26,7 @@ public class Context {
     private Lead lead;
     private Response response;
     private Account account;
+    private Contact contact;
 
     /**
      * Context for creation of the constructor.
@@ -35,6 +36,7 @@ public class Context {
         this.task = new Task();
         this.lead = new Lead();
         this.account = new Account();
+        this.contact = new Contact();
     }
 
     /**
@@ -89,5 +91,23 @@ public class Context {
      */
     public void setResponse(Response response) {
         this.response = response;
+    }
+
+    /**
+     * Method allow to return the object contact.
+     *
+     * @return contact the contact object.
+     */
+    public Contact getContact() {
+        return contact;
+    }
+
+    /**
+     * Method let set the contact object.
+     *
+     * @param contact the contact object.
+     */
+    public void setContact(Contact contact) {
+        this.contact = contact;
     }
 }

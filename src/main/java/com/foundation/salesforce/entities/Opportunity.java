@@ -53,7 +53,7 @@ public class Opportunity {
     /**
      * Sets the id of Opportunity.
      *
-     * @param id for the account.
+     * @param id for the opportunity.
      */
     public void setId(String id) {
         this.id = id;
