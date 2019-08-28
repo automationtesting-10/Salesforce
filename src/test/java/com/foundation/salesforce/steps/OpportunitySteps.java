@@ -32,7 +32,6 @@ import java.util.Map;
  * @version 1.0
  */
 public class OpportunitySteps {
-
     private OpportunityApi opportunityApi;
     private Context context;
     private Opportunity opportunity;
@@ -177,31 +176,5 @@ public class OpportunitySteps {
         Response response = opportunityApi.findOpportunityById(opportunityId);
         context.setResponse(response);
         response.prettyPrint();
-    }
-
-    /**
-     * Create an existing Opportunity id and Contact id.
-     */
-    @Given("User set up the data with contact id")
-    public void setUpTheDataWithContactId() {
-        JSONObject inputBody = new JSONObject();
-        String contactId = context.getContact().getId();
-        String opportunityId = context.getOpportunity().getId();
-        inputBody.put("OpportunityId", opportunityId);
-        inputBody.put("ContactId", contactId);
-        opportunityApi.setContent(inputBody);
-    }
-
-    /**
-     * Sends through a method request the data needed a opportunityContactRole.
-     *
-     * @param method for end point.
-     */
-    @When("User send request (.*) to opportunity contact role endpoint")
-    public void sendRequestPOSTToOpportunityContactRoleEndpoint(String method) {
-        response = opportunityApi.opportunityContactRoleResponse(method);
-        opportunityContactRole.setId(response.jsonPath().getString("id"));
-        context.setResponse(response);
-        this.response.prettyPrint();
     }
 }
