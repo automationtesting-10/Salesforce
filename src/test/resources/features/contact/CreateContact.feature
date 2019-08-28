@@ -33,3 +33,20 @@ Feature: Manage Tasks in Salesforce
       | title      |  enginer               |
     When user send de request post to contact endpoint with firstName, email, title
     Then the status code is 201
+
+  @CreateContact @funtional
+  Scenario: User creates a new user contact with firstName, email, title, etc
+    Given user specifies new contact with firstName, email, title, others.
+      | lastName      |  testName22            |
+      | firstname     |  testfirstName22       |
+      | email         |  testemail7@asdf22.com |
+      | title         |  enginer               |
+      | HomePhone     |  17927347129412421834  |
+      | Department    |  Finanzas              |
+      | OtherPhone    |  17927347129412421834  |
+      | Description   |  testDescription       |
+      | AssistantName |  testAsistanceName     |
+      | MobilePhone   |  17927347129412421834  |
+
+    When user send de request post to contact endpoint with firstName, email, title, other
+    Then the status code is 201
