@@ -1,14 +1,14 @@
 Feature: Creation funtional and acceptance
 
-  @AccountCreation
+  @AccountCreation @Acceptance
   Scenario: Create an Account with minimun data required
     Given user fills the request with the data required
       | Name | Account536 |
-    When I create an Account with the name
+    When user creates an Account with the name
     Then the status code is a number 201
     And schema "account creation schema" is valid
 
-  @AccountCreation
+  @AccountCreation @Funtional
   Scenario: Create an Account with five data
     Given user fills the request with the data required
       | Name     | Account536       |
@@ -16,17 +16,18 @@ Feature: Creation funtional and acceptance
       | Phone    | 101010           |
       | Website  | www.customer.com |
       | Industry | customerINC      |
-    When I create an Account with the name
+    When user creates an Account with the name
     Then the status code is a number 201
     And schema "account creation schema" is valid
 
+  @Negative
   Scenario: Create a Account with a body incorrect
     Given user fills the request with the data required
       | Phone | 101010 |
-    When I create an Account with the name
+    When user creates an Account with the name
     Then the status code is a number 400
 
-  @AccountCreation
+  @AccountCreation @Funtional
   Scenario Outline: User creates multiple accounts with type data
   by specifying at least a status and priority
     Given user specifies account body content
@@ -49,7 +50,7 @@ Feature: Creation funtional and acceptance
       | account8 | Other                       |
       | account8 | --None--                    |
 
-  @AccountCreation
+  @AccountCreation @Funtional
   Scenario Outline: User creates multiple accounts with industry data
   specific  at least a status and priority
     Given user specifies account body content
@@ -76,7 +77,7 @@ Feature: Creation funtional and acceptance
       | account12 | Telecommunications |
       | account13 | --None--           |
 
-  @AccountCreation
+  @AccountCreation @Funtional
   Scenario Outline: User creates multiple accounts with rating data
   by specifying at least a status and priority
     Given user specifies account body content
@@ -94,7 +95,7 @@ Feature: Creation funtional and acceptance
       | account3 | Cold     |
       | account4 | --None-- |
 
-  @AccountCreation
+  @AccountCreation @Funtional
   Scenario Outline: User creates multiple accounts with ownership data
   by specifying at least a status and priority
     Given user specifies account body content
@@ -113,14 +114,13 @@ Feature: Creation funtional and acceptance
       | account4 | Other      |
       | account5 | --None--   |
 
-  @AccountCreation
+  @AccountCreation @Funtional
   Scenario: Create an Account with all possible data
     Given user fills the request with the data required
       | Name              | Account536            |
       | fax               | 323232                |
       | Phone             | 101010                |
       | Jigsaw            | jigsawTest            |
-#      | OwnerId | id3232IDs464sdw84   |
       | SicDesc           | Account536            |
       | Website           | www.customer.com      |
       | Industry          | customerINC           |
@@ -134,16 +134,8 @@ Feature: Creation funtional and acceptance
       | ShippingState     | california            |
       | BillingCountry    | eeuu                  |
       | ShippingStreet    | america avenue        |
-#      | BillingLatitude    | 15                    |
       | ShippingCountry   | eeuu                  |
-#      | BillingLongitude   | 17                    |
-#      | ShippingLatitude   | 47                    |
       | BillingPostalCode | california23          |
-#      | NumberOfEmployees  | 22                    |
-#      | ShippingLongitude  | -180                  |
-#      | ShippingPostalCode | 1234                  |
-#      | BillingGeocodeAccuracy  | 123abc                |
-#      | ShippingGeocodeAccuracy | accuracy123           |
-    When I create an Account with the name
+    When user creates an Account with the name
     Then the status code is a number 201
     And schema "account creation schema" is valid

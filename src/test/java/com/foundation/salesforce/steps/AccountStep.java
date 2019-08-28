@@ -62,7 +62,7 @@ public class AccountStep {
     /**
      * I do the authentication.
      */
-    @Given("^I log in with Authorization token$")
+    @Given("^user logs in with Authorization token$")
     public void ILogInWithAuthorizationToken() {
         restClientApi.getInstance();
     }
@@ -70,7 +70,7 @@ public class AccountStep {
     /**
      * Get the account.
      */
-    @When("^I get all accounts created$")
+    @When("^user gets all accounts created$")
     public void iSetUpAGETRequestToAccountEndpoint() {
         response = accountApi.getInstance().getAccount();
         context.setResponse(response);
@@ -91,7 +91,7 @@ public class AccountStep {
     /**
      * Creates the account.
      */
-    @When("^I create an Account with the name")
+    @When("^user creates an Account with the name")
     public void iSendThePostWithTheName() {
         response = restClientApi.post(ACCOUNT_ENDPOINT);
         response.prettyPrint();
@@ -101,7 +101,7 @@ public class AccountStep {
     /**
      * Deletes an account by id.
      */
-    @When("^I delete an account that previusly was created$")
+    @When("^user deletes an account that previusly was created$")
     public void iFillTheDeleteRequest() {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.delete(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
@@ -124,7 +124,7 @@ public class AccountStep {
      *
      * @param inputFields - Input data.
      */
-    @Given("a user sets json object for the modify account")
+    @Given("an user sets json object for the modify account")
     public void aUserSetsJsonObjectWithRequiredFields(Map<String, String> inputFields) {
         restClientApi = RestClientApi.getInstance();
         restClientApi.buildSpec(inputFields);
@@ -159,21 +159,21 @@ public class AccountStep {
         context.setResponse(response);
     }
 
-    @When("a user finds an existing account by Id")
+    @When("an user finds an existing account by Id")
     public void aUserFindsAnExistingAccountById() {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.get(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
         response.prettyPrint();
     }
 
-    @When("a user finds a account by Id {string}")
+    @When("an user finds a account by Id {string}")
     public void aUserFindsAAccountById(String leadId) {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.get(ACCOUNT_ENDPOINT + "/" + leadId);
         response.prettyPrint();
     }
 
-    @When("a user deletes a account by Id {string}")
+    @When("an user deletes a account by Id {string}")
     public void aUserDeletesAAccountById(String leadId) {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.delete(ACCOUNT_ENDPOINT + "/" + leadId);
