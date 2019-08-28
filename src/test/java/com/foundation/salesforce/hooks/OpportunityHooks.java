@@ -50,7 +50,7 @@ public class OpportunityHooks {
         createNewOpportunity.put("Name", "TestApi");
         createNewOpportunity.put("CloseDate", "2019-01-01");
         createNewOpportunity.put("StageName", "Prospecting");
-        opportunityApi.getInstance().setContent(createNewOpportunity);
+        opportunityApi.setContent(createNewOpportunity);
         response = opportunityApi.createOpportunity();
         context.setResponse(response);
         opportunity.setId(response.jsonPath().getString("id"));
