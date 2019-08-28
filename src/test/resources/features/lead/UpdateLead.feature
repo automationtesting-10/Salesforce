@@ -70,7 +70,7 @@ Feature: Update an existing lead
     When the user updates lead by Id 00Q3i000001QlusEAC
     Then the status code is 404
     And the response contains the following
-      | errorCode |  INVALID_CROSS_REFERENCE_KEY |
+      | errorCode | INVALID_CROSS_REFERENCE_KEY |
 
   @UpdateLead @Functional
   Scenario Outline: Update a lead sending optional fields for lead creation with correct data
@@ -78,40 +78,49 @@ Feature: Update an existing lead
     When the user updates existing lead by Id
     Then the status code is 204
     Examples:
-      | Field             | Value              |
-      | City              | TestCity           |
-      | Email             | test@test.com      |
-      | Phone             | 123123123          |
-      | State             | TestState          |
-      | Title             | TestTitle          |
-      | Jigsaw            | TestJigsaw         |
-      | Rating            | TestRating         |
-      | Status            | TestStatus         |
-      | Street            | TestStreet         |
-      | Country           | TestCountry        |
-      | OwnerId           | 0053i000001OtatAAC |
-      | Website           | TestWebsite        |
-      | Industry          | TestIndustry       |
-      | FirstName         | TestFirstName      |
-      | LeadSource        | TestLeadSource     |
-      | PostalCode        | 12313              |
-      | Salutation        | TestSalutation     |
-      | Description       | TestDescription    |
-      | AnnualRevenue     | 123123123          |
-      | GeocodeAccuracy   | Address            |
-      | GeocodeAccuracy   | NearAddress        |
-      | GeocodeAccuracy   | Block              |
-      | GeocodeAccuracy   | Street             |
-      | GeocodeAccuracy   | ExtendedZip        |
-      | GeocodeAccuracy   | Zip                |
-      | GeocodeAccuracy   | Neighborhood       |
-      | GeocodeAccuracy   | City               |
-      | GeocodeAccuracy   | County             |
-      | GeocodeAccuracy   | State              |
-      | GeocodeAccuracy   | Unknown            |
-      | IsUnreadByOwner   | true               |
-      | IsUnreadByOwner   | false              |
-      | NumberOfEmployees | 123123             |
+      | Field             | Value                  |
+      | City              | TestCity               |
+      | Email             | test@test.com          |
+      | Phone             | 123123123              |
+      | State             | TestState              |
+      | Title             | TestTitle              |
+      | Jigsaw            | TestJigsaw             |
+      | Rating            | Hot                    |
+      | Rating            | Warm                   |
+      | Rating            | Cold                   |
+      | Status            | Open - Not Contacted   |
+      | Status            | Working - Contacted    |
+      | Status            | Closed - Converted     |
+      | Status            | Closed - Not Converted |
+      | Street            | TestStreet             |
+      | Country           | TestCountry            |
+      | OwnerId           | 0053i000001OtatAAC     |
+      | Website           | TestWebsite            |
+      | Industry          | TestIndustry           |
+      | FirstName         | TestFirstName          |
+      | LeadSource        | TestLeadSource         |
+      | PostalCode        | 12313                  |
+      | Salutation        | Mr.                    |
+      | Salutation        | Ms.                    |
+      | Salutation        | Mrs.                   |
+      | Salutation        | Dr.                    |
+      | Salutation        | Prof.                  |
+      | Description       | TestDescription        |
+      | AnnualRevenue     | 123123123              |
+      | GeocodeAccuracy   | Address                |
+      | GeocodeAccuracy   | NearAddress            |
+      | GeocodeAccuracy   | Block                  |
+      | GeocodeAccuracy   | Street                 |
+      | GeocodeAccuracy   | ExtendedZip            |
+      | GeocodeAccuracy   | Zip                    |
+      | GeocodeAccuracy   | Neighborhood           |
+      | GeocodeAccuracy   | City                   |
+      | GeocodeAccuracy   | County                 |
+      | GeocodeAccuracy   | State                  |
+      | GeocodeAccuracy   | Unknown                |
+      | IsUnreadByOwner   | true                   |
+      | IsUnreadByOwner   | false                  |
+      | NumberOfEmployees | 123123                 |
 
   @UpdateLead @Negative
   Scenario Outline: Update a lead sending optional fields for lead creation with incorrect data
@@ -122,8 +131,11 @@ Feature: Update an existing lead
       | Field             | Value              |
       | Email             | test@testcom       |
       | OwnerId           | 0053i000001OtatAA1 |
+      | Rating            | TestRating         |
+      | Status            | TestStatus         |
       | AnnualRevenue     | RevenueTest        |
       | GeocodeAccuracy   | Province           |
+      | Salutation        | TestSalutation     |
       | IsUnreadByOwner   | True               |
       | IsUnreadByOwner   | False              |
       | NumberOfEmployees | testNumber         |

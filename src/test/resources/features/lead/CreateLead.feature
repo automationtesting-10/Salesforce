@@ -36,40 +36,49 @@ Feature: Create lead
     When the user creates the lead
     Then the status code is 201
     Examples:
-      | Field             | Value              |
-      | City              | TestCity           |
-      | Email             | test@test.com      |
-      | Phone             | 123123123          |
-      | State             | TestState          |
-      | Title             | TestTitle          |
-      | Jigsaw            | TestJigsaw         |
-      | Rating            | TestRating         |
-      | Status            | TestStatus         |
-      | Street            | TestStreet         |
-      | Country           | TestCountry        |
-      | OwnerId           | 0053i000001OtatAAC |
-      | Website           | TestWebsite        |
-      | Industry          | TestIndustry       |
-      | FirstName         | TestFirstName      |
-      | LeadSource        | TestLeadSource     |
-      | PostalCode        | 12313              |
-      | Salutation        | TestSalutation     |
-      | Description       | TestDescription    |
-      | AnnualRevenue     | 123123123          |
-      | GeocodeAccuracy   | Address            |
-      | GeocodeAccuracy   | NearAddress        |
-      | GeocodeAccuracy   | Block              |
-      | GeocodeAccuracy   | Street             |
-      | GeocodeAccuracy   | ExtendedZip        |
-      | GeocodeAccuracy   | Zip                |
-      | GeocodeAccuracy   | Neighborhood       |
-      | GeocodeAccuracy   | City               |
-      | GeocodeAccuracy   | County             |
-      | GeocodeAccuracy   | State              |
-      | GeocodeAccuracy   | Unknown            |
-      | IsUnreadByOwner   | true               |
-      | IsUnreadByOwner   | false              |
-      | NumberOfEmployees | 123123             |
+      | Field             | Value                  |
+      | City              | TestCity               |
+      | Email             | test@test.com          |
+      | Phone             | 123123123              |
+      | State             | TestState              |
+      | Title             | TestTitle              |
+      | Jigsaw            | TestJigsaw             |
+      | Rating            | Hot                    |
+      | Rating            | Warm                   |
+      | Rating            | Cold                   |
+      | Status            | Open - Not Contacted   |
+      | Status            | Working - Contacted    |
+      | Status            | Closed - Converted     |
+      | Status            | Closed - Not Converted |
+      | Street            | TestStreet             |
+      | Country           | TestCountry            |
+      | OwnerId           | 0053i000001OtatAAC     |
+      | Website           | TestWebsite            |
+      | Industry          | TestIndustry           |
+      | FirstName         | TestFirstName          |
+      | LeadSource        | TestLeadSource         |
+      | PostalCode        | 12313                  |
+      | Salutation        | Mr.                    |
+      | Salutation        | Ms.                    |
+      | Salutation        | Mrs.                   |
+      | Salutation        | Dr.                    |
+      | Salutation        | Prof.                  |
+      | Description       | TestDescription        |
+      | AnnualRevenue     | 123123123              |
+      | GeocodeAccuracy   | Address                |
+      | GeocodeAccuracy   | NearAddress            |
+      | GeocodeAccuracy   | Block                  |
+      | GeocodeAccuracy   | Street                 |
+      | GeocodeAccuracy   | ExtendedZip            |
+      | GeocodeAccuracy   | Zip                    |
+      | GeocodeAccuracy   | Neighborhood           |
+      | GeocodeAccuracy   | City                   |
+      | GeocodeAccuracy   | County                 |
+      | GeocodeAccuracy   | State                  |
+      | GeocodeAccuracy   | Unknown                |
+      | IsUnreadByOwner   | true                   |
+      | IsUnreadByOwner   | false                  |
+      | NumberOfEmployees | 123123                 |
 
   @Negative
   Scenario Outline: Create a lead sending all required fields and optional fields with incorrect data
@@ -79,11 +88,14 @@ Feature: Create lead
     Examples:
       | Field             | Value              |
       | Email             | test@testcom       |
+      | Rating            | TestRating         |
+      | Status            | TestStatus         |
       | OwnerId           | 0053i000001OtatAA1 |
       | AnnualRevenue     | RevenueTest        |
       | GeocodeAccuracy   | Province           |
       | IsUnreadByOwner   | True               |
       | IsUnreadByOwner   | False              |
+      | Salutation        | TestSalutation     |
       | NumberOfEmployees | testNumber         |
 
   @Negative
