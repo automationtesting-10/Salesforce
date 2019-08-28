@@ -66,7 +66,7 @@ public class ContactSteps {
     /**
      * Method to let user sent a request.
      */
-    @When("User send de request post to contact endpoint")
+    @When("user send request post to contact endpoint")
     public void userSendDeRequestPostToContactEndpoint() {
         Response response = contactApi.postContent();
         context.setResponse(response);
@@ -75,21 +75,11 @@ public class ContactSteps {
     }
 
     /**
-     * Method to let compare a request.
-     *
-     * @param statusCode The status code that want to compare.
-     */
-    @Then("User get a {string} status code")
-    public void userGetAStatusCode(String statusCode) {
-        Assert.assertEquals(context.getResponse().getStatusCode(), Integer.parseInt(statusCode));
-    }
-
-    /**
      * Method to led a specifies a new contact.
      *
      * @param inputContent specified as data table in gherkin feature file.
      */
-    @Given("User specifies new contact with firstName")
+    @Given("user specifies new contact with firstName")
     public void userSpecifiesNewContactWithFirstName(Map<String, String> inputContent) {
         contactApi.setContent(inputContent);
     }
@@ -97,7 +87,7 @@ public class ContactSteps {
     /**
      * Method to let a sent a request to contact.
      */
-    @When("User send de request post to contact endpoint with firstName")
+    @When("user send de request post to contact endpoint with firstName")
     public void userSendDeRequestPostToContactEndpointWithFirstName() {
         Response response = contactApi.postContent();
         context.setResponse(response);
@@ -106,30 +96,19 @@ public class ContactSteps {
     }
 
     /**
-     * Method let me get the status code with first name.
-     *
-     * @param statusCode parameter to compare the status code.
-     */
-    @Then("User get a {string} status code with firstName")
-    public void userGetAStatusCodeWithFirstName(String statusCode) {
-        Assert.assertEquals(context.getResponse().getStatusCode(), Integer.parseInt(statusCode));
-    }
-
-    /**
      * Method to let me specifies new contact with the first name and email.
      *
-     * @param inputContent
+     * @param inputContent parameter input content.
      */
-    @Given("User specifies new contact with firstName, email")
+    @Given("user specifies new contact with firstName, email")
     public void userSpecifiesNewContactWithFirstNameEmail(Map<String, String> inputContent) {
-//        RestClientApi.getInstance().buildSpec(inputContent);
         contactApi.setContent(inputContent);
     }
 
     /**
      * Method let send a recuest to contact with first name and email.
      */
-    @When("User send de request post to contact endpoint with firstName, email")
+    @When("user send de request post to contact endpoint with firstName, email")
     public void userSendDeRequestPostToContactEndpointWithFirstNameEmail() {
         Response response = contactApi.postContent();
         context.setResponse(response);
@@ -142,7 +121,7 @@ public class ContactSteps {
      *
      * @param statusCode put the status code to do compared.
      */
-    @Then("User get a {string} status code with firstName, email")
+    @Then("user get a {string} status code with firstName, email")
     public void userGetAStatusCodeWithFirstNameEmail(String statusCode) {
         Assert.assertEquals(context.getResponse().getStatusCode(), Integer.parseInt(statusCode));
     }
@@ -152,16 +131,15 @@ public class ContactSteps {
      *
      * @param inputContent the input is HasMap that containt the value firstName, email, title.
      */
-    @Given("User specifies new contact with firstName, email, title")
+    @Given("user specifies new contact with firstName, email, title")
     public void userSpecifiesNewContactWithFirstNameEmailTitle(Map<String, String> inputContent) {
-//        RestClientApi.getInstance().buildSpec(inputContent);
         contactApi.setContent(inputContent);
     }
 
     /**
      * Method to let a send a request to contact with first name , email and title.
      */
-    @When("User send de request post to contact endpoint with firstName, email, title")
+    @When("user send de request post to contact endpoint with firstName, email, title")
     public void userSendDeRequestPostToContactEndpointWithFirstNameEmailTitle() {
         Response response = contactApi.postContent();
         context.setResponse(response);
@@ -174,7 +152,7 @@ public class ContactSteps {
      *
      * @param statusCode parameter the status code to compare.
      */
-    @Then("User get a {string} status code with firstName, email, title")
+    @Then("user get a {string} status code with firstName, email, title")
     public void userGetAStatusCodeWithFirstNameEmailTitle(String statusCode) {
         Assert.assertEquals(context.getResponse().getStatusCode(), Integer.parseInt(statusCode));
     }
@@ -182,9 +160,9 @@ public class ContactSteps {
     /**
      * Method to let delete a user existing..
      */
-    @When("User deletes an existing contact by Id")
+    @When("user deletes an existing contact by Id")
     public void userDeletesAnExistingContactById() {
-        Response response = contactApi.deleteTaskById(context.getContact().getId());
+        Response response = contactApi.deleteContactById(context.getContact().getId());
         context.setResponse(response);
         response.prettyPrint();
     }
@@ -194,9 +172,9 @@ public class ContactSteps {
      *
      * @param contactID parameter the contact id to compare.
      */
-    @When("User deletes a Contact by Id (.*)")
+    @When("user deletes a Contact by Id (.*)")
     public void userDeletesAContactByIdQIMRlqEAG(String contactID) {
-        Response response = contactApi.deleteTaskById(contactID);
+        Response response = contactApi.deleteContactById(contactID);
         context.setResponse(response);
         response.prettyPrint();
     }
@@ -204,9 +182,9 @@ public class ContactSteps {
     /**
      * Method to led find an existing contact by id.
      */
-    @When("User finds an existing Contact by Id")
+    @When("user finds an existing Contact by Id")
     public void userFindsAnExistingContactById() {
-        Response response = contactApi.findTaskById(context.getContact().getId());
+        Response response = contactApi.findContactById(context.getContact().getId());
         context.setResponse(response);
         response.prettyPrint();
     }
@@ -216,7 +194,7 @@ public class ContactSteps {
      *
      * @param contactID parameter to contact id to compare.
      */
-    @When("User finds a contact by Id ([\\w]{18})")
+    @When("user finds a contact by Id ([\\w]{18})")
     public void userFindsAContactByIdQIMKLeEA(String contactID) {
         Response response = contactApi.deleteContactById(contactID);
         context.setResponse(response);
@@ -226,7 +204,7 @@ public class ContactSteps {
     /**
      * Method to le retrieves the summary for a contact.
      */
-    @When("User retrieves the summary for Contact")
+    @When("user retrieves the summary for Contact")
     public void userRetrievesTheSummaryForContact() {
         Response response = contactApi.retrieveSummary();
         context.setResponse(response);
@@ -234,21 +212,11 @@ public class ContactSteps {
     }
 
     /**
-     * Method to le verify status code.
-     *
-     * @param statusCode parameter the status code to compare.
-     */
-    @Then("The status code is (\\d+)")
-    public void verify_status_code(int statusCode) {
-        Assert.assertEquals(context.getResponse().getStatusCode(), statusCode);
-    }
-
-    /**
      * Method to let set build specifications with the last name.
      *
      * @param inputFields parameter the input field to compare.
      */
-    @Given("User sets the lastName")
+    @Given("user sets the lastName")
     public void userSetsTheLastName(Map<String, String> inputFields) {
         contactApi.setContent(inputFields);
     }
@@ -256,7 +224,7 @@ public class ContactSteps {
     /**
      * Method to update the existing the contact by id.
      */
-    @When("User updates existing contact by Id")
+    @When("user updates existing contact by Id")
     public void userUpdatesExistingContactById() {
         Response response = contactApi.patchContent(context.getContact().getId());
         context.setResponse(response);
@@ -268,7 +236,7 @@ public class ContactSteps {
      *
      * @param inputFields parameter the input fields.
      */
-    @Given("User sets lastName to the contact")
+    @Given("user sets lastName to the contact")
     public void userSetsLastNameToTheContact(Map<String, String> inputFields) {
         contactApi.setContent(inputFields);
     }
@@ -278,7 +246,7 @@ public class ContactSteps {
      *
      * @param contactID parameter the contact id to let compare.
      */
-    @When("User updates contact by Id (.*)")
+    @When("user updates contact by Id (.*)")
     public void userUpdatesContactByIdFSA(String contactID) {
         Response response = contactApi.patchContent(contactID);
         context.setResponse(response);
@@ -290,22 +258,40 @@ public class ContactSteps {
      *
      * @param jsonBodyString in param type json to compare.
      */
-    @Given("User provides the following json")
+    @Given("user provides the following json")
     public void userProvidesTheFollowingJson(String jsonBodyString) {
         contactApi.setContent(jsonBodyString);
     }
 
-    @And("response contains the following in contact")
-    public void responseContainsTheFollowingInContact(Map<String, String> bodyFields) {
-        for (Map.Entry<String, String> field : bodyFields.entrySet()) {
-            Assert.assertEquals(context.getResponse().jsonPath().get(field.getKey()).toString(), field.getValue());
-        }
-    }
-
+    /**
+     * Method to let body fields.
+     *
+     * @param bodyFields parameter body fields.
+     */
     @And("In response we can found the following contain")
     public void inResponseWeCanFoundTheFollowingContain(Map<String, String> bodyFields) {
         for (Map.Entry<String, String> field : bodyFields.entrySet()) {
             Assert.assertEquals(context.getResponse().jsonPath().get(field.getKey()).toString(), field.getValue());
         }
+    }
+
+    @When("user finds a contact by id (.*)")
+    public void userFindsAContactByIdIUvDAAs(String contactId) {
+        Response response = contactApi.findContactsById(contactId);
+        context.setResponse(response);
+        response.prettyPrint();
+    }
+
+    @Given("user specifies new contact with firstName, email, title, others.")
+    public void userSpecifiesNewContactWithFirstNameEmailTitleOthers(Map<String, String> inputContent) {
+        contactApi.setContent(inputContent);
+    }
+
+    @When("user send de request post to contact endpoint with firstName, email, title, other")
+    public void userSendDeRequestPostToContactEndpointWithFirstNameEmailTitleOther() {
+        Response response = contactApi.postContent();
+        context.setResponse(response);
+        context.getContact().setId(response.jsonPath().getString("id"));
+        response.prettyPrint();
     }
 }

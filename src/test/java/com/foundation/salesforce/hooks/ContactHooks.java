@@ -45,8 +45,8 @@ public class ContactHooks {
      * Creates a Task before the scenarios.
      */
     @Before("@FindContact, @DeleteContact, @UpdateContact")
-    public void before_delete_task() {
-        String name = ValueAppender.prefix() + "Account" + ValueAppender.suffix();
+    public void beforeDeleteContact() {
+        String name = ValueAppender.prefix() + "Contact" + ValueAppender.suffix();
         String key = "lastName";
         String json = String.format("{\"%s\": \"%s\"}", key, name);
         contactApi.setContent(json);
@@ -60,7 +60,7 @@ public class ContactHooks {
      * Deletes any created count(s) in order to keep the environment clean.
      */
     @After(value = "@CreateContact, @UpdateContact, @FindContact" + "~@Negative")
-    public void after_create_contact() {
-        contactApi.deleteTaskById(context.getContact().getId());
+    public void afterCreateContact() {
+        contactApi.deleteContactById(context.getContact().getId());
     }
 }

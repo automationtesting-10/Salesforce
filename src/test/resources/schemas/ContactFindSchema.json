@@ -1,0 +1,264 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "url"
+      ]
+    },
+    "Id": {
+      "type": "string"
+    },
+    "IsDeleted": {
+      "type": "boolean"
+    },
+    "MasterRecordId": {
+      "type": "null"
+    },
+    "AccountId": {
+      "type": "null"
+    },
+    "LastName": {
+      "type": "string"
+    },
+    "FirstName": {
+      "type": "null"
+    },
+    "Salutation": {
+      "type": "null"
+    },
+    "Name": {
+      "type": "string"
+    },
+    "OtherStreet": {
+      "type": "null"
+    },
+    "OtherCity": {
+      "type": "null"
+    },
+    "OtherState": {
+      "type": "null"
+    },
+    "OtherPostalCode": {
+      "type": "null"
+    },
+    "OtherCountry": {
+      "type": "null"
+    },
+    "OtherLatitude": {
+      "type": "null"
+    },
+    "OtherLongitude": {
+      "type": "null"
+    },
+    "OtherGeocodeAccuracy": {
+      "type": "null"
+    },
+    "OtherAddress": {
+      "type": "null"
+    },
+    "MailingStreet": {
+      "type": "null"
+    },
+    "MailingCity": {
+      "type": "null"
+    },
+    "MailingState": {
+      "type": "null"
+    },
+    "MailingPostalCode": {
+      "type": "null"
+    },
+    "MailingCountry": {
+      "type": "null"
+    },
+    "MailingLatitude": {
+      "type": "null"
+    },
+    "MailingLongitude": {
+      "type": "null"
+    },
+    "MailingGeocodeAccuracy": {
+      "type": "null"
+    },
+    "MailingAddress": {
+      "type": "null"
+    },
+    "Phone": {
+      "type": "null"
+    },
+    "Fax": {
+      "type": "null"
+    },
+    "MobilePhone": {
+      "type": "null"
+    },
+    "HomePhone": {
+      "type": "null"
+    },
+    "OtherPhone": {
+      "type": "null"
+    },
+    "AssistantPhone": {
+      "type": "null"
+    },
+    "ReportsToId": {
+      "type": "null"
+    },
+    "Email": {
+      "type": "null"
+    },
+    "Title": {
+      "type": "null"
+    },
+    "Department": {
+      "type": "null"
+    },
+    "AssistantName": {
+      "type": "null"
+    },
+    "LeadSource": {
+      "type": "null"
+    },
+    "Birthdate": {
+      "type": "null"
+    },
+    "Description": {
+      "type": "null"
+    },
+    "OwnerId": {
+      "type": "string"
+    },
+    "CreatedDate": {
+      "type": "string"
+    },
+    "CreatedById": {
+      "type": "string"
+    },
+    "LastModifiedDate": {
+      "type": "string"
+    },
+    "LastModifiedById": {
+      "type": "string"
+    },
+    "SystemModstamp": {
+      "type": "string"
+    },
+    "LastActivityDate": {
+      "type": "null"
+    },
+    "LastCURequestDate": {
+      "type": "null"
+    },
+    "LastCUUpdateDate": {
+      "type": "null"
+    },
+    "LastViewedDate": {
+      "type": "string"
+    },
+    "LastReferencedDate": {
+      "type": "string"
+    },
+    "EmailBouncedReason": {
+      "type": "null"
+    },
+    "EmailBouncedDate": {
+      "type": "null"
+    },
+    "IsEmailBounced": {
+      "type": "boolean"
+    },
+    "PhotoUrl": {
+      "type": "string"
+    },
+    "Jigsaw": {
+      "type": "null"
+    },
+    "JigsawContactId": {
+      "type": "null"
+    },
+    "CleanStatus": {
+      "type": "string"
+    },
+    "Level__c": {
+      "type": "null"
+    },
+    "Languages__c": {
+      "type": "null"
+    }
+  },
+  "required": [
+    "attributes",
+    "Id",
+    "IsDeleted",
+    "MasterRecordId",
+    "AccountId",
+    "LastName",
+    "FirstName",
+    "Salutation",
+    "Name",
+    "OtherStreet",
+    "OtherCity",
+    "OtherState",
+    "OtherPostalCode",
+    "OtherCountry",
+    "OtherLatitude",
+    "OtherLongitude",
+    "OtherGeocodeAccuracy",
+    "OtherAddress",
+    "MailingStreet",
+    "MailingCity",
+    "MailingState",
+    "MailingPostalCode",
+    "MailingCountry",
+    "MailingLatitude",
+    "MailingLongitude",
+    "MailingGeocodeAccuracy",
+    "MailingAddress",
+    "Phone",
+    "Fax",
+    "MobilePhone",
+    "HomePhone",
+    "OtherPhone",
+    "AssistantPhone",
+    "ReportsToId",
+    "Email",
+    "Title",
+    "Department",
+    "AssistantName",
+    "LeadSource",
+    "Birthdate",
+    "Description",
+    "OwnerId",
+    "CreatedDate",
+    "CreatedById",
+    "LastModifiedDate",
+    "LastModifiedById",
+    "SystemModstamp",
+    "LastActivityDate",
+    "LastCURequestDate",
+    "LastCUUpdateDate",
+    "LastViewedDate",
+    "LastReferencedDate",
+    "EmailBouncedReason",
+    "EmailBouncedDate",
+    "IsEmailBounced",
+    "PhotoUrl",
+    "Jigsaw",
+    "JigsawContactId",
+    "CleanStatus",
+    "Level__c",
+    "Languages__c"
+  ]
+}

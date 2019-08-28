@@ -50,22 +50,22 @@ public final class ContactApi {
     }
 
     /**
-     * Method let set task body that let build request.
+     * Method let set contact body that let build request.
      *
-     * @param Contactbody parameter return the contact the bodu json.
+     * @param contactBody parameter return the contact the body json.
      */
-    public void setContent(String Contactbody) {
-        restClientApi.buildSpec(Contactbody);
+    public void setContent(String contactBody) {
+        restClientApi.buildSpec(contactBody);
     }
 
     /**
-     * Method let set task body that let build request.
+     * Method let set contact body that let build request.
      *
-     * @param Contactbody parameter that contain the contact body json.
+     * @param contactBody parameter that contain the contact body json.
      */
-    public void setContent(Map Contactbody) {
+    public void setContent(Map contactBody) {
 
-        restClientApi.buildSpec(Contactbody);
+        restClientApi.buildSpec(contactBody);
     }
 
     /**
@@ -90,16 +90,6 @@ public final class ContactApi {
     }
 
     /**
-     * Returns an overview of Task's metadata as well as a list of the most recently used Task records.
-     *
-     * @return a RestAssured Response structure containing metada of the most recently used Task records.
-     */
-    public Response retrieveSummaryForContact() {
-
-        return restClientApi.get(CONTACT_ENDPOINT);
-    }
-
-    /**
      * Returns a RestAssured Response as a result of a successful POST request.
      *
      * @return Returns a RestAssured Response as a result of a successful PATCH request containing among other
@@ -110,28 +100,6 @@ public final class ContactApi {
         return restClientApi.post(CONTACT_ENDPOINT);
     }
 
-    /**
-     * Delete a previously created Task specified by its id.
-     *
-     * @param id uniquely identifies a given Task.
-     * @return a RestAssured Response structure as a result of a successful DELETE request.
-     */
-    public Response deleteTaskById(String id) {
-
-        return restClientApi.delete(CONTACT_ENDPOINT.concat("/").concat(id));
-    }
-
-    /**
-     * Returns a previously created contact specified by its id.
-     *
-     * @param id uniquely identifies a given contact.
-     * @return a RestAssured Response structure containing the values for all the keys associated to a given Task.
-     */
-
-    public Response findTaskById(String id) {
-
-        return restClientApi.get(CONTACT_ENDPOINT.concat("/").concat(id));
-    }
 
     /**
      * Returns a RestAssured Response as a result of a successful PATCH request.
@@ -145,10 +113,21 @@ public final class ContactApi {
     }
 
     /**
-     * Method return the response summary
+     * Method return the response summary.
      * @return endPoint that have the contact endpoint.
      */
     public Response retrieveSummary() {
         return restClientApi.get(CONTACT_ENDPOINT);
     }
+
+    /**
+     * Returns a previously created Contact specified by its id.
+     *
+     * @param contactId uniquely identifies a given contactId.
+     * @return a RestAssured Response structure containing the values for all the keys associated to a given Contact.
+     */
+    public Response findContactsById(String contactId) {
+        return restClientApi.get(CONTACT_ENDPOINT.concat("/").concat(contactId));
+    }
+
 }

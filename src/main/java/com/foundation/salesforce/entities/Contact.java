@@ -19,11 +19,11 @@ package com.foundation.salesforce.entities;
  * @version 1.0
  */
 public class Contact {
-    String lastName;
-    String firstName;
-    String email;
-    String title;
-    String id;
+    private String lastName;
+    private String firstName;
+    private String email;
+    private String title;
+    private String id;
     /**
      * Method to return the lastName from the user.
      *

@@ -1,35 +1,53 @@
-Feature: Manage Tasks in Salesforce
+@Contact
+Feature: Manage contact in Salesforce
 
   @CreateContact @Acceptance
-  Scenario: User creates a new user contact
+  Scenario: user creates a new user contact
     Given user specifies new contact
     | lastName   |  testName22   |
-    When User send de request post to contact endpoint
-    Then User get a "201" status code
+    When user send request post to contact endpoint
+    Then the status code is 201
 
   @CreateContact @funtional
-  Scenario: User creates a new user contact with firstName
-    Given User specifies new contact with firstName
+  Scenario: user creates a new user contact with firstName
+    Given user specifies new contact with firstName
       | lastName   |  testName22   |
       | firstname  |  testfirstNames22  |
-    When User send de request post to contact endpoint with firstName
-    Then User get a "201" status code with firstName
+    When user send de request post to contact endpoint with firstName
+    Then the status code is 201
 
   @CreateContact @funtional
-  Scenario: User creates a new user contact with firstName, email
-    Given User specifies new contact with firstName, email
+  Scenario: user creates a new user contact with firstName, email
+    Given user specifies new contact with firstName, email
       | lastName   |  testName22            |
       | firstname  |  testfirstName22       |
       | email      |  testmasdil@ssdf22.com |
-    When User send de request post to contact endpoint with firstName, email
-    Then User get a "201" status code with firstName, email
+    When user send de request post to contact endpoint with firstName, email
+    Then the status code is 201
 
   @CreateContact @funtional
   Scenario: User creates a new user contact with firstName, email, title
-    Given User specifies new contact with firstName, email, title
+    Given user specifies new contact with firstName, email, title
       | lastName   |  testName22            |
       | firstname  |  testfirstName22       |
       | email      |  testemail7@asdf22.com |
       | title      |  enginer               |
-    When User send de request post to contact endpoint with firstName, email, title
-    Then User get a "201" status code with firstName, email, title
+    When user send de request post to contact endpoint with firstName, email, title
+    Then the status code is 201
+
+  @CreateContact @funtional
+  Scenario: User creates a new user contact with firstName, email, title, etc
+    Given user specifies new contact with firstName, email, title, others.
+      | lastName      |  testName22            |
+      | firstname     |  testfirstName22       |
+      | email         |  testemail7@asdf22.com |
+      | title         |  enginer               |
+      | HomePhone     |  17927347129412421834  |
+      | Department    |  Finanzas              |
+      | OtherPhone    |  17927347129412421834  |
+      | Description   |  testDescription       |
+      | AssistantName |  testAsistanceName     |
+      | MobilePhone   |  17927347129412421834  |
+
+    When user send de request post to contact endpoint with firstName, email, title, other
+    Then the status code is 201
