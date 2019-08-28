@@ -35,6 +35,7 @@ Feature: Create lead
     Given the user adds an optional field <Field> with <Value>
     When the user creates the lead
     Then the status code is 201
+    And the response passes lead creation schema validation
     Examples:
       | Field             | Value                  |
       | City              | TestCity               |
@@ -80,22 +81,32 @@ Feature: Create lead
       | IsUnreadByOwner   | false                  |
       | NumberOfEmployees | 123123                 |
 
-  @Negative
+  @Negative @Bug
   Scenario Outline: Create a lead sending all required fields and optional fields with incorrect data
     Given the user adds an optional field <Field> with <Value>
     When the user creates the lead
     Then the status code is 400
+    And the response passes lead error fields schema validation
     Examples:
       | Field             | Value              |
       | Email             | test@testcom       |
       | Rating            | TestRating         |
       | Status            | TestStatus         |
       | OwnerId           | 0053i000001OtatAA1 |
-      | AnnualRevenue     | RevenueTest        |
       | GeocodeAccuracy   | Province           |
+      | Salutation        | TestSalutation     |
+
+  @Negative
+  Scenario Outline: Create a lead sending required fields and optional fields with incorrect data type
+    Given the user adds an optional field <Field> with <Value>
+    When the user creates the lead
+    Then the status code is 400
+    And the response passes lead error schema validation
+    Examples:
+      | Field             | Value              |
+      | AnnualRevenue     | RevenueTest        |
       | IsUnreadByOwner   | True               |
       | IsUnreadByOwner   | False              |
-      | Salutation        | TestSalutation     |
       | NumberOfEmployees | testNumber         |
 
   @Negative
@@ -104,6 +115,7 @@ Feature: Create lead
       | Company | TestCompany |
     When the user creates the lead
     Then the status code is 400
+    And the response passes lead error fields schema validation
     And the response contains the following
       | errorCode | REQUIRED_FIELD_MISSING                  |
       | message   | Required fields are missing: [LastName] |
@@ -114,6 +126,7 @@ Feature: Create lead
       | LastName | TestLastName |
     When the user creates the lead
     Then the status code is 400
+    And the response passes lead error fields schema validation
     And the response contains the following
       | errorCode | REQUIRED_FIELD_MISSING                 |
       | message   | Required fields are missing: [Company] |
@@ -124,6 +137,7 @@ Feature: Create lead
       | FirstName | TestFirstName |
     When the user creates the lead
     Then the status code is 400
+    And the response passes lead error fields schema validation
     And the response contains the following
       | errorCode | REQUIRED_FIELD_MISSING                           |
       | message   | Required fields are missing: [LastName, Company] |
@@ -157,6 +171,7 @@ Feature: Create lead
     """
     When the user creates the lead
     Then the status code is 400
+    And the response passes lead error schema validation
     And the response contains the following
       | errorCode | JSON_PARSER_ERROR |
 
@@ -164,5 +179,6 @@ Feature: Create lead
   Scenario: Create a lead with empty body and not set contentType
     When the user creates the lead
     Then the status code is 415
+    And the response passes lead error schema validation
     And the response contains the following
       | errorCode | UNSUPPORTED_MEDIA_TYPE |
