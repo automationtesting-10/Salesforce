@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+import static com.foundation.salesforce.core.utils.EndPoints.OPPORTUNITY_CONTACT_ROLE_ENDPOINT;
 import static com.foundation.salesforce.core.utils.EndPoints.OPPORTUNITY_ENDPOINT;
 
 /**
@@ -143,5 +144,15 @@ public class OpportunityApi {
      */
     public Response opportunityResponse(String method) {
         return restClient.apiResponse(method, OPPORTUNITY_ENDPOINT);
+    }
+
+    /**
+     * Returns a response after requesting a post.
+     *
+     * @param method to do the request.
+     * @return a RestAssured Response structure.
+     */
+    public Response opportunityContactRoleResponse(String method) {
+        return restClient.apiResponse(method, OPPORTUNITY_CONTACT_ROLE_ENDPOINT);
     }
 }

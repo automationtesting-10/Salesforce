@@ -28,6 +28,7 @@ public class Context {
     private Account account;
     private Case textCase;
     private Contact contact;
+    private OpportunityContactRole opportunityContactRole;
 
     /**
      * Context for creation of the constructor.
@@ -39,6 +40,7 @@ public class Context {
         this.account = new Account();
         this.textCase = new Case();
         this.contact = new Contact();
+        this.opportunityContactRole = new OpportunityContactRole();
     }
 
     /**
@@ -120,5 +122,14 @@ public class Context {
      */
     public void setContact(Contact contact) {
         this.contact = contact;
+    }
+
+    /**
+     * Returns the Opportunity contact role of context.
+     *
+     * @return opportunityContactRole.
+     */
+    public OpportunityContactRole getOpportunityContactRole() {
+        return opportunityContactRole;
     }
 }

@@ -38,3 +38,4 @@ Feature: Update Opportunity in Salesforce
       | closeDate  |
       | 2019       |
       | 2030-02-30 |
+      | 2025-10    |
