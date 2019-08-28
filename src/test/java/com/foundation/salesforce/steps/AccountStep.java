@@ -61,7 +61,7 @@ public class AccountStep {
      * I do the authentication.
      */
     @Given("^user logs in with Authorization token$")
-    public void ILogInWithAuthorizationToken() {
+    public void iLogInWithAuthorizationToken() {
         restClientApi.getInstance();
     }
 
