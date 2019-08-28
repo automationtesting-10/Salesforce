@@ -13,24 +13,19 @@
 package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.TaskApi;
-import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
 
 import io.restassured.response.Response;
 
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 import org.json.JSONObject;
 
-import org.testng.Assert;
-
 import java.util.Map;
 
 /**
- * TaskSteps
+ * TaskSteps class.
  *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
@@ -61,7 +56,7 @@ public class TaskSteps {
      * @param inputContent specified as data table in gherkin feature file.
      */
     @Given("user specifies body content$")
-    public void user_specifies_content(Map<String, String> inputContent) {
+    public void userSpecifiesContent(Map<String, String> inputContent) {
         taskApi.setContent(inputContent);
     }
 
@@ -70,7 +65,7 @@ public class TaskSteps {
      * @param inputContent specified as data table in gherkin feature file.
      */
     @Given("user specifies json content")
-    public void user_specifies_content(String inputContent) {
+    public void userSpecifiesContent(String inputContent) {
         taskApi.setContent(inputContent);
     }
 
@@ -78,7 +73,7 @@ public class TaskSteps {
      *  Sends through a POST request the data needed to create a Task.
      */
     @When("user posts to Task endpoint$")
-    public void user_posts_content() {
+    public void userPostsContent() {
         Response response = taskApi.postContent();
         context.setResponse(response);
         context.getTask().setId(response.jsonPath().getString("id"));
@@ -92,7 +87,7 @@ public class TaskSteps {
      * @param priority Initial priority level the Task will be granted.
      */
     @Given("user specifies (.*) and (.*)")
-    public void user_specifies_status_priority(String status, String priority) {
+    public void userSpecifiesStatusPriority(String status, String priority) {
         JSONObject jsonContent = new JSONObject();
         jsonContent.put("Status", status);
         jsonContent.put("Priority", priority);
@@ -103,7 +98,7 @@ public class TaskSteps {
      * Searches for an existing Task.
      */
     @When("user patches an existing task")
-    public void user_patches_content() {
+    public void userPatchesContent() {
         Response response = taskApi.patchContent(context.getTask().getId());
         context.setResponse(response);
         response.prettyPrint();
@@ -115,7 +110,7 @@ public class TaskSteps {
      * @param id the id of the Task intended to add content to its body.
      */
     @When("user patches Task ([\\w]{18})")
-    public void user_patches_content(String id) {
+    public void userPatchesContent(String id) {
         Response response = taskApi.patchContent(id);
         context.setResponse(response);
         response.prettyPrint();
@@ -125,7 +120,7 @@ public class TaskSteps {
      * Searchs an existing id.
      */
     @When("user searches for an existing task")
-    public void user_searches_existing(){
+    public void userSearchesExisting() {
         Response response = taskApi.findTaskById(context.getTask().getId());
         context.setResponse(response);
         response.prettyPrint();
@@ -133,9 +128,11 @@ public class TaskSteps {
 
     /**
      * Search a task based on its id.
+     *
+     * @param taskId The id of the Task searched for.
      */
     @When("user searches for task ([\\w]{18})")
-    public void user_searches_for(String taskId){
+    public void userSearchesFor(String taskId) {
         Response response = taskApi.findTaskById(taskId);
         context.setResponse(response);
         response.prettyPrint();
@@ -145,7 +142,7 @@ public class TaskSteps {
      * Delete an existing Task.
      */
     @When("user makes a delete request for an existing task")
-    public void user_makes_delete_request_existing(){
+    public void userMakesDeleteRequestExisting() {
         Response response = taskApi.deleteTaskById(context.getTask().getId());
         context.setResponse(response);
         response.prettyPrint();
@@ -153,9 +150,11 @@ public class TaskSteps {
 
     /**
      * Delete a Task based on its id string.
+     *
+     * @param taskId the Id of the Task that is intended to be deleted.
      */
     @When("user makes a delete request for task ([\\w]{18})")
-    public void user_makes_delete_request(String taskId){
+    public void userMakesDeleteRequest(String taskId) {
         Response response = taskApi.deleteTaskById(taskId);
         context.setResponse(response);
         response.prettyPrint();
@@ -165,7 +164,7 @@ public class TaskSteps {
      * Retrieve a summary of Task.
      */
     @When("user makes a get request to endpoint")
-    public void user_retrieves_summary() {
+    public void userRetrievesSummary() {
         Response response = taskApi.retrieveSummaryForTask();
         context.setResponse(response);
         response.prettyPrint();

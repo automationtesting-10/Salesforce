@@ -38,7 +38,7 @@ public class TaskHooks {
      *
      * @param context Object to be set by dependecy injection.
      */
-    public TaskHooks (Context context) {
+    public TaskHooks(Context context) {
         this.context = context;
         taskApi = TaskApi.getInstance();
     }
@@ -47,10 +47,10 @@ public class TaskHooks {
      * Creates a Task before the scenarios tagged as: @FindTask, @DeleteTask, @UpdateTask.
      */
     @Before("@FindTask, @DeleteTask, @UpdateTask")
-    public void before_delete_task() {
+    public void beforeDeleteTask() {
         JSONObject jsonContent = new JSONObject();
-        jsonContent.put("Status","Not started");
-        jsonContent.put("Priority","Low");
+        jsonContent.put("Status", "Not started");
+        jsonContent.put("Priority", "Low");
         taskApi.setContent(jsonContent);
         Response response = taskApi.postContent();
         context.setResponse(response);
@@ -62,7 +62,7 @@ public class TaskHooks {
      * Deletes any created Task(s) in order to keep the environment clean.
      */
     @After(value = "@CreateTask, @UpdateTask, @FindTask" + "~@Negative")
-    public void after_create_task() {
+    public void afterCreateTask() {
         taskApi.deleteTaskById(context.getTask().getId());
     }
 }
