@@ -18,10 +18,12 @@ import com.foundation.salesforce.core.utils.EndPoints;
 import com.foundation.salesforce.core.utils.ValueAppender;
 import com.foundation.salesforce.entities.Context;
 
+import com.github.javafaker.Faker;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -50,11 +52,13 @@ public class LeadHooks {
      */
     @Before(value = "@DeleteLead, @FindLead, @UpdateLead, @DeleteDeleted, @UpdateDeleted, @LeadSummary", order = 0)
     public void createLeadBefore() {
-        String company = ValueAppender.prefix() + "Company" + ValueAppender.suffix();
-        requestManager.buildSpec("{\n" +
-                "\t\"Company\": \"" + company + "\",\n" +
-                "\t\"LastName\": \"Fisk\"\n" +
-                "}");
+        Faker faker = new Faker();
+        String lastName = faker.name().lastName();
+        String company = faker.company().name();
+        Map<String, String> leadCreationData = new HashMap<>();
+        leadCreationData.put("Company", company);
+        leadCreationData.put("LastName", ValueAppender.getStringWithPreffixSuffix(lastName));
+        requestManager.buildSpec(leadCreationData);
         Response response = requestManager.post(EndPoints.LEAD_ENDPOINT);
         Map<String, String> creationResponse = response.jsonPath().getMap("$");
         context.getLead().setId(creationResponse.get("id"));

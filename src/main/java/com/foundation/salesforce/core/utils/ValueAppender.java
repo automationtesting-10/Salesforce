@@ -47,4 +47,14 @@ public abstract class ValueAppender {
     public static String prefix() {
         return prefix;
     }
+
+    /**
+     * Returns the input string added to preffix and suffix.
+     *
+     * @param string - String to which prefix and suffix are going to be added.
+     * @return Concatenated string.
+     */
+    public static String getStringWithPreffixSuffix(String string) {
+        return prefix() + string + suffix();
+    }
 }

@@ -26,7 +26,9 @@ public class Context {
     private Lead lead;
     private Response response;
     private Account account;
+    private Case textCase;
     private Contact contact;
+    private OpportunityContactRole opportunityContactRole;
 
     /**
      * Context for creation of the constructor.
@@ -36,7 +38,9 @@ public class Context {
         this.task = new Task();
         this.lead = new Lead();
         this.account = new Account();
+        this.textCase = new Case();
         this.contact = new Contact();
+        this.opportunityContactRole = new OpportunityContactRole();
     }
 
     /**
@@ -64,6 +68,15 @@ public class Context {
      */
     public Account getAccount() {
         return account;
+    }
+
+    /**
+     * Allows to get the case.
+     *
+     * @return Case.
+     */
+    public Case getCase() {
+        return textCase;
     }
 
     /**
@@ -100,5 +113,14 @@ public class Context {
      */
     public Contact getContact() {
         return contact;
+    }
+
+    /**
+     * Returns the Opportunity contact role of context.
+     *
+     * @return opportunityContactRole.
+     */
+    public OpportunityContactRole getOpportunityContactRole() {
+        return opportunityContactRole;
     }
 }

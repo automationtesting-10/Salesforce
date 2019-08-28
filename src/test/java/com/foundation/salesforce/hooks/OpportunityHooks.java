@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * OpportunityHooks class
+ * OpportunityHooks class.
  *
  * @author Cristian Lujan
  * @version 1.0
@@ -46,11 +46,11 @@ public class OpportunityHooks {
      */
     @Before("@CreateOpportunity")
     public void beforeScenarioCreate() {
-        Map<String,String> createNewOpportunity = new HashMap<>();
+        Map<String, String> createNewOpportunity = new HashMap<>();
         createNewOpportunity.put("Name", "TestApi");
         createNewOpportunity.put("CloseDate", "2019-01-01");
         createNewOpportunity.put("StageName", "Prospecting");
-        opportunityApi.getInstance().setContent(createNewOpportunity);
+        opportunityApi.setContent(createNewOpportunity);
         response = opportunityApi.createOpportunity();
         context.setResponse(response);
         opportunity.setId(response.jsonPath().getString("id"));

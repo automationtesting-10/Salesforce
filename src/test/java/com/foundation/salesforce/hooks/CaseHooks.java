@@ -1,5 +1,5 @@
 /*
- * @(#) AccountHooks.java Copyright (c) 2019 Jala Foundation.
+ * @(#) CaseHooks.java Copyright (c) 2019 Jala Foundation.
  * 2643 Av. Melchor Perez de Olguin, Colquiri Sud, Cochabamba, Bolivia.
  * All rights reserved.
  *
@@ -17,7 +17,6 @@ import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.core.utils.EndPoints;
 import com.foundation.salesforce.core.utils.ValueAppender;
 import com.foundation.salesforce.entities.Context;
-
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import io.restassured.response.Response;
@@ -25,12 +24,12 @@ import io.restassured.response.Response;
 import java.util.Map;
 
 /**
- * AccountHooks class contains before and after actions for account endpoint.
+ * CaseHooks class contains before and after actions for case endpoint.
  *
  * @author John Salazar Pinto
  * @version 1.0
  **/
-public class AccountHooks {
+public class CaseHooks {
     private Context context;
     private RestClientApi restClientApi;
 
@@ -39,40 +38,41 @@ public class AccountHooks {
      *
      * @param context - Context to be set.
      */
-    public AccountHooks(Context context) {
+    public CaseHooks(Context context) {
         this.context = context;
         restClientApi = RestClientApi.getInstance();
         restClientApi.setRequest(Authentication.requestSpecification());
     }
 
     /**
-     * Creates an account before scenarios.
+     * Creates an case before scenarios.
      */
-    @Before("@DeleteAccount, @FindAccount, @UpdateAccount")
-    public void createAccountBefore() {
-        String name = ValueAppender.prefix() + "Account" + ValueAppender.suffix();
-        String key = "Name";
+    @Before("@DeleteCase, @FindCase, @UpdateCase")
+    public void createCaseBefore() {
+        String name = ValueAppender.prefix() + "case1" + ValueAppender.suffix();
+        String key = "type";
         String json = String.format("{\"%s\": \"%s\"}", key, name);
         restClientApi.buildSpec(json);
-        Response response = restClientApi.post(EndPoints.ACCOUNT_ENDPOINT);
+        Response response = restClientApi.post(EndPoints.CASE_ENDPOINT);
         Map<String, String> creationResponse = response.jsonPath().getMap("$");
-        context.getAccount().setId(creationResponse.get("id"));
+        context.getCase().setId(creationResponse.get("id"));
     }
 
     /**
-     * Deletes created accounts after scenarios.
+     * Deletes created Case after scenarios.
      */
-    @After(value = "@CreateAccount, @FindAccount, @UpdateAccount", order = 0)
-    public void deleteAccountAfterCreation() {
-        restClientApi.delete(EndPoints.ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
+    @After(value = "@CaseCreation, @FindCase, @UpdateCase", order = 0)
+    public void deleteCaseAfterCreation() {
+        restClientApi.delete(EndPoints.CASE_ENDPOINT + "/" + context.getCase().getId());
     }
 
     /**
-     * Sets context's account id after AccountCreation scenario.
+     * Sets context's Case id after CaseCreation scenario.
      */
-    @After(value = "@CreateAccount", order = 1)
-    public void saveAccountfterCreation() {
+    @After(value = "@CaseCreation", order = 1)
+    public void saveCasefterCreation() {
         Map<String, String> creationResponse = context.getResponse().jsonPath().getMap("$");
-        context.getAccount().setId(creationResponse.get("id"));
+        context.getCase().setId(creationResponse.get("id"));
     }
 }
+

@@ -9,9 +9,9 @@ Feature: Create Opportunity in Salesforce
       | StageName | Qualifier  |
     When User send request POST to opportunity endpoint
     Then the status code is 201
-    And the response includes the following
-      | success | true |
-    And the response passes opportunity create schema validation
+      And the response includes the following
+        | success | true |
+      And the response passes opportunity create schema validation
 
   @DeleteAccount @FindAccount @DeleteOpportunity @Acceptance
   Scenario: Creates a new opportunity with Opportunity Information date.
@@ -27,9 +27,9 @@ Feature: Create Opportunity in Salesforce
       | NextStep   | right                       |
     When User send request POST to opportunity endpoint
     Then the status code is 201
-    And the response includes the following
-      | success | true |
-    And the response passes opportunity create schema validation
+      And the response includes the following
+        | success | true |
+      And the response passes opportunity create schema validation
 
   @DeleteAccount @FindAccount @DeleteOpportunity @Functional
   Scenario: Creates a new opportunity with all dates.
@@ -51,9 +51,9 @@ Feature: Create Opportunity in Salesforce
       | TrackingNumber__c             | 22                          |
     When User send request POST to opportunity endpoint
     Then the status code is 201
-    And the response includes the following
-      | success | true |
-    And the response passes opportunity create schema validation
+      And the response includes the following
+        | success | true |
+      And the response passes opportunity create schema validation
 
   @DeleteOpportunity @Functional
   Scenario Outline: Creates multiple opportunity by specifying at least a Stage Name
@@ -63,9 +63,9 @@ Feature: Create Opportunity in Salesforce
       | StageName  | <StageName>  |
     When User send request POST to opportunity endpoint
     Then the status code is 201
-    And the response includes the following
-      | success | true |
-    And the response passes opportunity create schema validation
+      And the response includes the following
+        | success | true |
+      And the response passes opportunity create schema validation
     Examples:
       | StageName           |
       | Prospecting         |
@@ -86,9 +86,9 @@ Feature: Create Opportunity in Salesforce
       | StageName  | Prospecting  |
     When User send request POST to opportunity endpoint
     Then the status code is 201
-    And the response includes the following
-      | success | true |
-    And the response passes opportunity create schema validation
+      And the response includes the following
+        | success | true |
+      And the response passes opportunity create schema validation
 
   @Negative
   Scenario: Creates an opportunity that the name is more than 120 characters long
@@ -97,8 +97,8 @@ Feature: Create Opportunity in Salesforce
       | StageName  | Prospecting  |
     When User send request POST to opportunity endpoint
     Then the status code is 400
-    And the response includes the following
-      | errorCode | [STRING_TOO_LONG] |
+      And the response includes the following
+        | errorCode | [STRING_TOO_LONG] |
 
   @Negative
   Scenario Outline: Creates multiple opportunities by specifying only the required values
@@ -108,15 +108,15 @@ Feature: Create Opportunity in Salesforce
       | StageName | <stageName> |
     When User send request POST to opportunity endpoint
     Then the status code is 400
-    And the response includes the following
-      | errorCode | [REQUIRED_FIELD_MISSING] |
+      And the response includes the following
+        | errorCode | [REQUIRED_FIELD_MISSING] |
     Examples:
       | name | stageName   |
       |      | Prospecting |
       | work |             |
       |      |             |
 
-  @DeleteOpportunity @Negative
+  @Negative
   Scenario: User creates a opportunity by specifying malformed json content
     Given User set up Json content:
     """
@@ -128,5 +128,20 @@ Feature: Create Opportunity in Salesforce
     """
     When User send request POST to opportunity endpoint
     Then the status code is 400
-    And the response includes the following
-      | errorCode | [JSON_PARSER_ERROR] |
+      And the response includes the following
+        | errorCode | [JSON_PARSER_ERROR] |
+
+  @Negative
+  Scenario Outline: : Creates an opportunity that the name is 120 characters long
+    Given User configures the data with a random name:
+      | CloseDate  | <closeDate> |
+      | StageName  | Prospecting |
+    When User send request POST to opportunity endpoint
+    Then the status code is 400
+      And the response includes the following
+        | errorCode | [JSON_PARSER_ERROR] |
+    Examples:
+      | closeDate  |
+      | 2019/05/08 |
+      | 3000 - -   |
+      | 10-20-1995 |
