@@ -180,7 +180,7 @@ public class OpportunitySteps {
     }
 
     /**
-     *
+     * Create an existing Opportunity id and Contact id.
      */
     @Given("User set up the data with contact id")
     public void setUpTheDataWithContactId() {
@@ -193,8 +193,9 @@ public class OpportunitySteps {
     }
 
     /**
+     * Sends through a method request the data needed a opportunityContactRole.
      *
-     * @param method
+     * @param method for end point.
      */
     @When("User send request (.*) to opportunity contact role endpoint")
     public void sendRequestPOSTToOpportunityContactRoleEndpoint(String method) {
