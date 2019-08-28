@@ -1,3 +1,4 @@
+@Account
 Feature: Creation funtional and acceptance
 
   @CreateAccount @Acceptance

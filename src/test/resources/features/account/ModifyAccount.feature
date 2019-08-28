@@ -1,3 +1,4 @@
+@Account
 Feature: Modify an existing Account
 
   @UpdateAccount @Acceptance

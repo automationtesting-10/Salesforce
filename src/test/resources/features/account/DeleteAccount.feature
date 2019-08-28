@@ -1,3 +1,4 @@
+@Account
 Feature: Delete funtional and acceptance
 
   @DeleteAccount @Acceptance

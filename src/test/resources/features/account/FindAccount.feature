@@ -1,3 +1,4 @@
+@Account
 Feature: Acceptance Accounts tests
 
   @Acceptance
