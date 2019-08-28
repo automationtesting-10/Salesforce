@@ -131,7 +131,7 @@ public class AccountStep {
     /**
      * Schema account validation.
      *
-     * @param schemaTypeName.
+     * @param schemaTypeName name of the schema file.
      */
     @And("schema {string} is valid")
     public void schemaIsValid(String schemaTypeName) {
