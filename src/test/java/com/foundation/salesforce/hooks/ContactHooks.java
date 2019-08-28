@@ -45,7 +45,7 @@ public class ContactHooks {
      * Creates a Task before the scenarios.
      */
     @Before("@FindContact, @DeleteContact, @UpdateContact")
-    public void beforeDeleteTask() {
+    public void beforeDeleteContact() {
         String name = ValueAppender.prefix() + "Contact" + ValueAppender.suffix();
         String key = "lastName";
         String json = String.format("{\"%s\": \"%s\"}", key, name);
