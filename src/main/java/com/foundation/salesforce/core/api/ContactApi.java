@@ -59,7 +59,7 @@ public final class ContactApi {
     }
 
     /**
-     * Method let set task body that let build request.
+     * Method let set contact body that let build request.
      *
      * @param contactBody parameter that contain the contact body json.
      */
