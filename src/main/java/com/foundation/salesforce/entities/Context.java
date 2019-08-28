@@ -101,13 +101,4 @@ public class Context {
     public Contact getContact() {
         return contact;
     }
-
-    /**
-     * Method let set the contact object.
-     *
-     * @param contact the contact object.
-     */
-    public void setContact(Contact contact) {
-        this.contact = contact;
-    }
 }
