@@ -27,7 +27,8 @@ Feature: Creation funtional and acceptance
     Then the status code is a number 400
 
   @AccountCreation
-  Scenario Outline: User creates multiple accounts by specifying at least a status and priority
+  Scenario Outline: User creates multiple accounts with type data
+  by specifying at least a status and priority
     Given user specifies account body content
       | Name | <Name> |
       | type | <Type> |
@@ -49,7 +50,8 @@ Feature: Creation funtional and acceptance
       | account8 | --None--                    |
 
   @AccountCreation
-  Scenario Outline: User creates multiple accounts by specifying at least a status and priority
+  Scenario Outline: User creates multiple accounts with industry data
+  specific  at least a status and priority
     Given user specifies account body content
       | Name     | <Name>     |
       | Industry | <Industry> |
@@ -75,27 +77,39 @@ Feature: Creation funtional and acceptance
       | account13 | --None--           |
 
   @AccountCreation
-  Scenario Outline: User creates multiple accounts by specifying at least a status and priority
+  Scenario Outline: User creates multiple accounts with rating data
+  by specifying at least a status and priority
     Given user specifies account body content
-      | Name     | <Name>     |
-      | Industry | <Industry> |
+      | Name   | <Name>   |
+      | Rating | <Rating> |
     When user posts to Account endpoint
     Then the status code is a number 201
     And response includes the following
       | success | true |
     And response complies account create 201 schema
     Examples:
-      | Name      | Industry           |
-      | account1  | Agriculture        |
-      | account2  | Apparel            |
-      | account3  | Banking            |
-      | account4  | Biothechnology     |
-      | account5  | Food & Beverage    |
-      | account6  | Healthcare         |
-      | account7  | Hospitality        |
-      | account8  | Insurance          |
-      | account9  | Retail             |
-      | account10 | Shipping           |
-      | account11 | Technology         |
-      | account12 | Telecommunications |
-      | account13 | --None--           |
+      | Name     | Rating   |
+      | account1 | Hot      |
+      | account2 | Warm     |
+      | account3 | Cold     |
+      | account4 | --None-- |
+
+  @AccountCreation
+  Scenario Outline: User creates multiple accounts with ownership data
+  by specifying at least a status and priority
+    Given user specifies account body content
+      | Name      | <Name>      |
+      | Ownership | <Ownership> |
+    When user posts to Account endpoint
+    Then the status code is a number 201
+    And response includes the following
+      | success | true |
+    And response complies account create 201 schema
+    Examples:
+      | Name     | Ownership  |
+      | account1 | Public     |
+      | account2 | Private    |
+      | account3 | Subsidiary |
+      | account4 | Other      |
+      | account5 | --None--   |
+    
