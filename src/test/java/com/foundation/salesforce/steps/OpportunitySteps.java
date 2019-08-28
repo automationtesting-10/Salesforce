@@ -172,7 +172,7 @@ public class OpportunitySteps {
      * @param opportunityId that is input id.
      */
     @When("User searches for opportunity (.*)")
-    public void searchesForOpportunity(String opportunityId){
+    public void searchesForOpportunity(String opportunityId) {
         Response response = opportunityApi.findOpportunityById(opportunityId);
         context.setResponse(response);
         response.prettyPrint();

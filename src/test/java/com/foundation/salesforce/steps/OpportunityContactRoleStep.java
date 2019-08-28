@@ -22,7 +22,7 @@ import io.restassured.response.Response;
 import org.json.JSONObject;
 
 /**
- * OpportunityContactRoleStep class
+ * OpportunityContactRoleStep class.
  *
  * @author Cristian Lujan
  * @version 1.0
@@ -73,6 +73,8 @@ public class OpportunityContactRoleStep {
 
     /**
      * Delete an existing Opportunity.
+     *
+     * @param method for end point.
      */
     @When("User send request (.*) to new opportunity contact role endpoint")
     public void sendRequestDELETEToNewOpportunityContactRoleEndpoint(String method) {

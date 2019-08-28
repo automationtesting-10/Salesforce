@@ -104,7 +104,7 @@ public class CommonSteps {
      * @param schemaTypeName - Schema to validate.
      */
     @And("the response passes (.*) validation")
-    public void responsePassesSchemaValidation (String schemaTypeName) {
+    public void responsePassesSchemaValidation(String schemaTypeName) {
         boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, context.getResponse());
         Assert.assertTrue(actual);
     }

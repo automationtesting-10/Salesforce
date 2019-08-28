@@ -21,7 +21,6 @@ import static com.foundation.salesforce.core.utils.EndPoints.ACCOUNT_ENDPOINT;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
@@ -131,6 +130,8 @@ public class AccountStep {
 
     /**
      * Schema account validation.
+     *
+     * @param schemaTypeName.
      */
     @And("schema {string} is valid")
     public void schemaIsValid(String schemaTypeName) {
@@ -173,7 +174,7 @@ public class AccountStep {
     }
 
     /**
-     * This method deletes an account by Id
+     * This method deletes an account by Id.
      *
      * @param accountId Specified as data table for the body
      */
@@ -217,7 +218,7 @@ public class AccountStep {
      * @param inputContent specified as data table for the body.
      */
     @Given("user specifies account body content$")
-    public void user_specifies_content(Map<String, String> inputContent) {
+    public void userSpecifiesContent(Map<String, String> inputContent) {
         accountApi.getInstance().getAccount();
         restClientApi = RestClientApi.getInstance();
         restClientApi.buildSpec(inputContent);
