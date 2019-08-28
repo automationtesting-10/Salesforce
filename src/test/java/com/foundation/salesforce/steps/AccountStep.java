@@ -14,7 +14,6 @@ package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.AccountApi;
 import com.foundation.salesforce.core.restClient.RestClientApi;
-import com.foundation.salesforce.core.utils.EndPoints;
 import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
 
@@ -135,7 +134,7 @@ public class AccountStep {
      * Updates existing account by Id.
      */
     @When("the user updates existing account by Id")
-    public void theUserUpdatesExistingLeadById() {
+    public void theUserUpdatesExistingAccountById() {
         response = restClientApi.patch(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
         response.prettyPrint();
     }
@@ -150,7 +149,7 @@ public class AccountStep {
     }
 
     /**
-     * Updates existing lead by Id.
+     * Updates existing account by Id.
      */
     @When("the user creates the account")
     public void theUserCreatesTheAccount() {
@@ -167,16 +166,16 @@ public class AccountStep {
     }
 
     @When("an user finds a account by Id {string}")
-    public void aUserFindsAAccountById(String leadId) {
+    public void aUserFindsAAccountById(String accountId) {
         restClientApi = RestClientApi.getInstance();
-        response = restClientApi.get(ACCOUNT_ENDPOINT + "/" + leadId);
+        response = restClientApi.get(ACCOUNT_ENDPOINT + "/" + accountId);
         response.prettyPrint();
     }
 
     @When("an user deletes a account by Id {string}")
-    public void aUserDeletesAAccountById(String leadId) {
+    public void aUserDeletesAAccountById(String accountId) {
         restClientApi = RestClientApi.getInstance();
-        response = restClientApi.delete(ACCOUNT_ENDPOINT + "/" + leadId);
+        response = restClientApi.delete(ACCOUNT_ENDPOINT + "/" + accountId);
         response.prettyPrint();
     }
 
