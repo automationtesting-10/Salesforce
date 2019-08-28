@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
-final public class ResponseValidation {
+public final class ResponseValidation {
     private static ResponseValidation responseValidation;
 
     /**
@@ -69,7 +69,7 @@ final public class ResponseValidation {
         try {
             inputStream = getClass().getClassLoader()
                     .getResourceAsStream("schemas/" + schemaTypeName.concat(".json"));
-        } catch(NullPointerException npex) {
+        } catch (NullPointerException npex) {
             EventLogger.error(violations.toString(), npex);
         }
         JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
@@ -81,8 +81,7 @@ final public class ResponseValidation {
             JSONObject toBeChecked = new JSONObject(map);
             schema.validate(toBeChecked);
             result = true;
-        }
-        catch (ClassCastException ccex) {
+        } catch (ClassCastException ccex) {
             try {
                 List list = response.jsonPath().getList("$");
                 JSONArray intermeditate = new JSONArray(list);
@@ -94,8 +93,7 @@ final public class ResponseValidation {
                 EventLogger.error(violations.toString(), vex);
                 result = false;
             }
-        }
-        catch (ValidationException vex) {
+        } catch (ValidationException vex) {
             violations = vex.getCausingExceptions().stream().map(ValidationException::getMessage)
                     .collect(Collectors.toList());
             EventLogger.error(violations.toString(), vex);
