@@ -89,16 +89,6 @@ public final class ContactApi {
     }
 
     /**
-     * Returns an overview of Task's metadata as well as a list of the most recently used Task records.
-     *
-     * @return a RestAssured Response structure containing metada of the most recently used Task records.
-     */
-    public Response retrieveSummaryForContact() {
-
-        return restClientApi.get(CONTACT_ENDPOINT);
-    }
-
-    /**
      * Returns a RestAssured Response as a result of a successful POST request.
      *
      * @return Returns a RestAssured Response as a result of a successful PATCH request containing among other
@@ -109,28 +99,6 @@ public final class ContactApi {
         return restClientApi.post(CONTACT_ENDPOINT);
     }
 
-    /**
-     * Delete a previously created Task specified by its id.
-     *
-     * @param id uniquely identifies a given Task.
-     * @return a RestAssured Response structure as a result of a successful DELETE request.
-     */
-    public Response deleteTaskById(String id) {
-
-        return restClientApi.delete(CONTACT_ENDPOINT.concat("/").concat(id));
-    }
-
-    /**
-     * Returns a previously created contact specified by its id.
-     *
-     * @param id uniquely identifies a given contact.
-     * @return a RestAssured Response structure containing the values for all the keys associated to a given Task.
-     */
-
-    public Response findTaskById(String id) {
-
-        return restClientApi.get(CONTACT_ENDPOINT.concat("/").concat(id));
-    }
 
     /**
      * Returns a RestAssured Response as a result of a successful PATCH request.
