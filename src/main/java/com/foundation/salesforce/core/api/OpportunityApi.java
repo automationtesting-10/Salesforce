@@ -142,6 +142,6 @@ public class OpportunityApi {
      * @return a RestAssured Response structure.
      */
     public Response opportunityResponse(String method) {
-        return restClient.apiResponse(method,OPPORTUNITY_ENDPOINT);
+        return restClient.apiResponse(method, OPPORTUNITY_ENDPOINT);
     }
 }

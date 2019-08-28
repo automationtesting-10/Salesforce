@@ -16,6 +16,7 @@ Feature: Update an existing lead
       | LastName | TestLastName |
     When the user updates lead by Id 00Q3i000002MQiqEA
     Then the status code is 404
+    And the response passes lead error schema validation
     And the response contains the following
       | errorCode | NOT_FOUND |
 
@@ -26,6 +27,7 @@ Feature: Update an existing lead
       | LastName | TestLastName |
     When the user updates lead by Id 00Q3i000002MQiqEA1
     Then the status code is 400
+    And the response passes lead error fields schema validation
     And the response contains the following
       | errorCode | MALFORMED_ID |
 
@@ -35,11 +37,10 @@ Feature: Update an existing lead
       | Company  | TestCompany  |
       | LastName | TestLastName |
     When the user updates existing lead by Id
-    #When the user updates lead by Id 00Q3i000002MQiqEAG
     Then the status code is 404
+    And the response passes lead error fields schema validation
     And the response contains the following
       | errorCode | ENTITY_IS_DELETED |
-    #debería salir cross reference ñañaña
 
   @UpdateLead @Negative
   Scenario: Update a lead with an incorrect json
@@ -52,6 +53,7 @@ Feature: Update an existing lead
     """
     When the user updates existing lead by Id
     Then the status code is 400
+    And the response passes lead error schema validation
     And the response contains the following
       | errorCode | JSON_PARSER_ERROR |
 
@@ -59,6 +61,7 @@ Feature: Update an existing lead
   Scenario: Update a lead with empty body and not set contentType
     When the user updates existing lead by Id
     Then the status code is 400
+    And the response passes lead error schema validation
     And the response contains the following
       | errorCode | INVALID_CONTENT_TYPE |
 
@@ -69,6 +72,7 @@ Feature: Update an existing lead
       | LastName | TestLastName |
     When the user updates lead by Id 00Q3i000001QlusEAC
     Then the status code is 404
+    And the response passes lead error fields schema validation
     And the response contains the following
       | errorCode | INVALID_CROSS_REFERENCE_KEY |
 
@@ -122,20 +126,30 @@ Feature: Update an existing lead
       | IsUnreadByOwner   | false                  |
       | NumberOfEmployees | 123123                 |
 
-  @UpdateLead @Negative
-  Scenario Outline: Update a lead sending optional fields for lead creation with incorrect data
+  @UpdateLead @Negative @Bug
+  Scenario Outline: Update a lead sending fields with incorrect data
     Given the user adds an optional field <Field> with <Value>
     When the user updates existing lead by Id
     Then the status code is 400
+    And the response passes lead error fields schema validation
     Examples:
       | Field             | Value              |
       | Email             | test@testcom       |
       | OwnerId           | 0053i000001OtatAA1 |
       | Rating            | TestRating         |
       | Status            | TestStatus         |
-      | AnnualRevenue     | RevenueTest        |
       | GeocodeAccuracy   | Province           |
       | Salutation        | TestSalutation     |
+
+  @UpdateLead @Negative
+  Scenario Outline: Update a lead sending fields with incorrect data type
+    Given the user adds an optional field <Field> with <Value>
+    When the user updates existing lead by Id
+    Then the status code is 400
+    And the response passes lead error schema validation
+    Examples:
+      | Field             | Value              |
+      | AnnualRevenue     | RevenueTest        |
       | IsUnreadByOwner   | True               |
       | IsUnreadByOwner   | False              |
       | NumberOfEmployees | testNumber         |
