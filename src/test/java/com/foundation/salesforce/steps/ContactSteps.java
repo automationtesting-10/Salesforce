@@ -286,4 +286,24 @@ public class ContactSteps {
             Assert.assertEquals(context.getResponse().jsonPath().get(field.getKey()).toString(), field.getValue());
         }
     }
+
+    @When("user finds a contact by id (.*)")
+    public void userFindsAContactByIdIUvDAAs(String contactId) {
+        Response response = contactApi.findContactsById(contactId);
+        context.setResponse(response);
+        response.prettyPrint();
+    }
+
+    @Given("user specifies new contact with firstName, email, title, others.")
+    public void userSpecifiesNewContactWithFirstNameEmailTitleOthers(Map<String, String> inputContent) {
+        contactApi.setContent(inputContent);
+    }
+
+    @When("user send de request post to contact endpoint with firstName, email, title, other")
+    public void userSendDeRequestPostToContactEndpointWithFirstNameEmailTitleOther() {
+        Response response = contactApi.postContent();
+        context.setResponse(response);
+        context.getContact().setId(response.jsonPath().getString("id"));
+        response.prettyPrint();
+    }
 }
