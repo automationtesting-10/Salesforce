@@ -1,4 +1,5 @@
-Feature: Manage Tasks in Salesforce
+@Contact
+Feature: Manage contact in Salesforce
 
   @Acceptance
   Scenario: verify get summary for Contact
