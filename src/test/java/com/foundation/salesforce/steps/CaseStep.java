@@ -96,16 +96,6 @@ public class CaseStep {
     }
 
     /**
-     * Verifies response's status code.
-     *
-     * @param statusCode Expected status code.
-     */
-    @Then("the status code case is a number {int}")
-    public void theStatusCodeCaseIsANumber(int statusCode) {
-        Assert.assertEquals(response.getStatusCode(), statusCode);
-    }
-
-    /**
      * This method delete a case thas was create by the hooks.
      */
     @When("user deletes a case that previusly was created")

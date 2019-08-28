@@ -1,6 +1,6 @@
 Feature: Creation funtional and acceptance
 
-  @CaseCreation
+  @CaseCreation  @Acceptance
   Scenario: Create an case with minimun data required
     Given user fills the request case with the data required
       | type | case01 |
