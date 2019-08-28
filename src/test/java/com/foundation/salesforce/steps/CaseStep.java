@@ -83,7 +83,6 @@ public class CaseStep {
      */
     @Then("the status code is a numbert {int}")
     public void theStatusCodeIs(int statusCode) {
-        json = response.then().statusCode(statusCode);
         Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
@@ -103,7 +102,6 @@ public class CaseStep {
      */
     @Then("the status code case is a number {int}")
     public void theStatusCodeCaseIsANumber(int statusCode) {
-        json = response.then().statusCode(statusCode);
         Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
@@ -114,6 +112,7 @@ public class CaseStep {
     public void iDeleteAnCaseThatPreviuslyWasCreated() {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.delete(CASE_ENDPOINT + "/" + context.getCase().getId());
+        context.setResponse(response);
         response.prettyPrint();
     }
 
@@ -135,6 +134,7 @@ public class CaseStep {
     @When("the user updates existing case by Id")
     public void theUserUpdatesExistingCaseById() {
         response = restClientApi.patch(CASE_ENDPOINT + "/" + context.getCase().getId());
+        context.setResponse(response);
         response.prettyPrint();
     }
 
@@ -154,6 +154,7 @@ public class CaseStep {
     public void aUserFindsAnExistingCaseById() {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.get(CASE_ENDPOINT + "/" + context.getCase().getId());
+        context.setResponse(response);
         response.prettyPrint();
     }
 
@@ -166,6 +167,7 @@ public class CaseStep {
     public void aUserFindsACaseById(String leadId) {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.get(CASE_ENDPOINT + "/" + leadId);
+        context.setResponse(response);
         response.prettyPrint();
     }
 
