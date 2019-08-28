@@ -1,20 +1,20 @@
 Feature: Manage Tasks in Salesforce
 
   @Negative
-  Scenario: Delete a Contact by Id that entity is deleted
-    When User finds a contact by Id 0033i000005UeY2AAK
-    Then The status code is 404
+  Scenario: delete a Contact by Id that entity is deleted
+    When user finds a contact by Id 0033i000005UeY2AAK
+    Then the status code is 404
     And response contains the following in contact
       | errorCode | [ENTITY_IS_DELETED] |
-
+    And the response passes Contact Delete ID Schema validation
   @Negative
   Scenario: Find contact by Id that does not exist
-    When User finds a contact by Id 1133i000005UeY2AAK
-    Then The status code is 404
+    When user finds a contact by Id 1133i000005UeY2AAK
+    Then the status code is 404
     And response contains the following in contact
       | errorCode | [NOT_FOUND] |
-
+    And the response passes Contact Delete ID Not Exits Schema validation
   @DeleteContact @Acceptance
-  Scenario: Delete a contact by correct Id
-    When User deletes an existing contact by Id
-    Then The status code is 204
+  Scenario: delete a contact by correct Id
+    When user deletes an existing contact by Id
+    Then the status code is 204
