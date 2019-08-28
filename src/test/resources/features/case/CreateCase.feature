@@ -66,7 +66,7 @@ Feature: Creation funtional and acceptance
       | --None-- | --None--  |
 
   @CaseCreation @Funtional
-  Scenario Outline: User creates multiple cases with case origin and status data
+  Scenario Outline: User creates multiple cases with case reason and status data
   by specifying at least a status and priority
     Given user specifies case reason body content
       | Reason | <Reason> |
@@ -85,3 +85,28 @@ Feature: Creation funtional and acceptance
       | Feedback             |
       | Other                |
       | --None--             |
+
+  @CaseCreation @Funtional
+  Scenario Outline: User creates multiple cases with four case fields and status data
+  by specifying at least a status and priority
+    Given user specifies case reason body content
+      | Reason   | <Reason>   |
+      | Origin   | <Origin>   |
+      | Status   | <Status>   |
+      | Priority | <Priority> |
+    When user posts to case endpoint
+    Then the status code case is a number 201
+    And response includes the following
+      | success | true |
+    And response complies case create 201 schema
+    Examples:
+      | Reason               | Origin    | Status    | Priority |
+      | Installation         | Phone     | New       | Medium   |
+      | Equipment Complexity | Email     | New       | Medium   |
+      | Performance          | Web       | Escalated | High     |
+      | Breakdown            | Web       | Working   | Low      |
+      | Equipment Design     | Web       | Escalated | Low      |
+      | Feedback             | --None--  | --None--  | --None-- |
+      | Other                | Phone     | Escalated | High     |
+      | --None--             | Phone     | Escalated | High     |
+    
