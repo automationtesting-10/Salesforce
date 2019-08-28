@@ -116,21 +116,34 @@ Feature: Creation funtional and acceptance
   @AccountCreation
   Scenario: Create an Account with all possible data
     Given user fills the request with the data required
-      | Name        | Account536            |
-      | fax         | 323232                |
-      | Phone       | 101010                |
-      | Jigsaw      | jigsawTest            |
+      | Name              | Account536            |
+      | fax               | 323232                |
+      | Phone             | 101010                |
+      | Jigsaw            | jigsawTest            |
 #      | OwnerId | id3232IDs464sdw84   |
-      | SicDesc     | Account536            |
-      | Website     | www.customer.com      |
-      | Industry    | customerINC           |
-      | BillingCity | Av Customer           |
-      | Description | this is a description |
-#      | Name     | Account536       |
-#      | Type     | Customer         |
-#      | Phone    | 101010           |
-#      | Website  | www.customer.com |
-#      | Industry | customerINC      |
+      | SicDesc           | Account536            |
+      | Website           | www.customer.com      |
+      | Industry          | customerINC           |
+      | BillingCity       | Av Customer           |
+      | Description       | this is a description |
+      | BillingState      | billingState creation |
+      | ShippingCity      | cochabamba city       |
+      | AccountSource     | Advertisement         |
+      | AnnualRevenue     | 4                     |
+      | BillingStreet     | billingStreet test    |
+      | ShippingState     | california            |
+      | BillingCountry    | eeuu                  |
+      | ShippingStreet    | america avenue        |
+#      | BillingLatitude    | 15                    |
+      | ShippingCountry   | eeuu                  |
+#      | BillingLongitude   | 17                    |
+#      | ShippingLatitude   | 47                    |
+      | BillingPostalCode | california23          |
+#      | NumberOfEmployees  | 22                    |
+#      | ShippingLongitude  | -180                  |
+#      | ShippingPostalCode | 1234                  |
+#      | BillingGeocodeAccuracy  | 123abc                |
+#      | ShippingGeocodeAccuracy | accuracy123           |
     When I create an Account with the name
     Then the status code is a number 201
     And schema "account creation schema" is valid
