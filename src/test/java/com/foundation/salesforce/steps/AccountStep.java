@@ -16,6 +16,7 @@ import com.foundation.salesforce.core.api.AccountApi;
 import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
+
 import static com.foundation.salesforce.core.utils.EndPoints.ACCOUNT_ENDPOINT;
 
 import cucumber.api.java.en.And;
@@ -27,6 +28,8 @@ import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
+
 import java.util.Map;
 
 /**
@@ -38,12 +41,12 @@ import java.util.Map;
 public class AccountStep {
     private RestClientApi restClientApi;
     private AccountApi accountApi;
-    private String idAccount;
     private Response response;
     private ValidatableResponse json;
     private RequestSpecification request;
     private JSONObject bodyData;
     private Context context;
+    private Map<String, String> accountMap;
 
     /**
      * Initializes the class setting the context.
@@ -57,25 +60,26 @@ public class AccountStep {
     /**
      * I do the authentication.
      */
-    @Given("^I log in with Authorization token$")
-    public void ILogInWithAuthorizationToken() {
+    @Given("^user logs in with Authorization token$")
+    public void iLogInWithAuthorizationToken() {
         restClientApi.getInstance();
     }
 
     /**
      * Get the account.
      */
-    @When("^I get all accounts created$")
+    @When("^user gets all accounts created$")
     public void iSetUpAGETRequestToAccountEndpoint() {
-        accountApi.getInstance().getAccount();
+        response = accountApi.getInstance().getAccount();
+        context.setResponse(response);
     }
 
     /**
      * The body is fill with the minimun data required.
      *
-     * @param inputFields
+     * @param inputFields Specified as data table for the body.
      */
-    @Given("^I fill the request with the data required$")
+    @Given("^user fills the request with the data required$")
     public void iFillTheRequest(Map<String, String> inputFields) {
         accountApi.getInstance().getAccount();
         restClientApi = RestClientApi.getInstance();
@@ -85,7 +89,7 @@ public class AccountStep {
     /**
      * Creates the account.
      */
-    @When("^I create an Account with the name")
+    @When("^user creates an Account with the name")
     public void iSendThePostWithTheName() {
         response = restClientApi.post(ACCOUNT_ENDPOINT);
         response.prettyPrint();
@@ -95,30 +99,20 @@ public class AccountStep {
     /**
      * Deletes an account by id.
      */
-    @When("^I delete an account that previusly was created$")
+    @When("^user deletes an account that previusly was created$")
     public void iFillTheDeleteRequest() {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.delete(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
+        context.setResponse(response);
         response.prettyPrint();
-    }
-
-    /**
-     * Verifies response's status code.
-     *
-     * @param statusCode Expected status for delete account.
-     */
-    @Then("the status code is a number {int}")
-    public void theStatusCodeIs(int statusCode) {
-        json = response.then().statusCode(statusCode);
-        Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
     /**
      * Sets a json object according to input map.
      *
-     * @param inputFields - Input data.
+     * @param inputFields - Specified as data table for the body.
      */
-    @Given("a user sets json object for the modify account")
+    @Given("an user sets json object for the modify account")
     public void aUserSetsJsonObjectWithRequiredFields(Map<String, String> inputFields) {
         restClientApi = RestClientApi.getInstance();
         restClientApi.buildSpec(inputFields);
@@ -129,9 +123,9 @@ public class AccountStep {
      * Updates existing account by Id.
      */
     @When("the user updates existing account by Id")
-    public void theUserUpdatesExistingLeadById() {
+    public void theUserUpdatesExistingAccountById() {
         response = restClientApi.patch(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
-        System.out.println(context.getAccount().getId());
+        context.setResponse(response);
         response.prettyPrint();
     }
 
@@ -145,12 +139,87 @@ public class AccountStep {
     }
 
     /**
-     * Updates existing lead by Id.
+     * Updates existing account by Id.
      */
     @When("the user creates the account")
     public void theUserCreatesTheAccount() {
         response = restClientApi.post(ACCOUNT_ENDPOINT);
         response.prettyPrint();
         context.setResponse(response);
+    }
+
+    /**
+     * This method get an account.
+     */
+    @When("an user finds an existing account by Id")
+    public void aUserFindsAnExistingAccountById() {
+        restClientApi = RestClientApi.getInstance();
+        response = restClientApi.get(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
+        context.setResponse(response);
+        response.prettyPrint();
+    }
+
+    /**
+     * This method get an account by Id.
+     *
+     * @param accountId Specified as data table for the body.
+     */
+    @When("an user finds an account by Id {string}")
+    public void aUserFindsAAccountById(String accountId) {
+        restClientApi = RestClientApi.getInstance();
+        response = restClientApi.get(ACCOUNT_ENDPOINT + "/" + accountId);
+        context.setResponse(response);
+        response.prettyPrint();
+    }
+
+    /**
+     * This method deletes an account by Id
+     *
+     * @param accountId Specified as data table for the body
+     */
+    @When("an user deletes an account by Id {string}")
+    public void aUserDeletesAAccountById(String accountId) {
+        restClientApi = RestClientApi.getInstance();
+        response = restClientApi.delete(ACCOUNT_ENDPOINT + "/" + accountId);
+        context.setResponse(response);
+        response.prettyPrint();
+    }
+
+    /**
+     * This method assert the response message.
+     *
+     * @param bodyFields Expected fields and values.
+     */
+    @And("response contains the following message")
+    public void responseContainsTheFollowing(Map<String, String> bodyFields) {
+        SoftAssert softAssert = new SoftAssert();
+        Map<String, String> responseFirstElement = response.jsonPath().getMap("[0]");
+        for (Map.Entry<String, String> field : bodyFields.entrySet()) {
+            softAssert.assertEquals(responseFirstElement.get(field.getKey()), field.getValue());
+        }
+        softAssert.assertAll();
+    }
+
+    /**
+     * This method post an account.
+     */
+    @When("user posts to Account endpoint")
+    public void userPostsToAccountEndpoint() {
+        response = restClientApi.post(ACCOUNT_ENDPOINT);
+        context.setResponse(response);
+        context.getAccount().setId(response.jsonPath().getString("id"));
+        response.prettyPrint();
+    }
+
+    /**
+     * This method build body content.
+     *
+     * @param inputContent specified as data table for the body.
+     */
+    @Given("user specifies account body content$")
+    public void user_specifies_content(Map<String, String> inputContent) {
+        accountApi.getInstance().getAccount();
+        restClientApi = RestClientApi.getInstance();
+        restClientApi.buildSpec(inputContent);
     }
 }
