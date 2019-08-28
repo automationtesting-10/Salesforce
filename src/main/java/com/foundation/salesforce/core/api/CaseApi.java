@@ -42,7 +42,7 @@ public class CaseApi {
     private Response response;
 
     /**
-     * Constructor of AccountAPI.
+     * Constructor of CaseAPI.
      */
     protected CaseApi() {
         restClient = RestClientApi.getInstance();
@@ -50,9 +50,9 @@ public class CaseApi {
     }
 
     /**
-     * Returns the instance from account API.
+     * Returns the instance from case API.
      *
-     * @return a account API.
+     * @return a case API.
      */
     public static CaseApi getInstance() {
         return new CaseApi();
@@ -61,7 +61,7 @@ public class CaseApi {
     /**
      * Returns the response from case API.
      *
-     * @return response api
+     * @return response case api
      */
     public Response getCase() {
         response = restClient.get(CASE_ENDPOINT);

@@ -1,3 +1,4 @@
+@Case
 Feature: Modify an existing case
 
   @UpdateCase  @Acceptance

@@ -1,3 +1,4 @@
+@Case
 Feature: Acceptance Accounts tests
 
   @Acceptance

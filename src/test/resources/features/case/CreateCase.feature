@@ -1,3 +1,4 @@
+@Case
 Feature: Creation funtional and acceptance
 
   @CaseCreation  @Acceptance
@@ -109,4 +110,3 @@ Feature: Creation funtional and acceptance
       | Feedback             | --None--  | --None--  | --None-- |
       | Other                | Phone     | Escalated | High     |
       | --None--             | Phone     | Escalated | High     |
-    

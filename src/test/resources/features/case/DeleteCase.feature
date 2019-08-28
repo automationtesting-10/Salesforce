@@ -1,3 +1,4 @@
+@Case
 Feature: Creation funtional and acceptance
 
   @DeleteCase  @Acceptance
