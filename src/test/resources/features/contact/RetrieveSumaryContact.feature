@@ -4,3 +4,4 @@ Feature: Manage Tasks in Salesforce
   Scenario: verify get summary for Contact
     When user retrieves the summary for Contact
     Then the status code is 200
+    And the response passes Contact Retrive Sumary Schema validation
