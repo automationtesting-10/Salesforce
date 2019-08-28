@@ -216,7 +216,7 @@ public class LeadsSteps {
         FakeValuesService fakeValuesService = new FakeValuesService(
                 new Locale("en-GB"), new RandomService());
         setLeadRequiredFields();
-        String pattern = "[A-Za-z0-9]{"+ Integer.parseInt(maximumLimit) + "}";
+        String pattern = "[A-Za-z0-9]{" + Integer.parseInt(maximumLimit) + "}";
         String alphaNumericString = fakeValuesService.regexify(pattern);
         leadData.put(field, alphaNumericString);
         requestManager.buildSpec(leadData);
@@ -245,7 +245,7 @@ public class LeadsSteps {
         validationResponse.prettyPrint();
         SoftAssert softAssert = new SoftAssert();
         for (Map.Entry<String, String> field : leadData.entrySet()) {
-            System.out.println("field key value "+ field.getValue());
+            System.out.println("field key value " + field.getValue());
             System.out.println("field in response" + validationResponse.jsonPath().get(field.getKey()));
             softAssert.assertEquals(field.getValue(), validationResponse.jsonPath().get(field.getKey()));
         }

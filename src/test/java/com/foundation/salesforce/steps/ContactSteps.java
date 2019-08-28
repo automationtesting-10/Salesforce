@@ -275,18 +275,31 @@ public class ContactSteps {
         }
     }
 
+    /**
+     * This method get an contact by Id.
+     *
+     * @param contactId Specified as data table for the body.
+     */
     @When("user finds a contact by id (.*)")
-    public void userFindsAContactByIdIUvDAAs(String contactId) {
+    public void userFindsAContactById(String contactId) {
         Response response = contactApi.findContactsById(contactId);
         context.setResponse(response);
         response.prettyPrint();
     }
 
+    /**
+     * This method build body content.
+     *
+     * @param inputContent parameter body fields.
+     */
     @Given("user specifies new contact with firstName, email, title, others.")
     public void userSpecifiesNewContactWithFirstNameEmailTitleOthers(Map<String, String> inputContent) {
         contactApi.setContent(inputContent);
     }
 
+    /**
+     * This method send request for post.
+     */
     @When("user send de request post to contact endpoint with firstName, email, title, other")
     public void userSendDeRequestPostToContactEndpointWithFirstNameEmailTitleOther() {
         Response response = contactApi.postContent();

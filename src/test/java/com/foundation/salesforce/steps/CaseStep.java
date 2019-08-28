@@ -56,7 +56,7 @@ public class CaseStep {
     }
 
     /**
-     * User create a case with body type
+     * User create a case with body type.
      */
     @When("user creates a case with the type")
     public void iCreateAnCaseWithTheName() {
@@ -121,7 +121,7 @@ public class CaseStep {
     }
 
     /**
-     * Gets all cases that was created
+     * Gets all cases that was created.
      */
     @When("user gets all case created")
     public void iGetAllCaseCreated() {
@@ -159,7 +159,7 @@ public class CaseStep {
      * @param inputContent specified as data table for the body.
      */
     @Given("user specifies case body content")
-    public void user_specifies_content(Map<String, String> inputContent) {
+    public void userSpecifiesContent(Map<String, String> inputContent) {
         caseApi.getInstance().getCase();
         restClientApi = RestClientApi.getInstance();
         restClientApi.buildSpec(inputContent);
