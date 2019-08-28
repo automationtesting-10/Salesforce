@@ -6,7 +6,7 @@ Feature: Creation funtional and acceptance
       | type | case01 |
     When user creates a case with the type
     Then the status code is 201
-    And schema case "case creation schema" is valid
+    And the response passes case creation schema validation
 
   @CaseCreation @Funtional
   Scenario Outline: User creates multiple cases with type and status data

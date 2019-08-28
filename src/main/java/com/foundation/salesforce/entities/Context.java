@@ -26,7 +26,7 @@ public class Context {
     private Lead lead;
     private Response response;
     private Account account;
-    private Case fCase;
+    private Case textCase;
     private Contact contact;
 
     /**
@@ -37,7 +37,7 @@ public class Context {
         this.task = new Task();
         this.lead = new Lead();
         this.account = new Account();
-        this.fCase = new Case();
+        this.textCase = new Case();
         this.contact = new Contact();
     }
 
@@ -74,7 +74,7 @@ public class Context {
      * @return Case.
      */
     public Case getCase() {
-        return fCase;
+        return textCase;
     }
 
     /**

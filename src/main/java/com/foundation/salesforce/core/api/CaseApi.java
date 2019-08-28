@@ -14,9 +14,9 @@ package com.foundation.salesforce.core.api;
 
 import com.foundation.salesforce.core.restClient.Authentication;
 import com.foundation.salesforce.core.restClient.RestClientApi;
-import io.restassured.response.Response;
-
 import static com.foundation.salesforce.core.utils.EndPoints.CASE_ENDPOINT;
+
+import io.restassured.response.Response;
 
 /**
  * CaseApi class.

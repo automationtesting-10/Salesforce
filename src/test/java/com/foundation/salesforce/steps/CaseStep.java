@@ -14,21 +14,22 @@ package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.api.CaseApi;
 import com.foundation.salesforce.core.restClient.RestClientApi;
-import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
-import cucumber.api.java.en.And;
+
+import static com.foundation.salesforce.core.utils.EndPoints.CASE_ENDPOINT;
+
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+
 import org.json.JSONObject;
 import org.testng.Assert;
 
 import java.util.Map;
-
-import static com.foundation.salesforce.core.utils.EndPoints.CASE_ENDPOINT;
 
 /**
  * CaseStep class with the steps for the case feature.
@@ -84,15 +85,6 @@ public class CaseStep {
     @Then("the status code is a numbert {int}")
     public void theStatusCodeIs(int statusCode) {
         Assert.assertEquals(response.getStatusCode(), statusCode);
-    }
-
-    /**
-     * Schema case validation.
-     */
-    @And("schema case {string} is valid")
-    public void schemaIsValid(String schemaTypeName) {
-        boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
-        Assert.assertTrue(actual);
     }
 
     /**
