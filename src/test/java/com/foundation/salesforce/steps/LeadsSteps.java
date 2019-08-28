@@ -13,19 +13,24 @@ package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.core.utils.EndPoints;
+import com.foundation.salesforce.core.utils.ValueAppender;
 import com.foundation.salesforce.entities.Context;
 import com.foundation.salesforce.core.restClient.Authentication;
 
+import com.github.javafaker.Faker;
+import com.github.javafaker.service.FakeValuesService;
+import com.github.javafaker.service.RandomService;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -49,6 +54,7 @@ public class LeadsSteps {
         this.context = context;
         requestManager = RestClientApi.getInstance();
         requestManager.setRequest(Authentication.requestSpecification());
+        leadData = new HashMap<>();
     }
 
     /**
@@ -110,9 +116,17 @@ public class LeadsSteps {
      *
      * @param inputFields - Input data as a Map.
      */
-    @Given("a user sets json object")
+    @Given("a user sets json object with lead data")
     public void aUserSetsJsonObject(Map<String, String> inputFields) {
-        requestManager.buildSpec(inputFields);
+        for (Map.Entry<String, String> field : inputFields.entrySet()) {
+            if (!("LastName".equals(field.getKey()))) {
+                leadData.put(field.getKey(), field.getValue());
+            } else {
+                String lastNameConcatenated = ValueAppender.getStringWithPreffixSuffix(inputFields.get("LastName"));
+                leadData.put("LastName", lastNameConcatenated);
+            }
+        }
+        requestManager.buildSpec(leadData);
     }
 
     /**
@@ -128,7 +142,7 @@ public class LeadsSteps {
     /**
      * Updates existing lead by Id.
      */
-    @When("the user updates existing lead by Id")
+    @When("the user updates existing lead")
     public void theUserUpdatesExistingLeadById() {
         response = requestManager.patch(EndPoints.LEAD_ENDPOINT + "/" + context.getLead().getId());
         response.prettyPrint();
@@ -163,9 +177,8 @@ public class LeadsSteps {
      */
     @Given("a user specifies (.*) and (.*)")
     public void aUserSpecifiesCompanyAndLastName(String company, String lastName) {
-        leadData = new HashMap<>();
+        leadData.put("LastName", ValueAppender.getStringWithPreffixSuffix(lastName));
         leadData.put("Company", company);
-        leadData.put("LastName", lastName);
         requestManager.buildSpec(leadData);
     }
 
@@ -187,10 +200,55 @@ public class LeadsSteps {
      */
     @And("the user adds an optional field (.*) with (.*)")
     public void addsAnOptionalFieldFieldWithValue(String fieldName, String value) {
-        leadData = new HashMap<>();
-        leadData.put("Company", "TestCompany");
-        leadData.put("LastName", "TestLastname");
+        setLeadRequiredFields();
         leadData.put(fieldName, value);
         requestManager.buildSpec(leadData);
+    }
+
+    /**
+     * Sets lead fields with required length to create or update data.
+     *
+     * @param field - Field to which the value is going to be set.
+     * @param maximumLimit - Required length for the string generator.
+     */
+    @Given("a user sets a (.*) value with (.*) characters limit")
+    public void aUserSetsAFieldValueWithTheMaximumCharactersLimit(String field, String maximumLimit) {
+        FakeValuesService fakeValuesService = new FakeValuesService(
+                new Locale("en-GB"), new RandomService());
+        setLeadRequiredFields();
+        String pattern = "[A-Za-z0-9]{"+ Integer.parseInt(maximumLimit) + "}";
+        String alphaNumericString = fakeValuesService.regexify(pattern);
+        leadData.put(field, alphaNumericString);
+        requestManager.buildSpec(leadData);
+    }
+
+    /**
+     * Sets required fields for lead creation.
+     */
+    public void setLeadRequiredFields() {
+        Faker faker = new Faker();
+        String lastName = faker.name().lastName();
+        String company = faker.company().name();
+        leadData.put("Company", company);
+        leadData.put("LastName", ValueAppender.getStringWithPreffixSuffix(lastName));
+    }
+
+    /**
+     * Verifies is lead information is correct according to given data in creation or update.
+     */
+    @And("the lead information matches the given data")
+    public void leadIsCreatedWithGivenData() {
+        System.out.println("response in context" + context.getResponse().jsonPath());
+        Map<String, String> contextResponse = context.getResponse().jsonPath().getMap("$");
+        System.out.println("context response" + contextResponse.toString());
+        Response validationResponse = requestManager.get(EndPoints.LEAD_ENDPOINT + "/" + contextResponse.get("id"));
+        validationResponse.prettyPrint();
+        SoftAssert softAssert = new SoftAssert();
+        for (Map.Entry<String, String> field : leadData.entrySet()) {
+            System.out.println("field key value "+ field.getValue());
+            System.out.println("field in response" + validationResponse.jsonPath().get(field.getKey()));
+            softAssert.assertEquals(field.getValue(), validationResponse.jsonPath().get(field.getKey()));
+        }
+        softAssert.assertAll();
     }
 }
