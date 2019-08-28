@@ -103,18 +103,8 @@ public class AccountStep {
     public void iFillTheDeleteRequest() {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.delete(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
+        context.setResponse(response);
         response.prettyPrint();
-    }
-
-    /**
-     * Verifies response's status code.
-     *
-     * @param statusCode Expected status for delete account.
-     */
-    @Then("the status code is a number {int}")
-    public void theStatusCodeIs(int statusCode) {
-        //  json = response.then().statusCode(statusCode);
-        Assert.assertEquals(response.getStatusCode(), statusCode);
     }
 
     /**
@@ -135,6 +125,7 @@ public class AccountStep {
     @When("the user updates existing account by Id")
     public void theUserUpdatesExistingAccountById() {
         response = restClientApi.patch(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
+        context.setResponse(response);
         response.prettyPrint();
     }
 
@@ -164,6 +155,7 @@ public class AccountStep {
     public void aUserFindsAnExistingAccountById() {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.get(ACCOUNT_ENDPOINT + "/" + context.getAccount().getId());
+        context.setResponse(response);
         response.prettyPrint();
     }
 
@@ -176,6 +168,7 @@ public class AccountStep {
     public void aUserFindsAAccountById(String accountId) {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.get(ACCOUNT_ENDPOINT + "/" + accountId);
+        context.setResponse(response);
         response.prettyPrint();
     }
 
@@ -188,6 +181,7 @@ public class AccountStep {
     public void aUserDeletesAAccountById(String accountId) {
         restClientApi = RestClientApi.getInstance();
         response = restClientApi.delete(ACCOUNT_ENDPOINT + "/" + accountId);
+        context.setResponse(response);
         response.prettyPrint();
     }
 

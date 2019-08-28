@@ -5,7 +5,7 @@ Feature: Modify an existing Account
     Given an user sets json object for the modify account
       | Name | employee |
     When the user updates existing account by Id
-    Then the status code is a number 204
+    Then the status code is 204
 
   @UpdateAccount @Functional
   Scenario: Update an account sending correct json
@@ -16,14 +16,14 @@ Feature: Modify an existing Account
       | Website  | www.customer.com |
       | Industry | customerINC      |
     When the user updates existing account by Id
-    Then the status code is a number 204
+    Then the status code is 204
 
   @UpdateAccount   @Negative
   Scenario: Update an account with a wrong body
     Given an user sets json object for the modify account
       | Indus | customerINC      |
     When the user updates existing account by Id
-    Then the status code is a number 400
+    Then the status code is 400
 
   @UpdateAccount @Functional
   Scenario: Update all data of an account with correct json
@@ -48,4 +48,4 @@ Feature: Modify an existing Account
       | ShippingCountry   | eeuu                  |
       | BillingPostalCode | california23          |
     When the user updates existing account by Id
-    Then the status code is a number 204
+    Then the status code is 204

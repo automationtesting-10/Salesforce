@@ -5,7 +5,7 @@ Feature: Creation funtional and acceptance
     Given user fills the request with the data required
       | Name | Account536 |
     When user creates an Account with the name
-    Then the status code is a number 201
+    Then the status code is 201
     And schema "account creation schema" is valid
 
   @CreateAccount @Funtional
@@ -17,7 +17,7 @@ Feature: Creation funtional and acceptance
       | Website  | www.customer.com |
       | Industry | customerINC      |
     When user creates an Account with the name
-    Then the status code is a number 201
+    Then the status code is 201
     And schema "account creation schema" is valid
 
   @Negative
@@ -25,7 +25,7 @@ Feature: Creation funtional and acceptance
     Given user fills the request with the data required
       | Phone | 101010 |
     When user creates an Account with the name
-    Then the status code is a number 400
+    Then the status code is 400
 
   @CreateAccount @Funtional
   Scenario Outline: User creates multiple accounts with type data
@@ -34,7 +34,7 @@ Feature: Creation funtional and acceptance
       | Name | <Name> |
       | type | <Type> |
     When user posts to Account endpoint
-    Then the status code is a number 201
+    Then the status code is 201
     And the response includes the following
       | success | true |
     And the response passes account create 201 schema validation
@@ -57,7 +57,7 @@ Feature: Creation funtional and acceptance
       | Name     | <Name>     |
       | Industry | <Industry> |
     When user posts to Account endpoint
-    Then the status code is a number 201
+    Then the status code is 201
     And the response includes the following
       | success | true |
     And the response passes account create 201 schema validation
