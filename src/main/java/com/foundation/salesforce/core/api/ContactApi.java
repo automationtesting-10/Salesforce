@@ -52,7 +52,7 @@ public final class ContactApi {
     /**
      * Method let set contact body that let build request.
      *
-     * @param contactBody parameter return the contact the bodu json.
+     * @param contactBody parameter return the contact the body json.
      */
     public void setContent(String contactBody) {
         restClientApi.buildSpec(contactBody);
