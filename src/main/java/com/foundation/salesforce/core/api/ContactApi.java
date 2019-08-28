@@ -20,7 +20,6 @@ import io.restassured.response.Response;
 import java.util.Map;
 
 import static com.foundation.salesforce.core.utils.EndPoints.CONTACT_ENDPOINT;
-import static com.foundation.salesforce.core.utils.EndPoints.TASK_ENDPOINT;
 
 /**
  * Class let build endpoint.
@@ -52,20 +51,20 @@ public final class ContactApi {
     /**
      * Method let set task body that let build request.
      *
-     * @param Contactbody parameter return the contact the bodu json.
+     * @param contactBody parameter return the contact the bodu json.
      */
-    public void setContent(String Contactbody) {
-        restClientApi.buildSpec(Contactbody);
+    public void setContent(String contactBody) {
+        restClientApi.buildSpec(contactBody);
     }
 
     /**
      * Method let set task body that let build request.
      *
-     * @param Contactbody parameter that contain the contact body json.
+     * @param contactBody parameter that contain the contact body json.
      */
-    public void setContent(Map Contactbody) {
+    public void setContent(Map contactBody) {
 
-        restClientApi.buildSpec(Contactbody);
+        restClientApi.buildSpec(contactBody);
     }
 
     /**
@@ -145,7 +144,7 @@ public final class ContactApi {
     }
 
     /**
-     * Method return the response summary
+     * Method return the response summary.
      * @return endPoint that have the contact endpoint.
      */
     public Response retrieveSummary() {
