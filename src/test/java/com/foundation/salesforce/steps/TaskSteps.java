@@ -131,9 +131,6 @@ public class TaskSteps {
         response.prettyPrint();
     }
 
-    /**
-     * Search a task based on its id.
-     */
     @When("user searches for task ([\\w]{18})")
     public void user_searches_for(String taskId){
         Response response = taskApi.findTaskById(taskId);
