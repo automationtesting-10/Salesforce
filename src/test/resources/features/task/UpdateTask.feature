@@ -89,7 +89,7 @@ Feature: Update Tasks in Salesforce
     And the response passes task 400 schema validation
 
   # Bug: This should return code 400 but instead returns 204 because these values should be validated but
-  #      it turns it isn't.
+  #      it turns out that it is not.
   #      But, contrary to the case when creating with invalid Status & Priority values, when updating it
   #      actually allows the insertion of such invalid values.
   @Bug
@@ -99,7 +99,7 @@ Feature: Update Tasks in Salesforce
       | Status   | Daffy  |
       | Priority | Foobar |
     When user patches an existing task
-    Then the status code is 204
+    Then the status code is 400
 
   @UpdateTask @Negative
   Scenario: User updates a task by specifying an invalid CallType value
