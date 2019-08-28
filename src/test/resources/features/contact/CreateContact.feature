@@ -1,4 +1,5 @@
-Feature: Manage Tasks in Salesforce
+@Contact
+Feature: Manage contact in Salesforce
 
   @CreateContact @Acceptance
   Scenario: user creates a new user contact
