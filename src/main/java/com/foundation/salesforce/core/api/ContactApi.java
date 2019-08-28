@@ -20,6 +20,7 @@ import io.restassured.response.Response;
 import java.util.Map;
 
 import static com.foundation.salesforce.core.utils.EndPoints.CONTACT_ENDPOINT;
+import static com.foundation.salesforce.core.utils.EndPoints.TASK_ENDPOINT;
 
 /**
  * Class let build endpoint.
@@ -49,7 +50,7 @@ public final class ContactApi {
     }
 
     /**
-     * Method let set task body that let build request.
+     * Method let set contact body that let build request.
      *
      * @param contactBody parameter return the contact the bodu json.
      */
@@ -118,4 +119,15 @@ public final class ContactApi {
     public Response retrieveSummary() {
         return restClientApi.get(CONTACT_ENDPOINT);
     }
+
+    /**
+     * Returns a previously created Contact specified by its id.
+     *
+     * @param contactId uniquely identifies a given contactId.
+     * @return a RestAssured Response structure containing the values for all the keys associated to a given Contact.
+     */
+    public Response findContactsById(String contactId) {
+        return restClientApi.get(CONTACT_ENDPOINT.concat("/").concat(contactId));
+    }
+
 }
