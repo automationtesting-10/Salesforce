@@ -66,7 +66,7 @@ public class ContactSteps {
     /**
      * Method to let user sent a request.
      */
-    @When("user send de request post to contact endpoint")
+    @When("user send request post to contact endpoint")
     public void userSendDeRequestPostToContactEndpoint() {
         Response response = contactApi.postContent();
         context.setResponse(response);
