@@ -20,7 +20,6 @@ import io.restassured.response.Response;
 import java.util.Map;
 
 import static com.foundation.salesforce.core.utils.EndPoints.CONTACT_ENDPOINT;
-import static com.foundation.salesforce.core.utils.EndPoints.TASK_ENDPOINT;
 
 /**
  * Class let build endpoint.
