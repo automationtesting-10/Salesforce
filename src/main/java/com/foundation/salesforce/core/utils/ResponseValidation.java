@@ -16,6 +16,7 @@ import io.restassured.response.Response;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.ValidationException;
 import org.everit.json.schema.loader.SchemaLoader;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -31,7 +33,7 @@ import java.util.stream.Collectors;
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
-final public class ResponseValidation {
+public final class ResponseValidation {
     private static ResponseValidation responseValidation;
 
     /**
@@ -63,27 +65,51 @@ final public class ResponseValidation {
         schemaTypeName = parseSchemaName(schemaTypeName);
         InputStream inputStream = null;
         List violations = new ArrayList<>();
-        try  {
+        boolean result;
+        try {
             inputStream = getClass().getClassLoader()
                     .getResourceAsStream("schemas/" + schemaTypeName.concat(".json"));
-            JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
-            Schema schema = SchemaLoader.load(rawSchema);
-            schema.validate(new JSONObject(response.jsonPath().getMap("$")));
-            return true;
-        } catch (ValidationException npvex) {
-            violations = npvex.getCausingExceptions().stream().map(ValidationException::getMessage)
+        } catch (NullPointerException npex) {
+            EventLogger.error(violations.toString(), npex);
+        }
+        JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
+        Schema schema = SchemaLoader.load(rawSchema);
+
+        // TODO Refactor this Map/List validation
+        try {
+            Map map = response.jsonPath().getMap("$");
+            JSONObject toBeChecked = new JSONObject(map);
+            schema.validate(toBeChecked);
+            result = true;
+        } catch (ClassCastException ccex) {
+            try {
+                List list = response.jsonPath().getList("$");
+                JSONArray intermeditate = new JSONArray(list);
+                schema.validate(intermeditate);
+                result = true;
+            } catch (ValidationException vex) {
+                violations = vex.getCausingExceptions().stream().map(ValidationException::getMessage)
+                        .collect(Collectors.toList());
+                EventLogger.error(violations.toString(), vex);
+                result = false;
+            }
+        } catch (ValidationException vex) {
+            violations = vex.getCausingExceptions().stream().map(ValidationException::getMessage)
                     .collect(Collectors.toList());
-            EventLogger.error(violations.toString(), npvex);
-            return false;
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException ioex) {
-                    EventLogger.error(ioex.getMessage(), ioex);
-                }
+            EventLogger.error(violations.toString(), vex);
+            result = false;
+        }
+        // END TODO Refactor this Map/List validation
+
+        if (inputStream != null) {
+            try {
+                inputStream.close();
+            } catch (IOException ioex) {
+                EventLogger.error(ioex.getMessage(), ioex);
             }
         }
+
+        return result;
     }
 
     /**

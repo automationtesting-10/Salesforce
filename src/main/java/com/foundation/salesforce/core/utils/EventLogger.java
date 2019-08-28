@@ -21,7 +21,7 @@ import org.apache.log4j.Logger;
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
-public class EventLogger {
+public final class EventLogger {
     private static Logger logger = Logger.getLogger(EventLogger.class.getName());
 
     /**
