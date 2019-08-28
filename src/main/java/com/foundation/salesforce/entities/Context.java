@@ -116,15 +116,6 @@ public class Context {
     }
 
     /**
-     * Method let set the contact object.
-     *
-     * @param contact the contact object.
-     */
-    public void setContact(Contact contact) {
-        this.contact = contact;
-    }
-
-    /**
      * Returns the Opportunity contact role of context.
      *
      * @return opportunityContactRole.
