@@ -268,18 +268,6 @@ public class ContactSteps {
      *
      * @param bodyFields parameter body fields.
      */
-    @And("response contains the following in contact")
-    public void responseContainsTheFollowingInContact(Map<String, String> bodyFields) {
-        for (Map.Entry<String, String> field : bodyFields.entrySet()) {
-            Assert.assertEquals(context.getResponse().jsonPath().get(field.getKey()).toString(), field.getValue());
-        }
-    }
-
-    /**
-     * Method to let body fields.
-     *
-     * @param bodyFields parameter body fields.
-     */
     @And("In response we can found the following contain")
     public void inResponseWeCanFoundTheFollowingContain(Map<String, String> bodyFields) {
         for (Map.Entry<String, String> field : bodyFields.entrySet()) {
