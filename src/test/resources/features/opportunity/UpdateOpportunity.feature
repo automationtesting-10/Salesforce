@@ -6,7 +6,7 @@ Feature: Update Opportunity in Salesforce
     Given User set up the data:
       | Name| Test_AT10 |
     When User send request PATCH to new opportunity endpoint
-    Then User get a "204" status code as response
+    Then the status code is 204
 
   @CreateOpportunity @DeleteOpportunity
   Scenario Outline: Update the required values for an opportunity that has already been created.
@@ -14,7 +14,7 @@ Feature: Update Opportunity in Salesforce
       | CloseDate  | 2019-06-06  |
       | StageName  | <stageName> |
     When User send request PATCH to new opportunity endpoint
-    Then User get a "204" status code as response
+    Then the status code is 204
     Examples:
       | stageName           |
       | Prospecting         |
@@ -33,7 +33,7 @@ Feature: Update Opportunity in Salesforce
     Given User set up the data:
       | CloseDate | <closeDate> |
     When User send request PATCH to new opportunity endpoint
-    Then User get a "204" status code as response
+    Then the status code is 204
     Examples:
       | closeDate  |
       | 2019       |
