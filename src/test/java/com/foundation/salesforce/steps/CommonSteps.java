@@ -63,6 +63,7 @@ public class CommonSteps {
     @And("the response includes the following")
     public void responseIncludesTheFollowing(Map<String, String> bodyFields) {
         SoftAssert softAssert = new SoftAssert();
+
         for (Map.Entry<String, String> field : bodyFields.entrySet()) {
             softAssert.assertEquals(context.getResponse().jsonPath().get(field.getKey()).toString(), field.getValue());
         }

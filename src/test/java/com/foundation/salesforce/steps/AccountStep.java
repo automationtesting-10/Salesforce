@@ -201,34 +201,6 @@ public class AccountStep {
     }
 
     /**
-     * Verifies response headers.
-     *
-     * @param headerFields - Expected headers and values.
-     */
-    @And("the headers include the following")
-    public void headersIncludeTheFollowing(Map<String, String> headerFields) {
-        SoftAssert softAssert = new SoftAssert();
-        for (Map.Entry<String, String> field : headerFields.entrySet()) {
-            softAssert.assertEquals(response.getHeader(field.getKey()), field.getValue());
-        }
-        softAssert.assertAll();
-    }
-
-    /**
-     * Verifies response's json body.
-     *
-     * @param bodyFields - Expected fields and values.
-     */
-    @And("the response body includes the following")
-    public void responseIncludesTheFollowing(Map<String, String> bodyFields) {
-        SoftAssert softAssert = new SoftAssert();
-        for (Map.Entry<String, String> field : bodyFields.entrySet()) {
-            softAssert.assertEquals(response.jsonPath().get(field.getKey()).toString(), field.getValue());
-        }
-        softAssert.assertAll();
-    }
-
-    /**
      * This method post an account.
      */
     @When("user posts to Account endpoint")
