@@ -117,6 +117,11 @@ public class CaseStep {
         response.prettyPrint();
     }
 
+    /**
+     * Sets a json object according to input map.
+     *
+     * @param inputFields - Input data.
+     */
     @Given("an user sets json object for the modify case")
     public void aUserSetsJsonObjectWithRequiredFields(Map<String, String> inputFields) {
         restClientApi = RestClientApi.getInstance();
@@ -176,18 +181,14 @@ public class CaseStep {
         restClientApi.buildSpec(inputContent);
     }
 
+    /**
+     * This method post the case in the endpoint.
+     */
     @When("user posts to case endpoint")
     public void userPostsToCaseEndpoint() {
         response = restClientApi.post(CASE_ENDPOINT);
         context.setResponse(response);
         context.getAccount().setId(response.jsonPath().getString("id"));
         response.prettyPrint();
-    }
-
-    @Given("user specifies case reason body content")
-    public void userSpecifiesContent(Map<String, String> inputContent) {
-        caseApi.getInstance().getCase();
-        restClientApi = RestClientApi.getInstance();
-        restClientApi.buildSpec(inputContent);
     }
 }

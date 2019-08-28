@@ -5,7 +5,7 @@ Feature: Creation funtional and acceptance
     Given user fills the request case with the data required
       | type | case01 |
     When user creates a case with the type
-    Then the status code case is a number 201
+    Then the status code is 201
     And schema case "case creation schema" is valid
 
   @CaseCreation @Funtional
@@ -15,10 +15,10 @@ Feature: Creation funtional and acceptance
       | type   | <type>   |
       | Status | <Status> |
     When user posts to case endpoint
-    Then the status code case is a number 201
-    And response includes the following
+    Then the status code is 201
+    And the response includes the following
       | success | true |
-    And response complies case create 201 schema
+    And the response passes case create 201 schema validation
     Examples:
       | type       | Status    |
       | Mechanical | New       |
@@ -34,10 +34,10 @@ Feature: Creation funtional and acceptance
       | Priority | <Priority> |
       | Status   | <Status>   |
     When user posts to case endpoint
-    Then the status code case is a number 201
-    And response includes the following
+    Then the status code is 201
+    And the response includes the following
       | success | true |
-    And response complies case create 201 schema
+    And the response passes case create 201 schema validation
     Examples:
       | Priority | Status    |
       | Medium   | New       |
@@ -53,10 +53,10 @@ Feature: Creation funtional and acceptance
       | Origin | <Origin> |
       | Status | <Status> |
     When user posts to case endpoint
-    Then the status code case is a number 201
-    And response includes the following
+    Then the status code is 201
+    And the response includes the following
       | success | true |
-    And response complies case create 201 schema
+    And the response passes case create 201 schema validation
     Examples:
       | Origin   | Status    |
       | Phone    | New       |
@@ -68,13 +68,13 @@ Feature: Creation funtional and acceptance
   @CaseCreation @Funtional
   Scenario Outline: User creates multiple cases with case reason and status data
   by specifying at least a status and priority
-    Given user specifies case reason body content
+    Given user specifies case body content
       | Reason | <Reason> |
     When user posts to case endpoint
-    Then the status code case is a number 201
-    And response includes the following
+    Then the status code is 201
+    And the response includes the following
       | success | true |
-    And response complies case create 201 schema
+    And the response passes case create 201 schema validation
     Examples:
       | Reason               |
       | Installation         |
@@ -89,16 +89,16 @@ Feature: Creation funtional and acceptance
   @CaseCreation @Funtional
   Scenario Outline: User creates multiple cases with four case fields and status data
   by specifying at least a status and priority
-    Given user specifies case reason body content
+    Given user specifies case body content
       | Reason   | <Reason>   |
       | Origin   | <Origin>   |
       | Status   | <Status>   |
       | Priority | <Priority> |
     When user posts to case endpoint
-    Then the status code case is a number 201
-    And response includes the following
+    Then the status code is 201
+    And the response includes the following
       | success | true |
-    And response complies case create 201 schema
+    And the response passes case create 201 schema validation
     Examples:
       | Reason               | Origin    | Status    | Priority |
       | Installation         | Phone     | New       | Medium   |

@@ -148,7 +148,8 @@ public class RestClientApi {
      * @param taskBody A string containing plain deserialized key/value pairs.
      */
     public void buildSpec(final String taskBody) {
-        request = given().spec(request).contentType(ContentType.JSON).body(taskBody);
+        request = given().spec(request).contentType(ContentType.JSON)
+                .body(taskBody);
     }
 
     /**

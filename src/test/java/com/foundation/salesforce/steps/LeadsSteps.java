@@ -13,17 +13,17 @@ package com.foundation.salesforce.steps;
 
 import com.foundation.salesforce.core.restClient.RestClientApi;
 import com.foundation.salesforce.core.utils.EndPoints;
-import com.foundation.salesforce.core.utils.ResponseValidation;
 import com.foundation.salesforce.entities.Context;
 import com.foundation.salesforce.core.restClient.Authentication;
 
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+
 import org.testng.Assert;
-import org.testng.asserts.SoftAssert;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,6 +58,7 @@ public class LeadsSteps {
     public void aUserFindsExistingLeadById() {
         response = requestManager.get(EndPoints.LEAD_ENDPOINT + "/" + context.getLead().getId());
         response.prettyPrint();
+        context.setResponse(response);
     }
 
     /**
@@ -69,30 +70,7 @@ public class LeadsSteps {
     public void aUserFindsLeadById(String leadId) {
         response = requestManager.get(EndPoints.LEAD_ENDPOINT + "/" + leadId);
         response.prettyPrint();
-    }
-
-    /**
-     * Verifies response's status code.
-     *
-     * @param statusCode - Expected status code.
-     */
-    @Then("the status code is {int}")
-    public void theStatusCodeIs(int statusCode) {
-        Assert.assertEquals(response.getStatusCode(), statusCode);
-    }
-
-    /**
-     * Verifies response's json body.
-     *
-     * @param bodyFields - Expected fields and values.
-     */
-    @And("response body includes the following")
-    public void responseIncludesTheFollowing(Map<String, String> bodyFields) {
-        SoftAssert softAssert = new SoftAssert();
-        for (Map.Entry<String, String> field : bodyFields.entrySet()) {
-            softAssert.assertEquals(response.jsonPath().get(field.getKey()).toString(), field.getValue());
-        }
-        softAssert.assertAll();
+        context.setResponse(response);
     }
 
     /**
@@ -102,6 +80,7 @@ public class LeadsSteps {
     public void aUserRetrievesTheSummaryForLead() {
         response = requestManager.get(EndPoints.LEAD_ENDPOINT);
         response.prettyPrint();
+        context.setResponse(response);
     }
 
     /**
@@ -111,6 +90,7 @@ public class LeadsSteps {
     public void aUserDeletesExistingLeadById() {
         response = requestManager.delete(EndPoints.LEAD_ENDPOINT + "/" + context.getLead().getId());
         response.prettyPrint();
+        context.setResponse(response);
     }
 
     /**
@@ -122,6 +102,7 @@ public class LeadsSteps {
     public void aUserDeletesALeadById(String leadId) {
         response = requestManager.delete(EndPoints.LEAD_ENDPOINT + "/" + leadId);
         response.prettyPrint();
+        context.setResponse(response);
     }
 
     /**
@@ -145,27 +126,13 @@ public class LeadsSteps {
     }
 
     /**
-     * Verifies response's body array of json objects.
-     *
-     * @param bodyFields - Expected fields and values.
-     */
-    @And("response contains the following")
-    public void responseContainsTheFollowing(Map<String, String> bodyFields) {
-        SoftAssert softAssert = new SoftAssert();
-        Map<String, String> responseFirstElement = response.jsonPath().getMap("[0]");
-        for (Map.Entry<String, String> field : bodyFields.entrySet()) {
-            softAssert.assertEquals(responseFirstElement.get(field.getKey()), field.getValue());
-        }
-        softAssert.assertAll();
-    }
-
-    /**
      * Updates existing lead by Id.
      */
     @When("the user updates existing lead by Id")
     public void theUserUpdatesExistingLeadById() {
         response = requestManager.patch(EndPoints.LEAD_ENDPOINT + "/" + context.getLead().getId());
         response.prettyPrint();
+        context.setResponse(response);
     }
 
     /**
@@ -177,24 +144,11 @@ public class LeadsSteps {
     public void theUserUpdatesLeadById(String leadId) {
         response = requestManager.patch(EndPoints.LEAD_ENDPOINT + "/" + leadId);
         response.prettyPrint();
+        context.setResponse(response);
     }
 
     /**
-     * Verifies response headers.
-     *
-     * @param headerFields - Expected headers and values.
-     */
-    @And("headers include the following")
-    public void headersIncludeTheFollowing(Map<String, String> headerFields) {
-        SoftAssert softAssert = new SoftAssert();
-        for (Map.Entry<String, String> field : headerFields.entrySet()) {
-            softAssert.assertEquals(response.getHeader(field.getKey()), field.getValue());
-        }
-        softAssert.assertAll();
-    }
-
-    /**
-     * Verifies if Id n response is the same as the one looked for.
+     * Verifies if Id in response is the same as the one looked for.
      */
     @And("the Id in response is the same as the one looked for")
     public void theIdInResponseIsTheSameAsTheOneLookedFor() {
@@ -226,23 +180,11 @@ public class LeadsSteps {
     }
 
     /**
-     * Validates json schema of creation response.
+     * Adds optional lead fields to request body.
      *
-     * @param schemaTypeName - Schema to validate.
+     * @param fieldName - Name od the field to be added.
+     * @param value - Value of the field to be added.
      */
-    @And("response passes (.*) validation")
-    public void response_is_valid (String schemaTypeName) {
-        boolean actual = ResponseValidation.getInstance().matchesJsonSchema(schemaTypeName, this.response);
-        Assert.assertTrue(actual);
-    }
-
-    @Given("a user sets json object with required fields")
-    public void aUserSetsJsonObjectWithRequiredFields(Map<String, String> requiredFields) {
-        leadData = new HashMap<>();
-        leadData = requiredFields;
-        System.out.println(leadData.toString());
-    }
-
     @And("the user adds an optional field (.*) with (.*)")
     public void addsAnOptionalFieldFieldWithValue(String fieldName, String value) {
         leadData = new HashMap<>();
