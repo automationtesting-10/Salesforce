@@ -163,4 +163,31 @@ public class CaseStep {
         response = restClientApi.get(CASE_ENDPOINT + "/" + leadId);
         response.prettyPrint();
     }
+
+    /**
+     * This method build the body.
+     *
+     * @param inputContent specified as data table for the body.
+     */
+    @Given("user specifies case body content")
+    public void user_specifies_content(Map<String, String> inputContent) {
+        caseApi.getInstance().getCase();
+        restClientApi = RestClientApi.getInstance();
+        restClientApi.buildSpec(inputContent);
+    }
+
+    @When("user posts to case endpoint")
+    public void userPostsToCaseEndpoint() {
+        response = restClientApi.post(CASE_ENDPOINT);
+        context.setResponse(response);
+        context.getAccount().setId(response.jsonPath().getString("id"));
+        response.prettyPrint();
+    }
+
+    @Given("user specifies case reason body content")
+    public void userSpecifiesContent(Map<String, String> inputContent) {
+        caseApi.getInstance().getCase();
+        restClientApi = RestClientApi.getInstance();
+        restClientApi.buildSpec(inputContent);
+    }
 }
