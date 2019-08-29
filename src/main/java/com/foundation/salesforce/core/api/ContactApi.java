@@ -29,7 +29,6 @@ import static com.foundation.salesforce.core.utils.EndPoints.CONTACT_ENDPOINT;
  */
 public final class ContactApi {
     private RestClientApi restClientApi;
-    private Response response;
 
     /**
      * Class constructor.

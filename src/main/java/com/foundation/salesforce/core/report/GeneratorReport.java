@@ -46,10 +46,10 @@ public class GeneratorReport {
         jsonFiles.add("target/cucumber.json");
 
         final String projectName = "Salesforce";
-        final boolean runWithJenkins = false;
+        final boolean runWithJenkins = true;
 
         final Configuration configuration = new Configuration(reportOutputDirectory, projectName);
-        // additional metadata presented on main page
+        //additional metadata presented on main page
         configuration.addClassifications("Branch", "RELEASE/1.0");
         final ReportBuilder reportBuilder = new ReportBuilder(jsonFiles, configuration);
         final Reportable result = reportBuilder.generateReports();

@@ -17,7 +17,7 @@ import io.restassured.response.Response;
 /**
  * Context class contains all objects that are shared between steps.
  *
- * @author Cristian Lujan, Jesus Menacho
+ * @author Cristian Lujan
  * @version 1.0
  */
 public class Context {
