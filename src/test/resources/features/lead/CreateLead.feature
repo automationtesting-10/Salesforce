@@ -221,3 +221,85 @@ Feature: Create lead
       | LastName  | 81      |
       | Jigsaw    | 21      |
       | FirstName | 41      |
+
+  @LeadCreation @Functional
+  Scenario: Create a lead sending all required fields and Latitude and Longitude
+    Given a user sets json object with lead data
+      | LastName  | TestLastName |
+      | Company   | TestCompany  |
+      | Latitude  | -17.366435   |
+      | Longitude | -66.175709   |
+    When the user creates the lead
+    Then the status code is 201
+    And headers include the following
+      | Vary | Accept-Encoding |
+    And the response includes the following
+      | success | true |
+    And the response passes lead creation schema validation
+
+  @Negative
+  Scenario: Create a lead sending all required fields and Latitude
+    Given a user sets json object with lead data
+      | LastName | TestLastName |
+      | Company  | TestCompany  |
+      | Latitude | -17.366435   |
+    When the user creates the lead
+    Then the status code is 400
+    And the response passes lead error fields schema validation
+    And the response contains the following
+      | errorCode | FIELD_INTEGRITY_EXCEPTION              |
+      | message   | Longitude value is missing : Longitude |
+
+  @Negative
+  Scenario: Create a lead sending all required fields and Longitude
+    Given a user sets json object with lead data
+      | LastName  | TestLastName |
+      | Company   | TestCompany  |
+      | Longitude | -66.175709   |
+    When the user creates the lead
+    Then the status code is 400
+    And the response passes lead error fields schema validation
+    And the response contains the following
+      | errorCode | FIELD_INTEGRITY_EXCEPTION            |
+      | message   | Latitude value is missing : Latitude |
+
+  @Negative
+  Scenario: Create a lead sending all required fields and Latitude out of valid range
+    Given a user sets json object with lead data
+      | LastName  | TestLastName |
+      | Company   | TestCompany  |
+      | Latitude  | -90.366435   |
+      | Longitude | -66.175709   |
+    When the user creates the lead
+    Then the status code is 400
+    And the response passes lead error fields schema validation
+    And the response contains the following
+      | errorCode | NUMBER_OUTSIDE_VALID_RANGE |
+
+  @Negative
+  Scenario: Create a lead sending all required fields and Longitude out of valid range
+    Given a user sets json object with lead data
+      | LastName  | TestLastName |
+      | Company   | TestCompany  |
+      | Latitude  | -17.366435   |
+      | Longitude | -180.175709  |
+    When the user creates the lead
+    Then the status code is 400
+    And the response passes lead error fields schema validation
+    And the response contains the following
+      | errorCode | NUMBER_OUTSIDE_VALID_RANGE |
+
+  @Negative
+  Scenario: Create a lead sending all required fields and Latitude and Longitude with invalid data type
+    Given a user sets json object with lead data
+      | LastName  | TestLastName  |
+      | Company   | TestCompany   |
+      | Latitude  | TestLatitude  |
+      | Longitude | TestLongitude |
+    When the user creates the lead
+    Then the status code is 400
+    And the response passes lead error schema validation
+    And the response contains the following
+      | errorCode | JSON_PARSER_ERROR |
+
+

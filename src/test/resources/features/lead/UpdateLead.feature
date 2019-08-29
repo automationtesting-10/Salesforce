@@ -179,3 +179,95 @@ Feature: Update an existing lead
       | Jigsaw    | 21      |
       | FirstName | 41      |
 
+  @UpdateLead @Functional
+  Scenario: Update a lead sending all required fields and Latitude and Longitude
+    Given a user sets json object with lead data
+      | Latitude  | -17.366435   |
+      | Longitude | -66.175709   |
+    When the user updates existing lead
+    Then the status code is 204
+
+  @UpdateLead @Negative
+  Scenario: Update a lead sending all required fields and Latitude
+    Given a user sets json object with lead data
+      | Latitude | -17.366435   |
+    When the user updates existing lead
+    Then the status code is 400
+    And the response passes lead error fields schema validation
+    And the response contains the following
+      | errorCode | FIELD_INTEGRITY_EXCEPTION              |
+      | message   | Longitude value is missing : Longitude |
+
+  @UpdateLead @Negative
+  Scenario: Update a lead sending all required fields and Longitude
+    Given a user sets json object with lead data
+      | Longitude | -66.175709   |
+    When the user updates existing lead
+    Then the status code is 400
+    And the response passes lead error fields schema validation
+    And the response contains the following
+      | errorCode | FIELD_INTEGRITY_EXCEPTION            |
+      | message   | Latitude value is missing : Latitude |
+
+  @UpdateLead @Functional
+  Scenario: Update a lead sending Latitude and Longitude
+    Given a user sets json object with lead data
+      | Latitude  | -17.366435   |
+      | Longitude | -66.175709   |
+    When the user updates existing lead
+    Then the status code is 204
+
+  @UpdateLead @Negative
+  Scenario: Update a lead sending Latitude
+    Given a user sets json object with lead data
+      | Latitude | -17.366435   |
+    When the user updates existing lead
+    Then the status code is 400
+    And the response passes lead error fields schema validation
+    And the response contains the following
+      | errorCode | FIELD_INTEGRITY_EXCEPTION              |
+      | message   | Longitude value is missing : Longitude |
+
+  @UpdateLead @Negative
+  Scenario: Update a lead sending Longitude
+    Given a user sets json object with lead data
+      | Longitude | -66.175709   |
+    When the user updates existing lead
+    Then the status code is 400
+    And the response passes lead error fields schema validation
+    And the response contains the following
+      | errorCode | FIELD_INTEGRITY_EXCEPTION            |
+      | message   | Latitude value is missing : Latitude |
+
+  @UpdateLead @Negative
+  Scenario: Update a lead sending Latitude out of valid range
+    Given a user sets json object with lead data
+      | Latitude  | -90.366435   |
+      | Longitude | -66.175709   |
+    When the user creates the lead
+    Then the status code is 400
+    And the response passes lead error fields schema validation
+    And the response contains the following
+      | errorCode | NUMBER_OUTSIDE_VALID_RANGE |
+
+  @UpdateLead @Negative
+  Scenario: Update a lead sending Longitude out of valid range
+    Given a user sets json object with lead data
+      | Latitude  | -17.366435   |
+      | Longitude | -180.175709  |
+    When the user creates the lead
+    Then the status code is 400
+    And the response passes lead error fields schema validation
+    And the response contains the following
+      | errorCode | NUMBER_OUTSIDE_VALID_RANGE |
+
+  @UpdateLead @Negative
+  Scenario: Update a lead sending Latitude and Longitude with invalid data type
+    Given a user sets json object with lead data
+      | Latitude  | TestLatitude  |
+      | Longitude | TestLongitude |
+    When the user creates the lead
+    Then the status code is 400
+    And the response passes lead error schema validation
+    And the response contains the following
+      | errorCode | JSON_PARSER_ERROR |
