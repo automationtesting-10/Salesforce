@@ -98,7 +98,6 @@ Feature: Update an existing lead
       | Status            | Closed - Not Converted |
       | Street            | TestStreet             |
       | Country           | TestCountry            |
-      | OwnerId           | 0053i000001OtatAAC     |
       | Website           | TestWebsite            |
       | Industry          | TestIndustry           |
       | FirstName         | TestFirstName          |
