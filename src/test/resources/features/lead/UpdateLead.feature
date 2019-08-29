@@ -271,3 +271,11 @@ Feature: Update an existing lead
     And the response passes lead error schema validation
     And the response contains the following
       | errorCode | JSON_PARSER_ERROR |
+
+  @UpdateLead @Negative
+  Scenario: Update a lead sending Latitude and Longitude surpassing maximum decimal places
+    Given a user sets json object with lead data
+      | Latitude  | -17.366435366435366435  |
+      | Longitude | -66.175709175709175709 |
+    When the user updates existing lead
+    Then the status code is 400

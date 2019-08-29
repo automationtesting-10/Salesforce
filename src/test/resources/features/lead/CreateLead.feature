@@ -302,4 +302,14 @@ Feature: Create lead
     And the response contains the following
       | errorCode | JSON_PARSER_ERROR |
 
+  @LeadCreation @Negative
+  Scenario: Create a lead sending all required fields and Latitude and Longitude surpassing maximum decimal places
+    Given a user sets json object with lead data
+      | LastName  | TestLastName            |
+      | Company   | TestCompany             |
+      | Latitude  | -17.366435366435366435  |
+      | Longitude | -66.175709175709175709 |
+    When the user creates the lead
+    Then the status code is 400
+
 
