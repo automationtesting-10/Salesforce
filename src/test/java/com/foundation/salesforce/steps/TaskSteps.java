@@ -99,7 +99,7 @@ public class TaskSteps {
     /**
      * Creates a requirement Task to be searched for in the scenario.
      *
-     * @param inputContent
+     * @param inputContent A map structure holding the input data table defined in the gherkin step
      */
     @Given("a Task have been created with")
     public void aTaskCreatedWith(Map<String, String> inputContent) {
@@ -113,7 +113,7 @@ public class TaskSteps {
     /**
      * Updates a requirement Task to be searched for in the scenario.
      *
-     * @param inputContent
+     * @param inputContent A map structure holding the input data table defined in the gherkin step
      */
     @Given("an existing Task have been updated with")
     public void aTaskUpdatedWith(Map<String, String> inputContent) {
