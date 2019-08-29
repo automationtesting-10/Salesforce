@@ -272,7 +272,7 @@ Feature: Update an existing lead
     And the response contains the following
       | errorCode | JSON_PARSER_ERROR |
 
-  @UpdateLead @Negative
+  @UpdateLead @Negative @Bug
   Scenario: Update a lead sending Latitude and Longitude surpassing maximum decimal places
     Given a user sets json object with lead data
       | Latitude  | -17.366435366435366435 |

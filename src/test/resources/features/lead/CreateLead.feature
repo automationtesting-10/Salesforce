@@ -316,7 +316,7 @@ Feature: Create lead
     And the response contains the following
       | errorCode | JSON_PARSER_ERROR |
 
-  @LeadCreation @Negative
+  @LeadCreation @Negative @Bug
   Scenario: Create a lead sending all required fields and Latitude and Longitude surpassing maximum decimal places
     Given a user sets json object with lead data
       | LastName  | TestLastName            |
