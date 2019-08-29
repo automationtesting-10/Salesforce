@@ -15,6 +15,7 @@ package com.foundation.salesforce.steps;
 import com.foundation.salesforce.core.api.TaskApi;
 import com.foundation.salesforce.entities.Context;
 
+import com.github.javafaker.Faker;
 import io.restassured.response.Response;
 
 import cucumber.api.java.en.Given;
@@ -22,6 +23,7 @@ import cucumber.api.java.en.When;
 
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -92,6 +94,33 @@ public class TaskSteps {
         jsonContent.put("Status", status);
         jsonContent.put("Priority", priority);
         taskApi.setContent(jsonContent);
+    }
+
+    /**
+     * Creates a requirement Task to be searched for in the scenario.
+     *
+     * @param inputContent A map structure holding the input data table defined in the gherkin step
+     */
+    @Given("a Task have been created with")
+    public void aTaskCreatedWith(Map<String, String> inputContent) {
+        taskApi.setContent(inputContent);
+        Response response = taskApi.postContent();
+        context.setResponse(response);
+        context.getTask().setId(response.jsonPath().getString("id"));
+        response.prettyPrint();
+    }
+
+    /**
+     * Updates a requirement Task to be searched for in the scenario.
+     *
+     * @param inputContent A map structure holding the input data table defined in the gherkin step
+     */
+    @Given("an existing Task have been updated with")
+    public void aTaskUpdatedWith(Map<String, String> inputContent) {
+        taskApi.setContent(inputContent);
+        Response response = taskApi.patchContent(context.getTask().getId());
+        context.setResponse(response);
+        response.prettyPrint();
     }
 
     /**
@@ -168,5 +197,34 @@ public class TaskSteps {
         Response response = taskApi.retrieveSummaryForTask();
         context.setResponse(response);
         response.prettyPrint();
+    }
+
+    /**
+     * Sets a random invalid value for a given parametrized field.
+     *
+     * @param length input string length.
+     * @param inputField input field.
+     */
+    @Given("user provides value list with (\\d+) characters")
+    public void userProvidesValueListAndLength(int length, List<String> inputField) {
+        Faker faker = new Faker();
+        String value = faker.number().digits(length);
+        JSONObject inputBody = new JSONObject().put(inputField.get(0), value);
+        taskApi.setContent(inputBody);
+    }
+
+    /**
+     * Sets a random invalid value for a given parametrized field.
+     *
+     * @param length input string length.
+     * @param inputField input field.
+     */
+    @Given("user provides value table with (\\d+) characters")
+    public void userProvidesValueMapAndLength(int length, Map<String, String> inputField) {
+        Faker faker = new Faker();
+        String value = faker.number().digits(length);
+        JSONObject inputBody = new JSONObject(inputField);
+        inputBody = new JSONObject().put(inputField.keySet().toArray()[2].toString(), value);
+        taskApi.setContent(inputBody);
     }
 }
