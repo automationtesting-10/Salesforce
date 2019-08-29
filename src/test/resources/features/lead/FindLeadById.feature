@@ -8,7 +8,6 @@ Feature: Find lead by Id
     And the Id in response is the same as the one looked for
     And headers include the following
       | Vary | Accept-Encoding |
-    And the response passes lead find schema validation
     And the response includes the following
       | attributes.type | Lead |
 

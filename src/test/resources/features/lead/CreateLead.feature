@@ -67,7 +67,6 @@ Feature: Create lead
       | Status            | Closed - Not Converted |
       | Street            | TestStreet             |
       | Country           | TestCountry            |
-      | OwnerId           | 0053i000001OtatAAC     |
       | Website           | TestWebsite            |
       | Industry          | TestIndustry           |
       | FirstName         | TestFirstName          |
@@ -316,7 +315,7 @@ Feature: Create lead
     And the response contains the following
       | errorCode | JSON_PARSER_ERROR |
 
-  @LeadCreation @Negative
+  @LeadCreation @Negative @Bug
   Scenario: Create a lead sending all required fields and Latitude and Longitude surpassing maximum decimal places
     Given a user sets json object with lead data
       | LastName  | TestLastName            |
