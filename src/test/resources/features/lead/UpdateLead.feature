@@ -133,13 +133,13 @@ Feature: Update an existing lead
     Then the status code is 400
     And the response passes lead error fields schema validation
     Examples:
-      | Field             | Value              |
-      | Email             | test@testcom       |
-      | OwnerId           | 0053i000001OtatAA1 |
-      | Rating            | TestRating         |
-      | Status            | TestStatus         |
-      | GeocodeAccuracy   | Province           |
-      | Salutation        | TestSalutation     |
+      | Field           | Value              |
+      | Email           | test@testcom       |
+      | OwnerId         | 0053i000001OtatAA1 |
+      | Rating          | TestRating         |
+      | Status          | TestStatus         |
+      | GeocodeAccuracy | Province           |
+      | Salutation      | TestSalutation     |
 
   @UpdateLead @Negative
   Scenario Outline: Update a lead sending fields with incorrect data type
@@ -148,11 +148,11 @@ Feature: Update an existing lead
     Then the status code is 400
     And the response passes lead error schema validation
     Examples:
-      | Field             | Value              |
-      | AnnualRevenue     | RevenueTest        |
-      | IsUnreadByOwner   | True               |
-      | IsUnreadByOwner   | False              |
-      | NumberOfEmployees | testNumber         |
+      | Field             | Value       |
+      | AnnualRevenue     | RevenueTest |
+      | IsUnreadByOwner   | True        |
+      | IsUnreadByOwner   | False       |
+      | NumberOfEmployees | testNumber  |
 
   @UpdateLead @Functional
   Scenario Outline: Update a lead sending fields to check maximum characters limit
@@ -182,15 +182,15 @@ Feature: Update an existing lead
   @UpdateLead @Functional
   Scenario: Update a lead sending all required fields and Latitude and Longitude
     Given a user sets json object with lead data
-      | Latitude  | -17.366435   |
-      | Longitude | -66.175709   |
+      | Latitude  | -17.366435 |
+      | Longitude | -66.175709 |
     When the user updates existing lead
     Then the status code is 204
 
   @UpdateLead @Negative
   Scenario: Update a lead sending all required fields and Latitude
     Given a user sets json object with lead data
-      | Latitude | -17.366435   |
+      | Latitude | -17.366435 |
     When the user updates existing lead
     Then the status code is 400
     And the response passes lead error fields schema validation
@@ -201,7 +201,7 @@ Feature: Update an existing lead
   @UpdateLead @Negative
   Scenario: Update a lead sending all required fields and Longitude
     Given a user sets json object with lead data
-      | Longitude | -66.175709   |
+      | Longitude | -66.175709 |
     When the user updates existing lead
     Then the status code is 400
     And the response passes lead error fields schema validation
@@ -212,15 +212,15 @@ Feature: Update an existing lead
   @UpdateLead @Functional
   Scenario: Update a lead sending Latitude and Longitude
     Given a user sets json object with lead data
-      | Latitude  | -17.366435   |
-      | Longitude | -66.175709   |
+      | Latitude  | -17.366435 |
+      | Longitude | -66.175709 |
     When the user updates existing lead
     Then the status code is 204
 
   @UpdateLead @Negative
   Scenario: Update a lead sending Latitude
     Given a user sets json object with lead data
-      | Latitude | -17.366435   |
+      | Latitude | -17.366435 |
     When the user updates existing lead
     Then the status code is 400
     And the response passes lead error fields schema validation
@@ -231,7 +231,7 @@ Feature: Update an existing lead
   @UpdateLead @Negative
   Scenario: Update a lead sending Longitude
     Given a user sets json object with lead data
-      | Longitude | -66.175709   |
+      | Longitude | -66.175709 |
     When the user updates existing lead
     Then the status code is 400
     And the response passes lead error fields schema validation
@@ -242,8 +242,8 @@ Feature: Update an existing lead
   @UpdateLead @Negative
   Scenario: Update a lead sending Latitude out of valid range
     Given a user sets json object with lead data
-      | Latitude  | -90.366435   |
-      | Longitude | -66.175709   |
+      | Latitude  | -90.366435 |
+      | Longitude | -66.175709 |
     When the user creates the lead
     Then the status code is 400
     And the response passes lead error fields schema validation
@@ -253,8 +253,8 @@ Feature: Update an existing lead
   @UpdateLead @Negative
   Scenario: Update a lead sending Longitude out of valid range
     Given a user sets json object with lead data
-      | Latitude  | -17.366435   |
-      | Longitude | -180.175709  |
+      | Latitude  | -17.366435  |
+      | Longitude | -180.175709 |
     When the user creates the lead
     Then the status code is 400
     And the response passes lead error fields schema validation
@@ -275,7 +275,7 @@ Feature: Update an existing lead
   @UpdateLead @Negative
   Scenario: Update a lead sending Latitude and Longitude surpassing maximum decimal places
     Given a user sets json object with lead data
-      | Latitude  | -17.366435366435366435  |
+      | Latitude  | -17.366435366435366435 |
       | Longitude | -66.175709175709175709 |
     When the user updates existing lead
     Then the status code is 400

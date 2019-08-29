@@ -27,6 +27,7 @@ import cucumber.api.java.en.When;
 import io.restassured.response.Response;
 
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -122,7 +123,6 @@ public class LeadsSteps {
                 leadData.put(field.getKey(), field.getValue());
             } else {
                 String lastNameConcatenated = ValueAppender.getStringWithPreffixSuffix(inputFields.get("LastName"));
-                System.out.println(lastNameConcatenated);
                 leadData.put("LastName", lastNameConcatenated);
             }
         }
@@ -231,5 +231,24 @@ public class LeadsSteps {
         String company = faker.company().name();
         leadData.put("Company", company);
         leadData.put("LastName", ValueAppender.getStringWithPreffixSuffix(lastName));
+    }
+
+    /**
+     * Verifies is lead information is correct according to given data in creation or update.
+     */
+    @And("the lead information matches the given data")
+    public void leadIsCreatedWithGivenData() {
+        System.out.println("response in context" + context.getResponse().jsonPath());
+        Map<String, String> contextResponse = context.getResponse().jsonPath().getMap("$");
+        System.out.println("context response" + contextResponse.toString());
+        Response validationResponse = requestManager.get(EndPoints.LEAD_ENDPOINT + "/" + contextResponse.get("id"));
+        validationResponse.prettyPrint();
+        SoftAssert softAssert = new SoftAssert();
+        for (Map.Entry<String, String> field : leadData.entrySet()) {
+            System.out.println("field key value "+ field.getValue());
+            System.out.println("field in response" + validationResponse.jsonPath().get(field.getKey()));
+            softAssert.assertEquals(field.getValue(), validationResponse.jsonPath().get(field.getKey()));
+        }
+        softAssert.assertAll();
     }
 }

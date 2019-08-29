@@ -14,6 +14,20 @@ Feature: Create lead
       | success | true |
     And the response passes lead creation schema validation
 
+  @LeadCreation @Acceptance
+  Scenario: Create a lead sending correct json with all required fields and it is created with given data
+    Given a user sets json object with lead data
+      | Company  | TestCompany  |
+      | LastName | TestLastName |
+    When the user creates the lead
+    Then the status code is 201
+    And headers include the following
+      | Vary | Accept-Encoding |
+    And the response includes the following
+      | success | true |
+    And the response passes lead creation schema validation
+    And the lead information matches the given data
+
   @LeadCreation @Functional
   Scenario: Create a lead sending correct json with all required fields and some extra
     Given a user sets json object with lead data
