@@ -325,5 +325,3 @@ Feature: Create lead
       | Longitude | -66.175709175709175709 |
     When the user creates the lead
     Then the status code is 400
-
-
