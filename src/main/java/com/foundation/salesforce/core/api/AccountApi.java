@@ -31,11 +31,6 @@ public class AccountApi {
     private RestClientApi restClient;
 
     /**
-     * Variable for the final endpoint.
-     */
-    private String finalEndpoint;
-
-    /**
      * Variable for the response.
      */
     private Response response;
